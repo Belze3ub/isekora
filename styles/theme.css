@@ -1,0 +1,49 @@
+@tailwind base;
+
+@layer base {
+  :root {
+    --background: 210 40% 98%; /* light gray */
+    --foreground: 210 40% 10%; /* dark gray */
+    --card: 210 40% 90%; /* slightly darker than background */
+    --card-foreground: 210 40% 10%; /* dark gray */
+    --popover: 210 40% 90%; /* same as card */
+    --popover-foreground: 210 40% 10%; /* dark gray */
+    --primary: 150 92% 45%; /* #07BF67 */
+    --primary-foreground: 210 40% 10%; /* dark gray */
+    --secondary: 210 40% 70%; /* medium gray */
+    --secondary-foreground: 210 40% 10%; /* dark gray */
+    --muted: 210 40% 70%; /* medium gray */
+    --muted-foreground: 210 40% 10%; /* dark gray */
+    --accent: 150 92% 45%; /* #07BF67 */
+    --accent-foreground: 210 40% 10%; /* dark gray */
+    --destructive: 0 84.2% 60.2%; /* red */
+    --destructive-foreground: 210 40% 10%; /* dark gray */
+    --border: 210 40% 70%; /* medium gray */
+    --input: 210 40% 70%; /* medium gray */
+    --ring: 150 92% 45%; /* #07BF67 */
+    --radius: 0.5rem;
+  }
+
+  .dark {
+    --background: 210 40% 10%; /* dark gray */
+    --foreground: 210 40% 98%; /* light gray */
+    --card: 210 40% 15%; /* slightly lighter than background */
+    --card-foreground: 210 40% 98%; /* light gray */
+    --popover: 210 40% 15%; /* same as card */
+    --popover-foreground: 210 40% 98%; /* light gray */
+    --primary: 150 92% 45%; /* #07BF67 */
+    --primary-foreground: 210 40% 98%; /* light gray */
+    --secondary: 210 40% 30%; /* medium gray */
+    --secondary-foreground: 210 40% 98%; /* light gray */
+    --muted: 210 40% 30%; /* medium gray */
+    --muted-foreground: 210 40% 98%; /* light gray */
+    --accent: 150 92% 45%; /* #07BF67 */
+    --accent-foreground: 210 40% 98%; /* light gray */
+    --destructive: 0 84.2% 60.2%; /* red */
+    --destructive-foreground: 210 40% 98%; /* light gray */
+    --border: 210 40% 30%; /* medium gray */
+    --input: 210 40% 30%; /* medium gray */
+    --ring: 150 92% 45%; /* #07BF67 */
+    --radius: 0.5rem;
+  }
+}
