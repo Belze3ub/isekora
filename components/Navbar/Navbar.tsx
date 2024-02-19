@@ -4,7 +4,7 @@ import Link from 'next/link';
 import logo from '@/public/images/logo.svg';
 import MobileNav from '@/components/Navbar/MobileNav';
 import NavContent from '@/components/Navbar/NavContent';
-import Search from '@/components/Search';
+import SearchTest from '../SearchModal';
 
 const Navbar = () => {
   return (
@@ -20,7 +20,7 @@ const Navbar = () => {
           </div>
         </div>
         <div className="flex justify-end items-center gap-5">
-          <Search />
+          <SearchTest />
           <ThemeToggle />
           <div className="md:hidden">
             <MobileNav />

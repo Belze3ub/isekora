@@ -10,13 +10,13 @@ const MobileNav = () => {
   return (
     <Sheet>
       <SheetTrigger asChild>
-        <Button variant="ghost" size="icon">
+        <Button variant="ghost" size="icon" >
           <IoMenu className="h-[1.5rem] w-[1.5rem]" />
         </Button>
       </SheetTrigger>
       <SheetContent side="left">
         <SheetClose asChild>
-          <Link href="/" className="flex items-center gap-1">
+          <Link href="/" className="inline-flex">
             <Image src={logo} width={30} height={30} alt="Isekora" />
             <p className="h2-bold">Isekora</p>
           </Link>
