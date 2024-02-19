@@ -5,12 +5,9 @@ import Search from './SearchBar';
 import {
   Dialog,
   DialogContent,
-  DialogDescription,
   DialogHeader,
-  DialogTitle,
   DialogTrigger,
 } from './ui/dialog';
-import { Button } from './ui/button';
 import { FaMagnifyingGlass } from 'react-icons/fa6';
 
 const SearchTest = () => {
@@ -26,6 +23,7 @@ const SearchTest = () => {
         <DialogContent className="bg-transparent border-none flex gap-5 flex-col shadow-none max-h-full">
           <DialogHeader>
             <Search />
+            
           </DialogHeader>
           {query && (
             <div className="bg-secondary p-5 rounded-lg max-h-[80%] overflow-auto"></div>

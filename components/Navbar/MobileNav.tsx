@@ -1,5 +1,5 @@
 import { Sheet, SheetClose, SheetContent, SheetTrigger } from '@/components/ui/sheet';
-import { IoMenu } from 'react-icons/io5';
+import { IoClose, IoMenu } from 'react-icons/io5';
 import { Button } from '../ui/button';
 import Link from 'next/link';
 import Image from 'next/image';
@@ -10,17 +10,23 @@ const MobileNav = () => {
   return (
     <Sheet>
       <SheetTrigger asChild>
-        <Button variant="ghost" size="icon" >
+        <Button variant="ghost" size="icon">
           <IoMenu className="h-[1.5rem] w-[1.5rem]" />
         </Button>
       </SheetTrigger>
       <SheetContent side="left">
-        <SheetClose asChild>
-          <Link href="/" className="inline-flex">
-            <Image src={logo} width={30} height={30} alt="Isekora" />
-            <p className="h2-bold">Isekora</p>
-          </Link>
-        </SheetClose>
+        <div className="flex-between">
+          <SheetClose asChild>
+            <Link href="/" className="inline-flex gap-2">
+              <Image src={logo} width={30} height={30} alt="Isekora" />
+              <p className="h2-bold">Isekora</p>
+            </Link>
+          </SheetClose>
+          <SheetClose className="hover:bg-accent rounded-lg p-2">
+            <IoClose />
+            <span className="sr-only">Close</span>
+          </SheetClose>
+        </div>
         <MobileNavContent />
       </SheetContent>
     </Sheet>

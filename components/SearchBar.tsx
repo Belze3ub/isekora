@@ -4,6 +4,7 @@ import { Input } from './ui/input';
 import { ChangeEvent, useEffect, useState } from 'react';
 import { IoClose } from 'react-icons/io5';
 import { useRouter } from 'next/navigation';
+import { DialogClose } from './ui/dialog';
 
 const Search = () => {
   const router = useRouter();
@@ -11,25 +12,26 @@ const Search = () => {
 
   useEffect(() => {
     if (query) {
-      router.push(`?search=${query}`)
+      router.push(`?search=${query}`);
     } else {
-      router.push('/')
+      router.push('/');
     }
-  }, [query, router])
+  }, [query, router]);
 
   const handleSearch = (e: ChangeEvent<HTMLInputElement>) => {
     setQuery(e.target.value);
   };
   return (
-    <div className="relative items-center gap-2 md:flex">
-      <div className="absolute left-2 top-1/2 h-4 w-4 -translate-y-1/2 transform">
+    <div className="relative items-center gap-2 flex">
+      <div className="absolute left-0 flex">
         {query ? (
-          <IoClose
-            className="text-accent cursor-pointer"
-            onClick={() => setQuery('')}
-          />
+          <div className="p-2 cursor-pointer" onClick={() => setQuery('')}>
+            <IoClose className="text-accent" />
+          </div>
         ) : (
-          <FaMagnifyingGlass />
+          <div className="p-2">
+            <FaMagnifyingGlass />
+          </div>
         )}
       </div>
       <Input
@@ -38,6 +40,11 @@ const Search = () => {
         value={query}
         onChange={(e) => handleSearch(e)}
       />
+      <div className="absolute right-0 flex" onClick={() => setQuery('')}>
+        <DialogClose className="p-2">
+          <IoClose />
+        </DialogClose>
+      </div>
     </div>
   );
 };

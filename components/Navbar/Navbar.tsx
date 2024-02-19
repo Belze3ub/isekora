@@ -8,10 +8,10 @@ import SearchTest from '../SearchModal';
 
 const Navbar = () => {
   return (
-    <header className="bg-background ">
+    <header className="bg-primary ">
       <nav className="flex-between card w-full gap-5 p-4 bg-primary-100">
         <div className="flex items-center gap-5">
-          <Link href="/" className="flex items-center gap-2">
+          <Link href="/" className="flex gap-2">
             <Image src={logo} width={30} height={30} alt="Isekora" />
             <p className="h2-bold">Isekora</p>
           </Link>
