@@ -63,4 +63,7 @@
   .no-focus {
     @apply focus-visible:ring-0 !important;
   }
+  body {
+    @apply bg-background text-foreground;
+  }
 }

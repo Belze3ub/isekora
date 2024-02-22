@@ -1,4 +1,4 @@
 export const navbarLinks = [
-  { label: 'Serie', route: '/series' },
-  { label: 'Filmy', route: '/movies' },
+  { label: 'Anime', route: '/anime' },
+  // { label: 'Filmy', route: '/movies' },
 ];

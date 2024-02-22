@@ -3,20 +3,21 @@ import { FaMagnifyingGlass } from 'react-icons/fa6';
 import { Input } from './ui/input';
 import { ChangeEvent, useEffect, useState } from 'react';
 import { IoClose } from 'react-icons/io5';
-import { useRouter } from 'next/navigation';
+import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 import { DialogClose } from './ui/dialog';
 
 const Search = () => {
   const router = useRouter();
+  const pathname = usePathname();
   const [query, setQuery] = useState('');
 
   useEffect(() => {
     if (query) {
-      router.push(`?search=${query}`);
+      router.push(`${pathname}?query=${query}`);
     } else {
-      router.push('/');
+      router.push(`${pathname}`);
     }
-  }, [query, router]);
+  }, [query, router, pathname]);
 
   const handleSearch = (e: ChangeEvent<HTMLInputElement>) => {
     setQuery(e.target.value);

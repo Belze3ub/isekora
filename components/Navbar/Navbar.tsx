@@ -8,8 +8,8 @@ import SearchTest from '../SearchModal';
 
 const Navbar = () => {
   return (
-    <header className="bg-primary ">
-      <nav className="flex-between card w-full gap-5 p-4 bg-primary-100">
+    <header className="bg-primary">
+      <nav className="flex-between card w-full gap-5 p-4 bg-primary-100 flex-wrap">
         <div className="flex items-center gap-5">
           <Link href="/" className="flex gap-2">
             <Image src={logo} width={30} height={30} alt="Isekora" />

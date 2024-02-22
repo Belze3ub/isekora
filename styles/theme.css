@@ -3,19 +3,19 @@
 @layer base {
   :root {
     --background: 210 40% 98%; /* light gray */
-    --foreground: 210 40% 10%; /* dark gray */
+    --foreground: 0 0% 100%; /* dark gray */
     --card: 210 40% 90%; /* slightly darker than background */
-    --card-foreground: 210 40% 10%; /* dark gray */
+    --card-foreground: 0 0% 100%; /* dark gray */
     --popover: 210 40% 90%; /* same as card */
-    --popover-foreground: 210 40% 10%; /* dark gray */
+    --popover-foreground: 0 0% 100%; /* dark gray */
     --primary: 150 92% 45%; /* #07BF67 */
-    --primary-foreground: 210 40% 10%; /* dark gray */
+    --primary-foreground: 0 0% 100%; /* dark gray */
     --secondary: 210 40% 70%; /* medium gray */
-    --secondary-foreground: 210 40% 10%; /* dark gray */
+    --secondary-foreground: 0 0% 100%; /* dark gray */
     --muted: 210 40% 70%; /* medium gray */
     --muted-foreground: 210 40% 10%; /* dark gray */
     --accent: 150 92% 45%; /* #07BF67 */
-    --accent-foreground: 210 40% 10%; /* dark gray */
+    --accent-foreground: 0 0% 100%; /* dark gray */
     --destructive: 0 84.2% 60.2%; /* red */
     --destructive-foreground: 210 40% 10%; /* dark gray */
     --border: 210 40% 70%; /* medium gray */

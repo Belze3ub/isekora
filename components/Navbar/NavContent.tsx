@@ -8,14 +8,12 @@ const NavContent = () => {
   return (
     <section className="flex gap-5">
       {navbarLinks.map((link) => {
-        const isActive =
-          (currentPath.includes(link.route) && link.route.length > 1) ||
-          currentPath === link.route;
+        const isActive = currentPath === link.route;
         return (
           <Link key={link.label} href={link.route}>
             <p
               className={`${
-                isActive ? 'base-bold text-primary' : 'base-medium'
+                isActive ? 'base-bold text-accent' : 'base-medium'
               }`}
             >
               {link.label}

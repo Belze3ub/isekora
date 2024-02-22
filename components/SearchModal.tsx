@@ -23,7 +23,6 @@ const SearchTest = () => {
         <DialogContent className="bg-transparent border-none flex gap-5 flex-col shadow-none max-h-full">
           <DialogHeader>
             <Search />
-            
           </DialogHeader>
           {query && (
             <div className="bg-secondary p-5 rounded-lg max-h-[80%] overflow-auto"></div>
