@@ -35,8 +35,6 @@ const AnimeListPage = async ({ searchParams }: Props) => {
       <PaginationComponent
         page={page}
         totalPages={totalPages}
-        genres={searchParams?.genres ? searchParams?.genres : ''}
-        format={searchParams?.format ? searchParams.format : ''}
       />
       <div className="grid gap-3 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 my-3">
         {animes.map((anime) => (
@@ -54,8 +52,6 @@ const AnimeListPage = async ({ searchParams }: Props) => {
       <PaginationComponent
         page={page}
         totalPages={totalPages}
-        genres={searchParams?.genres ? searchParams?.genres : ''}
-        format={searchParams?.format ? searchParams.format : ''}
       />
     </div>
   );

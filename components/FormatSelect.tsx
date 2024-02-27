@@ -1,5 +1,4 @@
 'use client';
-import { AppRouterInstance } from 'next/dist/shared/lib/app-router-context.shared-runtime';
 import {
   Select,
   SelectContent,
@@ -9,48 +8,16 @@ import {
   SelectTrigger,
   SelectValue,
 } from './ui/select';
-import { usePathname, useRouter, useSearchParams } from 'next/navigation';
-
-export interface Params {
-  [key: string]: string;
-}
-
-export const updateURLParams = (
-  router: AppRouterInstance,
-  pathname: string,
-  params: Params
-) => {
-  let url = pathname;
-  const paramKeys = Object.keys(params);
-  if (paramKeys.length > 0) {
-    const validParams = paramKeys.filter((key) => params[key]);
-    if (validParams.length > 0) {
-      url += '?';
-      url += validParams.map((key) => `${key}=${params[key]}`).join('&');
-    }
-  }
-  router.push(url);
-};
+import { usePathname, useRouter } from 'next/navigation';
+import { updateURLParams } from '@/lib/utils';
 
 const FormatSelect = ({ formats }: { formats: { format: string }[] }) => {
   const pathname = usePathname();
-  const searchParams = useSearchParams();
-  const genres = searchParams.get('genres') || '';
   const router = useRouter();
 
-  // const handleSelect = (format: string) => {
-  //   if (format === 'all') {
-  //     router.push(`${pathname}${genres ? '?genres=' + genres : ''}`);
-  //   } else {
-  //     router.push(
-  //       `${pathname}?${genres ? 'genres=' + genres + '&' : ''}format=${format}`
-  //     );
-  //   }
-  // };
-
   const handleSelect = (format: string) => {
-    const params = { genres, format: format === 'all' ? '' : format };
-    updateURLParams(router, pathname, params);
+    const newParam = { format: format === 'all' ? '' : format, page: '' };
+    updateURLParams(router, pathname, newParam);
   };
 
   return (

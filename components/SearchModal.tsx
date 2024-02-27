@@ -1,18 +1,19 @@
 'use client';
-import { useSearchParams } from 'next/navigation';
-import Search from './SearchBar';
+import SearchBar from './SearchBar';
 
+import { useState } from 'react';
+import { FaMagnifyingGlass } from 'react-icons/fa6';
+import SearchResults from './SearchResults';
 import {
   Dialog,
   DialogContent,
   DialogHeader,
-  DialogTrigger,
+  DialogTrigger
 } from './ui/dialog';
-import { FaMagnifyingGlass } from 'react-icons/fa6';
 
-const SearchTest = () => {
-  const searchParams = useSearchParams();
-  const query = searchParams.get('search');
+const SearchModal = () => {
+  const [searchQuery, setSearchQuery] = useState('');
+
   return (
     <div>
       <Dialog>
@@ -20,17 +21,21 @@ const SearchTest = () => {
           <FaMagnifyingGlass />
           <p className="hidden md:block">Szukaj...</p>
         </DialogTrigger>
-        <DialogContent className="bg-transparent border-none flex gap-5 flex-col shadow-none max-h-full">
+        <DialogContent
+          className="bg-transparent border-none flex flex-col shadow-none max-h-full"
+          onClick={() => setSearchQuery('')}
+        >
           <DialogHeader>
-            <Search />
+            <SearchBar
+              searchQuery={searchQuery}
+              setSearchQuery={setSearchQuery}
+            />
           </DialogHeader>
-          {query && (
-            <div className="bg-secondary p-5 rounded-lg max-h-[80%] overflow-auto"></div>
-          )}
+          {searchQuery && <SearchResults searchQuery={searchQuery} setSearchQuery={setSearchQuery} />}
         </DialogContent>
       </Dialog>
     </div>
   );
 };
 
-export default SearchTest;
+export default SearchModal;

@@ -29,7 +29,8 @@ export const fetchAnime = async (
   format: string,
   genres: string[],
   page: number,
-  pageSize: number
+  pageSize: number,
+  query?: string,
 ): Promise<Anime[]> => {
   let anime: Anime[] = [];
   try {
@@ -38,6 +39,7 @@ export const fetchAnime = async (
       genres,
       page,
       page_size: pageSize,
+      search_query: query ? query : '',
     });
     if (error) {
       console.error(`Error fetching data from anime table: ${error.message}`);

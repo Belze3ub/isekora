@@ -1,32 +1,30 @@
 'use client';
+import { ChangeEvent } from 'react';
 import { FaMagnifyingGlass } from 'react-icons/fa6';
-import { Input } from './ui/input';
-import { ChangeEvent, useEffect, useState } from 'react';
 import { IoClose } from 'react-icons/io5';
-import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 import { DialogClose } from './ui/dialog';
+import { Input } from './ui/input';
 
-const Search = () => {
-  const router = useRouter();
-  const pathname = usePathname();
-  const [query, setQuery] = useState('');
+interface Props {
+  searchQuery: string;
+  setSearchQuery: (searchQuery: string) => void;
+}
 
-  useEffect(() => {
-    if (query) {
-      router.push(`${pathname}?query=${query}`);
-    } else {
-      router.push(`${pathname}`);
-    }
-  }, [query, router, pathname]);
-
+const SearchBar = ({ searchQuery, setSearchQuery }: Props) => {
   const handleSearch = (e: ChangeEvent<HTMLInputElement>) => {
-    setQuery(e.target.value);
+    const value = e.target.value;
+    setSearchQuery(value);
   };
+
+  const clearQuery = () => {
+    setSearchQuery('');
+  };
+
   return (
     <div className="relative items-center gap-2 flex">
       <div className="absolute left-0 flex">
-        {query ? (
-          <div className="p-2 cursor-pointer" onClick={() => setQuery('')}>
+        {searchQuery ? (
+          <div className="p-2 cursor-pointer" onClick={clearQuery}>
             <IoClose className="text-accent" />
           </div>
         ) : (
@@ -38,10 +36,10 @@ const Search = () => {
       <Input
         placeholder="Szukaj..."
         className="pl-8 no-focus border-none bg-secondary"
-        value={query}
+        value={searchQuery}
         onChange={(e) => handleSearch(e)}
       />
-      <div className="absolute right-0 flex" onClick={() => setQuery('')}>
+      <div className="absolute right-0 flex" onClick={clearQuery}>
         <DialogClose className="p-2">
           <IoClose />
         </DialogClose>
@@ -50,4 +48,4 @@ const Search = () => {
   );
 };
 
-export default Search;
+export default SearchBar;

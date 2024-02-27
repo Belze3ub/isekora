@@ -1,4 +1,5 @@
 import { type ClassValue, clsx } from "clsx"
+import { AppRouterInstance } from "next/dist/shared/lib/app-router-context.shared-runtime";
 import { twMerge } from "tailwind-merge"
 
 export function cn(...inputs: ClassValue[]) {
@@ -45,4 +46,28 @@ export const seasonTranslations: {[key: string]: string} = {
 export const statusTranslations: { [key: string]: string } = {
   releasing: 'Wychodzi',
   finished: 'Zakończone',
+};
+
+export interface Param {
+  [key: string]: string;
+}
+
+export const updateURLParams = (
+  router: AppRouterInstance,
+  pathname: string,
+  newParam: Param
+) => {
+  const searchParams = new URLSearchParams(window.location.search);
+  for (const [key, value] of Object.entries(newParam)) {
+    if (value) {
+      searchParams.set(key, value);
+    } else {
+      searchParams.delete(key);
+    }
+  }
+  const queryString = searchParams.toString();
+
+  const url = queryString ? `${pathname}?${queryString}` : pathname;
+
+  router.push(url);
 };

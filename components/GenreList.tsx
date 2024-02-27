@@ -4,34 +4,18 @@ import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 import { useEffect } from 'react';
 import { Toggle } from './ui/toggle';
 import { useSelectedGenres } from '@/contexts/genre';
-import { Params, updateURLParams } from './FormatSelect';
+import { updateURLParams } from '@/lib/utils';
 
 const GenreList = ({ genres }: { genres: Genre[] }) => {
   const router = useRouter();
   const pathname = usePathname();
-  const searchParams = useSearchParams();
-  const format = searchParams.get('format') || '';
-  const {selectedGenres, setSelectedGenres} = useSelectedGenres();
-  // useEffect(() => {
-  //   if (selectedGenres.length === 0) {
-  //     router.push(`${pathname}${format ? '?format=' + format : ''}`);
-  //   } else {
-  //     router.push(`${pathname}?genres=${selectedGenres.join(',')}`);
-  //     router.push(
-  //       `${pathname}?genres=${selectedGenres}${
-  //         format ? '&format=' + format : ''
-  //       }`
-  //     );
-  //   }
-
-  // }, [selectedGenres, router, pathname, format]);
-
-  useEffect(() => {
-    const params: Params = { genres: selectedGenres.join(','), format };
-    updateURLParams(router, pathname, params);
-  }, [selectedGenres, router, pathname, format]);
-
+  const { selectedGenres, setSelectedGenres } = useSelectedGenres();
   
+  useEffect(() => {
+    const newParam = { genres: selectedGenres.join(','), page: '' };
+    updateURLParams(router, pathname, newParam);
+  }, [selectedGenres, router, pathname]);
+
   const handleToggle = (genre: string) => {
     if (selectedGenres.includes(genre)) {
       const newSelectedGenres = selectedGenres.filter(

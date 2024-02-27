@@ -267,6 +267,7 @@ export type Database = {
               genres: string[]
               page: number
               page_size: number
+              search_query?: string
             }
             Returns: {
               anime_id: number
