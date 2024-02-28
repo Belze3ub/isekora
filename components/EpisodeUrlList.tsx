@@ -31,7 +31,8 @@ const EpisodeUrlList = ({ slug, episodeNumber, players }: Props) => {
                     width={30}
                     height={30}
                     alt="Translator Name"
-                    className='mr-1'
+                    className='mr-1 rounded-full'
+                    
                   />
                   {player.translator_names[i]}
                 </Button>

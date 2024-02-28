@@ -27,12 +27,18 @@ export default async function Home() {
         <h2 className="h1-bold w-full flex justify-center items-center gap-2 mb-2">
           Ostatnio dodane
         </h2>
-        <div className="hidden lg:block">
-          <NewestEpisodesCarousel episodes={episodes} />
-        </div>
-        <div className="lg:hidden">
+        {episodes.length > 12 ? (
+          <>
+            <div className="hidden lg:block">
+              <NewestEpisodesCarousel episodes={episodes} />
+            </div>
+            <div className="lg:hidden">
+              <EpisodeCarousel episodes={episodes} />
+            </div>
+          </>
+        ) : (
           <EpisodeCarousel episodes={episodes} />
-        </div>
+        )}
       </div>
       <div>
         <h2 className="h1-bold w-full flex justify-center items-center gap-2 mb-2">

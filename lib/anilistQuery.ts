@@ -1,10 +1,11 @@
-import { Anilist, Query } from "@/database/types/types";
+import { Anilist } from "@/database/types/types";
 import client from "./apolloClient";
 import { gql } from "@apollo/client";
 
 const GET_ANIME_DETAILS = `
   query Anilist ($id: Int, $type: MediaType = ANIME) {
-    Media(idMal: $id, type: $type) {
+    Media(id: $id, type: $type) {
+      id
       idMal
       title {
         romaji
@@ -84,17 +85,17 @@ const GET_ANIME_DETAILS = `
   }
 `;
 
-const fetchAnimeInfo = async (malId: number): Promise<Anilist | null> => {
+const fetchAnimeInfo = async (id: number): Promise<Anilist | null> => {
   try {
     const {data} = await client.query({
       query: gql(GET_ANIME_DETAILS),
-      variables: {id: malId}
+      variables: {id}
     })
     return data.Media
   } catch (error) {
     if (error instanceof Error) {
       console.error(
-        `Error fetching data for mal_id: ${malId}: ${error.message}`
+        `Error fetching data for anilist_id: ${id}: ${error.message}`
       );
     }
     return null;

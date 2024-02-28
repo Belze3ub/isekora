@@ -24,7 +24,7 @@ const AnimeListPage = async ({ searchParams }: Props) => {
   const format = searchParams?.format ? searchParams.format : '';
   let animes: Anime[] = [];
 
-  animes = await fetchAnime(format, genres, page, pageSize);
+  animes = await fetchAnime('', pageSize, format, genres, page);
   const totalPages = await fetchTotalPages(format, genres, pageSize);
   const allGenres = await fetchGenres();
   const formats = await fetchAnimeFormats();

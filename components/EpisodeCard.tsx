@@ -13,12 +13,12 @@ interface EpisodeProps {
 }
 
 const EpisodeCard = ({
-  episode: { episode_number, episode_thumbnail, added_date },
+  episode: { episode_number, episode_thumbnail, create_date },
   titleSlug,
   title_english,
 }: EpisodeProps) => {
   const [imgSrc, setImgSrc] = useState(episode_thumbnail);
-  const date = added_date && timestampToDate(added_date);
+  const date = create_date && timestampToDate(create_date);
   return (
     <Link href={`/anime/${titleSlug}/${episode_number}`}>
       <div className="group bg-primary overflow-hidden rounded-xl transition-all hover:bg-secondary">

@@ -11,14 +11,14 @@ import CoverImage from './CoverImage';
 
 interface Props {
   searchQuery: string;
-  setSearchQuery: (searchQuery: string) =>  void;
+  setSearchQuery: (searchQuery: string) => void;
 }
 
 const SearchResults = ({ searchQuery, setSearchQuery }: Props) => {
   const [anime, setAnime] = useState<Anime[]>([]);
   const fetchData = useCallback(
     _.debounce(async (searchQuery) => {
-      const anime = await fetchAnime('', [], 1, 10, searchQuery);
+      const anime = await fetchAnime(searchQuery, 5);
       setAnime(anime);
     }, 1000),
     []

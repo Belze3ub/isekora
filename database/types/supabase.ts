@@ -11,14 +11,14 @@ export type Database = {
     Tables: {
       anime: {
         Row: {
+          anilist_id: number
           anime_id: number
           cover_extra_large_image: string | null
-          cover_large_image: string | null
           description: string | null
           duration: number | null
           episodes: number | null
           format: string | null
-          mal_id: number
+          mal_id: number | null
           season: string | null
           season_year: string | null
           title_english: string | null
@@ -26,14 +26,14 @@ export type Database = {
           title_romaji_slug: string | null
         }
         Insert: {
+          anilist_id: number
           anime_id?: number
           cover_extra_large_image?: string | null
-          cover_large_image?: string | null
           description?: string | null
           duration?: number | null
           episodes?: number | null
           format?: string | null
-          mal_id: number
+          mal_id?: number | null
           season?: string | null
           season_year?: string | null
           title_english?: string | null
@@ -41,14 +41,14 @@ export type Database = {
           title_romaji_slug?: string | null
         }
         Update: {
+          anilist_id?: number
           anime_id?: number
           cover_extra_large_image?: string | null
-          cover_large_image?: string | null
           description?: string | null
           duration?: number | null
           episodes?: number | null
           format?: string | null
-          mal_id?: number
+          mal_id?: number | null
           season?: string | null
           season_year?: string | null
           title_english?: string | null
@@ -72,6 +72,13 @@ export type Database = {
         }
         Relationships: [
           {
+            foreignKeyName: "anime_genre_anime_id_fkey"
+            columns: ["anime_id"]
+            isOneToOne: false
+            referencedRelation: "anime"
+            referencedColumns: ["anime_id"]
+          },
+          {
             foreignKeyName: "anime_genre_genre_id_fkey"
             columns: ["genre_id"]
             isOneToOne: false
@@ -80,62 +87,32 @@ export type Database = {
           }
         ]
       }
-      anime_test: {
-        Row: {
-          anilist_id: number
-          anime_id: number
-          cover_extra_large_image: string
-          cover_large_image: string
-          season: string | null
-          season_year: string | null
-          title_english: string | null
-          title_romaji: string
-        }
-        Insert: {
-          anilist_id: number
-          anime_id?: number
-          cover_extra_large_image: string
-          cover_large_image: string
-          season?: string | null
-          season_year?: string | null
-          title_english?: string | null
-          title_romaji: string
-        }
-        Update: {
-          anilist_id?: number
-          anime_id?: number
-          cover_extra_large_image?: string
-          cover_large_image?: string
-          season?: string | null
-          season_year?: string | null
-          title_english?: string | null
-          title_romaji?: string
-        }
-        Relationships: []
-      }
       episode: {
         Row: {
-          added_date: string | null
           anime_id: number | null
+          create_date: string | null
           episode_id: number
           episode_number: string
           episode_thumbnail: string | null
+          update_date: string | null
           views: number | null
         }
         Insert: {
-          added_date?: string | null
           anime_id?: number | null
+          create_date?: string | null
           episode_id?: number
           episode_number: string
           episode_thumbnail?: string | null
+          update_date?: string | null
           views?: number | null
         }
         Update: {
-          added_date?: string | null
           anime_id?: number | null
+          create_date?: string | null
           episode_id?: number
           episode_number?: string
           episode_thumbnail?: string | null
+          update_date?: string | null
           views?: number | null
         }
         Relationships: [
@@ -245,14 +222,14 @@ export type Database = {
           name: string
         }
         Returns: {
+          anilist_id: number
           anime_id: number
           cover_extra_large_image: string | null
-          cover_large_image: string | null
           description: string | null
           duration: number | null
           episodes: number | null
           format: string | null
-          mal_id: number
+          mal_id: number | null
           season: string | null
           season_year: string | null
           title_english: string | null
@@ -260,66 +237,23 @@ export type Database = {
           title_romaji_slug: string | null
         }[]
       }
-      fetch_animes:
-        | {
-            Args: {
-              anime_format: string
-              genres: string[]
-              page: number
-              page_size: number
-              search_query?: string
-            }
-            Returns: {
-              anime_id: number
-              cover_extra_large_image: string | null
-              cover_large_image: string | null
-              description: string | null
-              duration: number | null
-              episodes: number | null
-              format: string | null
-              mal_id: number
-              season: string | null
-              season_year: string | null
-              title_english: string | null
-              title_romaji: string | null
-              title_romaji_slug: string | null
-            }[]
-          }
-        | {
-            Args: {
-              genres: string[]
-              page: number
-              page_size: number
-            }
-            Returns: {
-              anime_id: number
-              cover_extra_large_image: string | null
-              cover_large_image: string | null
-              description: string | null
-              duration: number | null
-              episodes: number | null
-              format: string | null
-              mal_id: number
-              season: string | null
-              season_year: string | null
-              title_english: string | null
-              title_romaji: string | null
-              title_romaji_slug: string | null
-            }[]
-          }
-      fetch_animes_by_genre: {
+      fetch_animes: {
         Args: {
-          genre_name: string
+          search_query?: string
+          page_size?: number
+          anime_format?: string
+          genres?: string[]
+          page?: number
         }
         Returns: {
+          anilist_id: number
           anime_id: number
           cover_extra_large_image: string | null
-          cover_large_image: string | null
           description: string | null
           duration: number | null
           episodes: number | null
           format: string | null
-          mal_id: number
+          mal_id: number | null
           season: string | null
           season_year: string | null
           title_english: string | null
@@ -332,11 +266,12 @@ export type Database = {
           slug: string
         }
         Returns: {
-          added_date: string | null
           anime_id: number | null
+          create_date: string | null
           episode_id: number
           episode_number: string
           episode_thumbnail: string | null
+          update_date: string | null
           views: number | null
         }[]
       }
@@ -346,34 +281,19 @@ export type Database = {
           genres: string[]
         }
         Returns: {
+          anilist_id: number
           anime_id: number
           cover_extra_large_image: string | null
-          cover_large_image: string | null
           description: string | null
           duration: number | null
           episodes: number | null
           format: string | null
-          mal_id: number
+          mal_id: number | null
           season: string | null
           season_year: string | null
           title_english: string | null
           title_romaji: string | null
           title_romaji_slug: string | null
-        }[]
-      }
-      fetch_urls_by_slug_and_episode_number: {
-        Args: {
-          slug: string
-          episode_num: string
-        }
-        Returns: {
-          url_id: number
-          episode_id: number
-          url: string
-          player_name: string
-          translator_episode_link: string
-          translator_id: number
-          translator_logo: string
         }[]
       }
       fetch_urls_by_slug_and_episode_number_test: {
@@ -401,18 +321,19 @@ export type Database = {
         Returns: {
           anime_id: number
           cover_extra_large_image: string
-          cover_large_image: string
           description: string
           duration: number
           episodes: number
           format: string
           mal_id: number
+          anilist_id: number
           season: string
           season_year: string
           title_english: string
           title_romaji: string
           title_romaji_slug: string
-          added_date: string
+          create_date: string
+          update_date: string
           episode_id: number
           episode_number: string
           episode_thumbnail: string
@@ -427,18 +348,19 @@ export type Database = {
         Returns: {
           anime_id: number
           cover_extra_large_image: string
-          cover_large_image: string
           description: string
           duration: number
           episodes: number
           format: string
           mal_id: number
+          anilist_id: number
           season: string
           season_year: string
           title_english: string
           title_romaji: string
           title_romaji_slug: string
-          added_date: string
+          update_date: string
+          create_date: string
           episode_id: number
           episode_number: string
           episode_thumbnail: string

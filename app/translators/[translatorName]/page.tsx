@@ -25,7 +25,8 @@ const TranslatorDetailPage = async ({
   const translatorAnime = await fetchAnimeByTranslatorName(translator_name);
   const animeCount = translatorAnime.length;
   const newestEpisodes = await fetchNewestEpisodesFromTranslator(
-    translator_name, 10
+    translator_name,
+    10
   );
   if (!translator) notFound();
   return (
@@ -77,39 +78,51 @@ const TranslatorDetailPage = async ({
               </div>
               <h1 className="h1-bold">{translator?.translator_name}</h1>
               <h3 className="h3-semibold my-5">Opis</h3>
-              <p
-                dangerouslySetInnerHTML={{
-                  __html: `${translator?.translator_info}`,
-                }}
-              />
+              {translator.translator_info ? (
+                <p
+                  dangerouslySetInnerHTML={{
+                    __html: `${translator?.translator_info}`,
+                  }}
+                />
+              ) : (
+                <p className="text-center">Brak Opisu</p>
+              )}
             </div>
             <div>
-              <h3>Najnowsze Odcinki</h3>
-              <NewestEpisodesFromTranslator newestEpisodes={newestEpisodes} />
+              <h3 className="h3-bold">Najnowsze Odcinki</h3>
+              {newestEpisodes.length !== 0 ? (
+                <NewestEpisodesFromTranslator newestEpisodes={newestEpisodes} />
+              ) : (
+                <p className="text-center">Brak odcinków</p>
+              )}
             </div>
             <h3 className="h3-bold">Wszystkie Odcinki</h3>
-            <div className="grid gap-3 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 my-3">
-              {translatorAnime.map((anime) => (
-                <Link
-                  href={`/anime/${anime.title_romaji_slug}`}
-                  key={anime.anime_id}
-                >
-                  <CoverImage
-                    src={anime.cover_extra_large_image || placeholder}
-                    alt={
-                      anime.title_romaji ||
-                      anime.title_english ||
-                      'Title Unknown'
-                    }
-                    title={
-                      anime.title_romaji ||
-                      anime.title_english ||
-                      'Title Unknown'
-                    }
-                  />
-                </Link>
-              ))}
-            </div>
+            {translatorAnime.length !== 0 ? (
+              <div className="grid gap-3 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 my-3">
+                {translatorAnime.map((anime) => (
+                  <Link
+                    href={`/anime/${anime.title_romaji_slug}`}
+                    key={anime.anime_id}
+                  >
+                    <CoverImage
+                      src={anime.cover_extra_large_image || placeholder}
+                      alt={
+                        anime.title_romaji ||
+                        anime.title_english ||
+                        'Title Unknown'
+                      }
+                      title={
+                        anime.title_romaji ||
+                        anime.title_english ||
+                        'Title Unknown'
+                      }
+                    />
+                  </Link>
+                ))}
+              </div>
+            ) : (
+              <p className="text-center">Brak odcinków</p>
+            )}
           </div>
         </div>
       </div>

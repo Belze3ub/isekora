@@ -3,7 +3,7 @@ import BackgroundImage from '@/components/BackgroundImage';
 import Breadcrumbs from '@/components/Breadcrumbs';
 import CoverImage from '@/components/CoverImage';
 import { fetchAnimeBySlug } from '@/database/anime';
-import AnimeInfo from '@/lib/anilistQuery';
+import fetchAnimeInfo from '@/lib/anilistQuery';
 import { notFound } from 'next/navigation';
 
 interface Props {
@@ -15,7 +15,7 @@ interface Props {
 
 const AnimePageLayout = async ({ children, params: { slug } }: Props) => {
   const dbAnime = await fetchAnimeBySlug(slug);
-  const anime = dbAnime && (await AnimeInfo(dbAnime.mal_id));
+  const anime = dbAnime && (await fetchAnimeInfo(dbAnime.anilist_id));
   if (!anime) notFound();
   return (
     <>

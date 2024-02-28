@@ -17,12 +17,14 @@ const NewestEpisodesFromTranslator = ({newestEpisodes}: Props) => {
       className="w-full relative"
     >
       <CarouselContent className="-ml-2">
-        {newestEpisodes.map((episode) => (
+        {newestEpisodes.map((episode, index) => (
           <CarouselItem
-            key={episode.anime_id}
+            key={index}
             className="basis-1/2 pl-2 sm:basis-1/3 md:basis-1/5 lg:basis-1/6 xl:basis-1/7"
           >
-            <Link href={`/anime/${episode.title_romaji_slug}/${episode.episode_number}`}>
+            <Link
+              href={`/anime/${episode.title_romaji_slug}/${episode.episode_number}`}
+            >
               <CoverImage
                 src={episode.cover_extra_large_image || placeholder}
                 alt={episode.title_romaji || 'Unknown title'}

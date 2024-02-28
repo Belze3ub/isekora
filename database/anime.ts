@@ -26,11 +26,11 @@ export const fetchTotalPages = async (
 };
 
 export const fetchAnime = async (
-  format: string,
-  genres: string[],
-  page: number,
-  pageSize: number,
-  query?: string,
+  searchQuery?: string,
+  pageSize?: number,
+  format?: string,
+  genres?: string[],
+  page?: number,
 ): Promise<Anime[]> => {
   let anime: Anime[] = [];
   try {
@@ -39,7 +39,8 @@ export const fetchAnime = async (
       genres,
       page,
       page_size: pageSize,
-      search_query: query ? query : '',
+      // search_query: query ? query : '',
+      search_query: searchQuery,
     });
     if (error) {
       console.error(`Error fetching data from anime table: ${error.message}`);

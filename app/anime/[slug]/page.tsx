@@ -14,7 +14,7 @@ interface Props {
 
 const AnimeDetailPage = async ({ params: { slug } }: Props) => {
   const dbAnime = await fetchAnimeBySlug(slug);
-  const anime = dbAnime && (await fetchAnimeInfo(dbAnime.mal_id));
+  const anime = dbAnime && (await fetchAnimeInfo(dbAnime.anilist_id));
   const episodes = await fetchEpisodesBySlug(slug);
   if (!anime) notFound();
   return (
