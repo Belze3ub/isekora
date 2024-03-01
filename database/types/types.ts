@@ -1,4 +1,4 @@
-import { Tables } from "./supabase";
+import { Tables } from './supabase';
 
 export type Anime = Tables<'anime'>;
 export type Episode = Tables<'episode'>;
@@ -20,13 +20,10 @@ export type Anilist = {
   title: {
     romaji: string;
     english: string;
-    native: string;
   };
   coverImage: {
     extraLarge: string;
-    large: string;
     medium: string;
-    color: string;
   };
   bannerImage: string;
   description: string;
@@ -68,23 +65,12 @@ export type Anilist = {
         title: {
           romaji: string;
           english: string;
-          native: string;
         };
       };
     }[];
   };
   relations: {
-    edges: {
-      node: {
-        title: {
-          romaji: string;
-          english: string;
-          native: string;
-        };
-        type: string;
-      };
-      relationType: string;
-    };
+    edges: Edge[];
   };
   nextAiringEpisode: {
     airingAt: number;
@@ -92,6 +78,24 @@ export type Anilist = {
     episode: number;
   };
 };
+
+export type Edge = {
+  relationType: string;
+  node: {
+    title: {
+      romaji: string;
+      english: string;
+    };
+    id: number;
+    coverImage: {
+      extraLarge: string;
+      medium: string;
+    };
+    type: string;
+  };
+};
+
+export type RelatedAnime = Edge & { title_romaji_slug: string };
 
 export type Query = {
   Media: Anilist;

@@ -8,12 +8,14 @@ import {
   SelectTrigger,
   SelectValue,
 } from './ui/select';
-import { usePathname, useRouter } from 'next/navigation';
+import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 import { updateURLParams } from '@/lib/utils';
 
 const FormatSelect = ({ formats }: { formats: { format: string }[] }) => {
   const pathname = usePathname();
   const router = useRouter();
+  const searchParams = useSearchParams();
+  const format = searchParams.get('format') || '';
 
   const handleSelect = (format: string) => {
     const newParam = { format: format === 'all' ? '' : format, page: '' };
@@ -21,7 +23,7 @@ const FormatSelect = ({ formats }: { formats: { format: string }[] }) => {
   };
 
   return (
-    <Select onValueChange={(format) => handleSelect(format)}>
+    <Select onValueChange={(format) => handleSelect(format)} value={format}>
       <SelectTrigger className="w-[180px]">
         <SelectValue placeholder="Rodzaj" />
       </SelectTrigger>

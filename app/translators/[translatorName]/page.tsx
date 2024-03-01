@@ -96,7 +96,7 @@ const TranslatorDetailPage = async ({
                 <p className="text-center">Brak odcinków</p>
               )}
             </div>
-            <h3 className="h3-bold">Wszystkie Odcinki</h3>
+            <h3 className="h3-bold">Wszystkie anime</h3>
             {translatorAnime.length !== 0 ? (
               <div className="grid gap-3 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 my-3">
                 {translatorAnime.map((anime) => (

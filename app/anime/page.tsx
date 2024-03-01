@@ -1,7 +1,11 @@
 import CoverImage from '@/components/CoverImage';
 import GenreList from '@/components/GenreList';
 import PaginationComponent from '@/components/PaginationComponent';
-import { fetchAnime, fetchAnimeFormats, fetchTotalPages } from '@/database/anime';
+import {
+  fetchAnime,
+  fetchAnimeFormats,
+  fetchTotalPages,
+} from '@/database/anime';
 import { fetchGenres } from '@/database/genre';
 import { Anime } from '@/database/types/types';
 import Link from 'next/link';
@@ -32,27 +36,30 @@ const AnimeListPage = async ({ searchParams }: Props) => {
     <div className="container">
       <GenreList genres={allGenres} />
       <FormatSelect formats={formats} />
-      <PaginationComponent
-        page={page}
-        totalPages={totalPages}
-      />
-      <div className="grid gap-3 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 my-3">
-        {animes.map((anime) => (
-          <Link href={`/anime/${anime.title_romaji_slug}`} key={anime.anime_id}>
-            <CoverImage
-              src={anime.cover_extra_large_image || placeholder}
-              alt={anime.title_romaji || anime.title_english || 'Title Unknown'}
-              title={
-                anime.title_romaji || anime.title_english || 'Title Unknown'
-              }
-            />
-          </Link>
-        ))}
-      </div>
-      <PaginationComponent
-        page={page}
-        totalPages={totalPages}
-      />
+      {animes.length !== 0 ? (
+        <>
+          <PaginationComponent page={page} totalPages={totalPages} />
+          <div className="grid gap-3 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 my-3">
+            {animes.map((anime) => (
+              <Link
+                href={`/anime/${anime.title_romaji_slug}`}
+                key={anime.anime_id}
+              >
+                <CoverImage
+                  src={anime.cover_extra_large_image || placeholder}
+                  alt={
+                    anime.title_romaji || anime.title_english || 'Title Unknown'
+                  }
+                  title={
+                    anime.title_romaji || anime.title_english || 'Title Unknown'
+                  }
+                />
+              </Link>
+            ))}
+          </div>
+          <PaginationComponent page={page} totalPages={totalPages} />
+        </>
+      ) : <p className='text-center mt-5'>Nie znaleziono</p>}
     </div>
   );
 };

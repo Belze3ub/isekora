@@ -27,14 +27,14 @@ const EpisodeUrlList = ({ slug, episodeNumber, players }: Props) => {
               {player.urls.map((url, i) => (
                 <Button key={url} onClick={() => setUrl(url)}>
                   <Image
-                    src={player.translator_logos[i]}
+                    src={player.translator_logos[i] || ''}
                     width={30}
                     height={30}
                     alt="Translator Name"
                     className='mr-1 rounded-full'
                     
                   />
-                  {player.translator_names[i]}
+                  {player.translator_names[i] || 'Nieznany'}
                 </Button>
               ))}
             </div>

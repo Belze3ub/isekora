@@ -3,12 +3,13 @@ CREATE TABLE anime (
     mal_id INTEGER UNIQUE, 
     anilist_id INTEGER UNIQUE NOT NULL, 
     title_romaji TEXT,
-    title_romaji_slug TEXT,
+    title_romaji_slug TEXT NOT NULL,
     title_english TEXT,
     description TEXT,
     episodes INT,
     duration INT,
     cover_extra_large_image TEXT,
+    cover_medium_image TEXT,
     season TEXT,
     season_year TEXT,
     format TEXT
@@ -139,6 +140,7 @@ CREATE OR REPLACE FUNCTION get_newest_episodes(_limit INT)
 RETURNS TABLE(
   anime_id int,
   cover_extra_large_image text,
+  cover_medium_image text,
   description text,
   duration int,
   episodes int,
@@ -162,6 +164,7 @@ BEGIN
   SELECT 
     a.anime_id,
     a.cover_extra_large_image,
+    a.cover_medium_image,
     a.description,
     a.duration,
     a.episodes,
@@ -190,6 +193,7 @@ CREATE OR REPLACE FUNCTION get_newest_episodes_from_translator(t_name text, _lim
 RETURNS TABLE(
   anime_id int,
   cover_extra_large_image text,
+  cover_medium_image text,
   description text,
   duration int,
   episodes int,
@@ -213,6 +217,7 @@ BEGIN
   SELECT 
     a.anime_id,
     a.cover_extra_large_image,
+    a.cover_medium_image,
     a.description,
     a.duration,
     a.episodes,

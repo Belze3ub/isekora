@@ -38,9 +38,9 @@ export function timestampToDate(timestamp: string) {
 
 export const seasonTranslations: {[key: string]: string} = {
   winter: 'Zima',
-  sprint: 'Wiosna',
+  spring: 'Wiosna',
   summer: 'Lato',
-  autumn: 'Jesień'
+  fall: 'Jesień'
 }
 
 export const statusTranslations: { [key: string]: string } = {

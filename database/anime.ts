@@ -108,6 +108,31 @@ export const fetchAnimeBySlug = async (slug: string): Promise<Anime | null> => {
   return anime;
 };
 
+export const fetchAnimeByAnilistId = async (id: number): Promise<Anime | null> => {
+  let anime: Anime | null = null;
+  try {
+    const { data, error } = await supabase
+      .from('anime')
+      .select('*')
+      .eq('anilist_id', id)
+      .single();
+    if (error) {
+      console.error(
+        `Error fetching data from anime table for anilist_id: ${id} - ${error.message}`
+      );
+    } else {
+      anime = data;
+    }
+  } catch (error) {
+    if (error instanceof Error) {
+      console.error(
+        `Error fetching data from anime table for anilist_id: ${id} - ${error.message}`
+      );
+    }
+  }
+  return anime;
+};
+
 export const fetchAnimeFormats = async (): Promise<{format: string}[]> => {
   let formats: {format: string}[] = [];
   try {

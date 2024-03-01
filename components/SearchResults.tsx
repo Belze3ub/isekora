@@ -16,16 +16,23 @@ interface Props {
 
 const SearchResults = ({ searchQuery, setSearchQuery }: Props) => {
   const [anime, setAnime] = useState<Anime[]>([]);
+  const [isSearching, setIsSearching] = useState(false);
   const fetchData = useCallback(
     _.debounce(async (searchQuery) => {
       const anime = await fetchAnime(searchQuery, 5);
       setAnime(anime);
+      setIsSearching(false);
     }, 1000),
     []
   );
 
   useEffect(() => {
-    fetchData(searchQuery);
+    if (searchQuery) {
+      setIsSearching(true);
+      fetchData(searchQuery);
+    } else {
+      setIsSearching(false)
+    }
   }, [searchQuery, fetchData]);
 
   return (
@@ -39,7 +46,7 @@ const SearchResults = ({ searchQuery, setSearchQuery }: Props) => {
           <DialogClose className="flex gap-5 py-2 px-5 items-center border-b hover:bg-secondary w-full">
             <div className="min-w-[3rem] min-h-[3rem]">
               <CoverImage
-                src={a.cover_extra_large_image || placeholder}
+                src={a.cover_medium_image || placeholder}
                 alt={a.title_romaji || 'Unknown title'}
                 // ratioClass="aspect-square"
               />
@@ -53,7 +60,16 @@ const SearchResults = ({ searchQuery, setSearchQuery }: Props) => {
           </DialogClose>
         </Link>
       ))}
-      {anime.length === 0 && searchQuery ? 'Nothing found' : ''}
+      {/* {anime.length === 0 && searchQuery ? 'Nic nie znaleziono' : ''} */}
+      {anime.length === 0 && (
+        <p className="text-center p-2">
+          {isSearching
+            ? 'Wyszukiwanie...'
+            : searchQuery && anime.length === 0
+            ? 'Nic nie znaleziono'
+            : ''}
+        </p>
+      )}
     </div>
   );
 };
