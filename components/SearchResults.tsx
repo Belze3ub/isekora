@@ -31,7 +31,7 @@ const SearchResults = ({ searchQuery, setSearchQuery }: Props) => {
       setIsSearching(true);
       fetchData(searchQuery);
     } else {
-      setIsSearching(false)
+      setIsSearching(false);
     }
   }, [searchQuery, fetchData]);
 
@@ -43,24 +43,22 @@ const SearchResults = ({ searchQuery, setSearchQuery }: Props) => {
           key={a.anime_id}
           onClick={() => setSearchQuery('')}
         >
-          <DialogClose className="flex gap-5 py-2 px-5 items-center border-b hover:bg-secondary w-full">
+          <DialogClose className="flex gap-5 py-2 px-5 items-center hover:bg-secondary w-full">
             <div className="min-w-[3rem] min-h-[3rem]">
               <CoverImage
                 src={a.cover_medium_image || placeholder}
                 alt={a.title_romaji || 'Unknown title'}
-                // ratioClass="aspect-square"
               />
             </div>
-            <div className="flex flex-col items-start">
-              <h4 className="font-bold">{a.title_romaji}</h4>
-              <h5>
+            <div className="overflow-hidden">
+              <h4 className="font-bold text-left line-clamp-2">{a.title_romaji}</h4>
+              <h5 className="text-left truncate">
                 {a.episodes} {a.episodes === 1 ? 'odcinek' : 'odcinków'}
               </h5>
             </div>
           </DialogClose>
         </Link>
       ))}
-      {/* {anime.length === 0 && searchQuery ? 'Nic nie znaleziono' : ''} */}
       {anime.length === 0 && (
         <p className="text-center p-2">
           {isSearching
