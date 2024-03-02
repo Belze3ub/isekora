@@ -1,36 +1,34 @@
-'use client'
-import { fetchEpisodesBySlug } from "@/database/episode";
-import Link from "next/link";
-import { Button } from "./ui/button";
-import { FaRegListAlt } from "react-icons/fa";
-import { MdArrowRight, MdArrowLeft } from 'react-icons/md';
+'use client';
+import { Episode } from '@/database/types/types';
+import Link from 'next/link';
 import { CgArrowTopRightR } from 'react-icons/cg';
-import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "./ui/tooltip";
-import { Episode } from "@/database/types/types";
-import { useEffect, useState } from "react";
+import { FaRegListAlt } from 'react-icons/fa';
+import { MdArrowLeft, MdArrowRight } from 'react-icons/md';
+import { Button } from './ui/button';
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from './ui/tooltip';
 
 interface Props {
   slug: string;
   episodeNumber: string;
   url: string;
+  episodes: Episode[];
 }
 
-const EpisodeNav = ({ slug, episodeNumber, url }: Props) => {
-  const [episodes, setEpisodes] = useState<Episode[]>([])
-  useEffect(() => {
-    const fetchEpisodes = async () => {
-      const episodes = await fetchEpisodesBySlug(slug);
-      setEpisodes(episodes);
-    }
-    fetchEpisodes();
-  }, [slug]);
+const EpisodeNav = ({ slug, episodeNumber, url, episodes }: Props) => {
   const episodeArr = episodes.map((episode) => Number(episode.episode_number));
   episodeArr.sort((a, b) => a - b);
   const currentEpisodeIndex = episodeArr.indexOf(Number(episodeNumber));
   let previousEpisode = null;
   let nextEpisode = null;
-  if (currentEpisodeIndex > 0) previousEpisode = episodeArr[currentEpisodeIndex - 1];
-  if (currentEpisodeIndex < episodeArr.length - 1) nextEpisode = episodeArr[currentEpisodeIndex + 1];
+  if (currentEpisodeIndex > 0)
+    previousEpisode = episodeArr[currentEpisodeIndex - 1];
+  if (currentEpisodeIndex < episodeArr.length - 1)
+    nextEpisode = episodeArr[currentEpisodeIndex + 1];
   return (
     <div className="flex flex-wrap p-4 gap-5 justify-center bg-primary rounded-xl">
       <Link
@@ -60,9 +58,6 @@ const EpisodeNav = ({ slug, episodeNumber, url }: Props) => {
             </TooltipContent>
           </Tooltip>
         </TooltipProvider>
-        {/* <Button className="border flex gap-2">
-          <FaRegListAlt size={20} />
-        </Button> */}
       </Link>
       <TooltipProvider>
         <Tooltip>
