@@ -25,7 +25,7 @@ export type Anilist = {
   trailer: {
     id: number;
     site: string;
-  }
+  };
   coverImage: {
     extraLarge: string;
     medium: string;
@@ -60,17 +60,10 @@ export type Anilist = {
   };
   synonyms: string[];
   recommendations: {
-    nodes: {
-      mediaRecommendation: {
-        title: {
-          romaji: string;
-          english: string;
-        };
-      };
-    }[];
+    nodes: RecommendedNode[];
   };
   relations: {
-    edges: Edge[];
+    edges: RelatedEdge[];
   };
   nextAiringEpisode: {
     airingAt: number;
@@ -79,7 +72,23 @@ export type Anilist = {
   };
 };
 
-export type Edge = {
+export type RecommendedNode = {
+  mediaRecommendation: {
+    id: number;
+    format: string;
+    seasonYear: number;
+    episodes: number;
+    coverImage: {
+      medium: string;
+    };
+    title: {
+      romaji: string;
+      english: string;
+    };
+  };
+};
+
+export type RelatedEdge = {
   relationType: string;
   node: {
     title: {
@@ -88,14 +97,15 @@ export type Edge = {
     };
     id: number;
     coverImage: {
-      extraLarge: string;
       medium: string;
     };
     type: string;
   };
 };
 
-export type RelatedAnime = Edge & { title_romaji_slug: string };
+export type RelatedAnime = RelatedEdge & { title_romaji_slug: string };
+
+export type RecommendedAnime = RecommendedNode & { title_romaji_slug: string };
 
 export type Query = {
   Media: Anilist;

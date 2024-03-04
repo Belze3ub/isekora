@@ -43,7 +43,7 @@ const EpisodeCard = ({
           <div className="absolute inset-0 bg-black opacity-20"></div>
         </div>
         <div className="p-3">
-          <h5>Episode {episode_number}</h5>
+          <h5>Odcinek {episode_number}</h5>
           <h6>{date}</h6>
         </div>
       </div>

@@ -56,6 +56,13 @@ const GET_ANIME_DETAILS = `
       recommendations {
         nodes {
           mediaRecommendation {
+            id
+            format
+            seasonYear
+            episodes
+            coverImage {
+              medium
+            }
             title {
               romaji
               english
@@ -73,7 +80,6 @@ const GET_ANIME_DETAILS = `
             }
             id
             coverImage {
-              extraLarge
               medium
             }
             type
