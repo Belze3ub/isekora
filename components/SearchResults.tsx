@@ -50,7 +50,7 @@ const SearchResults = ({ searchQuery, setSearchQuery }: Props) => {
                 alt={a.title_romaji || 'Unknown title'}
               />
             </div>
-            <div className="overflow-hidden">
+            <div>
               <h4 className="font-bold text-left line-clamp-2">{a.title_romaji}</h4>
               <h5 className="text-left truncate">
                 {a.episodes} {a.episodes === 1 ? 'odcinek' : 'odcinków'}

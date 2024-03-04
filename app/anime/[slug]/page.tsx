@@ -48,7 +48,7 @@ const AnimeDetailPage = async ({ params: { slug } }: Props) => {
                   href={`/anime/${anime.title_romaji_slug}`}
                   key={anime.node.id}
                 >
-                  <div className="inline-flex bg-primary rounded-lg hover:bg-secondary">
+                  <div className="flex bg-primary rounded-lg hover:bg-secondary h-full">
                     <div className="min-w-[5rem] grid items-center">
                       <CoverImage
                         src={anime.node.coverImage.medium}
@@ -57,8 +57,12 @@ const AnimeDetailPage = async ({ params: { slug } }: Props) => {
                     </div>
                     <div className="p-2">
                       <p className="text-slate-300">{anime.relationType}</p>
-                      <p className="font-bold">{anime.node.title.romaji}</p>
-                      <p>{anime.node.title.english}</p>
+                      <p className="font-bold line-clamp-2">
+                        {anime.node.title.romaji}
+                      </p>
+                      <p className="line-clamp-2">
+                        {anime.node.title.english}
+                      </p>
                     </div>
                   </div>
                 </Link>
