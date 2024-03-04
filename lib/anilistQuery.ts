@@ -11,6 +11,10 @@ const GET_ANIME_DETAILS = `
         romaji
         english
       }
+      trailer {
+          id
+          site
+      }
       coverImage {
         extraLarge
         medium

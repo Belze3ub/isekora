@@ -17,10 +17,15 @@ export type UrlTranslator = {
 
 export type Anilist = {
   id: number;
+  idMal: number;
   title: {
     romaji: string;
     english: string;
   };
+  trailer: {
+    id: number;
+    site: string;
+  }
   coverImage: {
     extraLarge: string;
     medium: string;
@@ -54,11 +59,6 @@ export type Anilist = {
     }[];
   };
   synonyms: string[];
-  trailer: {
-    id: string;
-    site: string;
-    thumbnail: string;
-  };
   recommendations: {
     nodes: {
       mediaRecommendation: {
