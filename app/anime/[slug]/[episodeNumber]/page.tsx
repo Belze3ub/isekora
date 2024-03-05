@@ -1,4 +1,5 @@
 import EpisodeUrlList from '@/components/EpisodeUrlList';
+import { fetchAnimeBySlug } from '@/database/anime';
 import { fetchEpisodesBySlug } from '@/database/episode';
 import { fetchEpisodeUrls } from '@/database/url';
 import { notFound } from 'next/navigation';
@@ -24,6 +25,14 @@ const EpisodePage = async ({ params: { slug, episodeNumber } }: Props) => {
       />
     </div>
   );
+};
+
+export async function generateMetadata({params}: Props) {
+  const dbAnime = await fetchAnimeBySlug(params.slug);
+  return {
+    title: `Odcinek ${params.episodeNumber} - ${dbAnime?.title_romaji} (ang. ${dbAnime?.title_english}) | Napisy pl`,
+    description: `Odcinek ${params.episodeNumber} serii ${dbAnime?.title_romaji} (ang. ${dbAnime?.title_english}) za darmo z polskimi napisami.`,
+  };
 };
 
 export default EpisodePage;

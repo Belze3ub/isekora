@@ -13,12 +13,10 @@ interface Props {
   params: {
     translatorName: string;
   };
-  children: React.ReactNode;
 }
 
 const TranslatorDetailPage = async ({
   params: { translatorName },
-  children,
 }: Props) => {
   const translator_name = translatorName.replace('%20', ' ');
   const translator = await fetchTranslatorByName(translator_name);
@@ -128,6 +126,17 @@ const TranslatorDetailPage = async ({
       </div>
     </>
   );
+};
+
+export async function generateMetadata({params}: Props) {
+  const translator_name = params.translatorName.replace('%20', ' ');
+  const translator = await fetchTranslatorByName(translator_name);
+  return {
+    title: `Grupa tłumaczy ${translator?.translator_name} - Isekora`,
+    description: translator?.translator_info
+      ? `${translator?.translator_info}`
+      : `Grupa tłumaczy ${translator?.translator_name}`,
+  };
 };
 
 export default TranslatorDetailPage;

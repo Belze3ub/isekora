@@ -2,6 +2,7 @@ import CoverImage from "@/components/CoverImage";
 import { fetchTranslators } from "@/database/translator";
 import Link from "next/link";
 import placeholder from '@/public/images/no-image-placeholder.svg'
+import { Metadata } from "next";
 
 const TranslatorsPage = async () => {
   const translators = await fetchTranslators();
@@ -22,5 +23,10 @@ const TranslatorsPage = async () => {
     </div>
   );
 }
+
+export const metadata: Metadata = {
+  title: 'Lista grup suberskich - Isekora',
+  description: 'Lista wszystkich dostępnych grup suberskich dostępnych na naszym serwisie',
+};
 
 export default TranslatorsPage

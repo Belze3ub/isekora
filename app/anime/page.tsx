@@ -11,6 +11,7 @@ import { Anime } from '@/database/types/types';
 import Link from 'next/link';
 import placeholder from '@/public/images/no-image-placeholder.svg';
 import FormatSelect from '@/components/FormatSelect';
+import { Metadata } from 'next';
 
 interface Props {
   searchParams?: {
@@ -63,5 +64,10 @@ const AnimeListPage = async ({ searchParams }: Props) => {
     </div>
   );
 };
+
+export const metadata: Metadata = {
+  title: 'Wszystkie serie anime - Isekora',
+  description: 'Lista wszystkich dostępnych serii anime na naszym serwisie'
+}
 
 export default AnimeListPage;

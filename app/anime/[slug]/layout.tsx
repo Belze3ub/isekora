@@ -83,4 +83,12 @@ const AnimePageLayout = async ({ children, params: { slug } }: Props) => {
   );
 };
 
+export async function generateMetadata({params}: Props) {
+  const dbAnime = await fetchAnimeBySlug(params.slug);
+  return {
+    title: `${dbAnime?.title_romaji} (ang. ${dbAnime?.title_english}) | Anime z polskimi napisami`,
+    description: `Oglądaj ${dbAnime?.title_romaji} (ang. ${dbAnime?.title_english}) za darmo z polskimi napisami. Odkryj fascynujący świat ${dbAnime?.title_romaji} już dziś!`,
+  };
+};
+
 export default AnimePageLayout;
