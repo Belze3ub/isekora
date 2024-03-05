@@ -16,14 +16,12 @@ const EpisodePage = async ({ params: { slug, episodeNumber } }: Props) => {
   const episodes = await fetchEpisodesBySlug(slug);
   if (players.length === 0) notFound();
   return (
-    <div className="flex flex-col gap-5">
       <EpisodeUrlList
         slug={slug}
         episodeNumber={episodeNumber}
         players={players}
         episodes={episodes}
       />
-    </div>
   );
 };
 

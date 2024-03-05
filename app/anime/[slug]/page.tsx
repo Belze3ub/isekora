@@ -31,7 +31,7 @@ const AnimeDetailPage = async ({ params: { slug } }: Props) => {
       });
   }));
   await Promise.all(anime.recommendations.nodes.map(async (node) => {
-    const foundAnime = await fetchAnimeByAnilistId(node.mediaRecommendation.id);
+    const foundAnime = await fetchAnimeByAnilistId(node.mediaRecommendation?.id);
     foundAnime &&
       recommendedAnime.push({
         ...node,
@@ -49,7 +49,7 @@ const AnimeDetailPage = async ({ params: { slug } }: Props) => {
     return titleA < titleB ? -1 : titleA > titleB ? 1 : 0;
   });
   return (
-    <div className="">
+    <div>
       <h1 className="h1-bold">{anime.title.romaji}</h1>
       <h2 className="h2-semibold">{anime.title.english}</h2>
       <h3 className="h3-semibold mt-4 mb-2">Opis</h3>
@@ -90,7 +90,7 @@ const AnimeDetailPage = async ({ params: { slug } }: Props) => {
         </div>
       )}
       <h3 className="h3-bold mt-4 mb-2">Odcinki</h3>
-      <div className="grid gap-3 md:grid-cols-[repeat(3,minmax(100px,500px))] lg:grid-cols-[repeat(4,minmax(100px,500px))]">
+      <div className="grid gap-3 md:grid-cols-[repeat(2,minmax(100px,500px))] lg:grid-cols-[repeat(3,minmax(100px,500px))] xl:grid-cols-[repeat(4,minmax(100px,500px))]">
         {episodes.map((episode) => (
           <EpisodeCard
             key={episode.episode_id}
@@ -109,7 +109,7 @@ const AnimeDetailPage = async ({ params: { slug } }: Props) => {
       {recommendedAnime.length !== 0 && (
         <div>
           <h3 className="h3-semibold mt-4 mb-2">Podobne serie</h3>
-          <div className="grid gap-3 md:grid-cols-[repeat(2,minmax(100px,500px))] xl:grid-cols-[repeat(3,minmax(100px,500px))]">
+          <div className="grid gap-3 md:grid-cols-[repeat(2,minmax(100px,500px))] lg:grid-cols-[repeat(3,minmax(100px,500px))] xl:grid-cols-[repeat(4,minmax(100px,500px))]">
             {recommendedAnime.map((anime) => {
               return (
                 <Link
@@ -132,8 +132,11 @@ const AnimeDetailPage = async ({ params: { slug } }: Props) => {
                           {anime.mediaRecommendation.title.english}
                         </p>
                       </div>
-                      <div className='flex flex-between'>
-                        <p>{anime.mediaRecommendation.format}, {anime.mediaRecommendation.seasonYear}</p>
+                      <div className="flex flex-between">
+                        <p>
+                          {anime.mediaRecommendation.format},{' '}
+                          {anime.mediaRecommendation.seasonYear}
+                        </p>
                         <p>{anime.mediaRecommendation.episodes}</p>
                       </div>
                     </div>

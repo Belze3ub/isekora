@@ -39,8 +39,8 @@ const AnimePageLayout = async ({ children, params: { slug } }: Props) => {
         <div className=" flex flex-wrap py-2">
           <Breadcrumbs title={anime.title.romaji} />
         </div>
-        <div className="grid gap-5 md:grid-cols-5">
-          <div className="grid gap-5 md:col-span-1 self-start">
+        <div className="grid gap-5 md:grid-cols-[auto,1fr]">
+          <div className="grid gap-5 self-start">
             <CoverImage
               src={anime.coverImage.extraLarge}
               alt={anime.title.romaji || anime.title.english}
@@ -82,7 +82,7 @@ const AnimePageLayout = async ({ children, params: { slug } }: Props) => {
               </div>
             </div>
           </div>
-          <div className="grid md:col-span-4">{children}</div>
+          <div className="grid">{children}</div>
         </div>
       </div>
     </>
