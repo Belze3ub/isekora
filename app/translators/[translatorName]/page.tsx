@@ -8,6 +8,7 @@ import { fetchTranslatorByName } from '@/database/translator';
 import placeholder from '@/public/images/no-image-placeholder.svg';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
+import { cache } from 'react';
 
 interface Props {
   params: {
@@ -15,11 +16,16 @@ interface Props {
   };
 }
 
+const fetchTranslator = cache((translator_name: string) => {
+  return fetchTranslatorByName(translator_name);
+})
+
 const TranslatorDetailPage = async ({
   params: { translatorName },
 }: Props) => {
   const translator_name = translatorName.replace('%20', ' ');
-  const translator = await fetchTranslatorByName(translator_name);
+  // const translator = await fetchTranslatorByName(translator_name);
+  const translator = await fetchTranslator(translator_name);
   const translatorAnime = await fetchAnimeByTranslatorName(translator_name);
   const animeCount = translatorAnime.length;
   const newestEpisodes = await fetchNewestEpisodesFromTranslator(

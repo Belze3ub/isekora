@@ -6,6 +6,7 @@ import { Button } from '@/components/ui/button';
 import { fetchAnimeBySlug } from '@/database/anime';
 import fetchAnimeInfo from '@/lib/anilistQuery';
 import { notFound } from 'next/navigation';
+import { cache } from 'react';
 import { FaYoutube } from 'react-icons/fa';
 import { SiMyanimelist } from 'react-icons/si';
 import { SiAnilist } from 'react-icons/si';
@@ -18,8 +19,13 @@ interface Props {
   };
 }
 
+const fetchAnime = cache((slug: string) => {
+  return fetchAnimeBySlug(slug);
+});
+
 const AnimePageLayout = async ({ children, params: { slug } }: Props) => {
-  const dbAnime = await fetchAnimeBySlug(slug);
+  // const dbAnime = await fetchAnimeBySlug(slug);
+  const dbAnime = await fetchAnime(slug);
   const anime = dbAnime && (await fetchAnimeInfo(dbAnime.anilist_id));
   if (!anime) notFound();
   return (
@@ -84,7 +90,7 @@ const AnimePageLayout = async ({ children, params: { slug } }: Props) => {
 };
 
 export async function generateMetadata({params}: Props) {
-  const dbAnime = await fetchAnimeBySlug(params.slug);
+  const dbAnime = await fetchAnime(params.slug);
   return {
     title: `${dbAnime?.title_romaji} (ang. ${dbAnime?.title_english}) | Anime z polskimi napisami`,
     description: `Oglądaj ${dbAnime?.title_romaji} (ang. ${dbAnime?.title_english}) za darmo z polskimi napisami. Odkryj fascynujący świat ${dbAnime?.title_romaji} już dziś!`,
