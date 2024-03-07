@@ -102,3 +102,27 @@ export const fetchEpisodesBySlug = async (slug: string): Promise<Episode[]> => {
   }
   return episodes;
 };
+
+export const fetchEpisodeBySlugAndNumber = async (slug: string, episodeNumber: string): Promise<Episode | null> => {
+  let episode: Episode | null = null;
+  try {
+    const { data, error } = await supabase.rpc('fetch_episodes_by_slug_and_number', {
+      slug,
+      episode_num: episodeNumber
+    });
+    if (error) {
+      console.error(
+        `Error fetching data for ${slug} episode: ${episodeNumber} - ${error.message}`
+      );
+    } else {
+      episode = data[0];
+    }
+  } catch (error) {
+    if (error instanceof Error) {
+      console.error(
+        `Error fetching data for ${slug} episode: ${episodeNumber} - ${error.message}`
+      );
+    }
+  }
+  return episode;
+};

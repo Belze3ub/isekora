@@ -7,6 +7,7 @@ import NavContent from '@/components/Navbar/NavContent';
 import SearchModal from '../SearchModal';
 import { getServerSession } from 'next-auth';
 import { authOptions } from '@/app/api/auth/[...nextauth]/route';
+import LoggedInUser from '../LoggedInUser';
 
 const Navbar = async () => {
   const session = await getServerSession(authOptions);
@@ -29,12 +30,13 @@ const Navbar = async () => {
           <div className="hidden md:block">
             {!session && <Link href="/api/auth/signin">Sign In</Link>}
             {session && (
-              <div>
-                {session?.user?.name}
-                <Link href="/api/auth/signout" className="ml-5">
-                  Sign Out
-                </Link>
-              </div>
+              // <div>
+              //   {session?.user?.name}
+              //   <Link href="/api/auth/signout" className="ml-5">
+              //     Sign Out
+              //   </Link>
+              // </div>
+              <LoggedInUser {...session} />
             )}
           </div>
           <div className="md:hidden">

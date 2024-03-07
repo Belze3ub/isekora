@@ -56,6 +56,16 @@ CREATE TABLE anime_genre (
     PRIMARY KEY (anime_id, genre_id)
 );
 
+CREATE TABLE comment (
+    comment_id SERIAL PRIMARY KEY,
+    user_id UUID REFERENCES next_auth.users(id),
+    episode_id INT REFERENCES episode(episode_id),
+    comment_text TEXT NOT NULL,
+    create_date TIMESTAMP WITH TIME ZONE DEFAULT (CURRENT_TIMESTAMP AT TIME ZONE 'UTC'),
+    update_date TIMESTAMP WITH TIME ZONE DEFAULT (CURRENT_TIMESTAMP AT TIME ZONE 'UTC')
+);
+
+
 DROP TABLE anime CASCADE;
 DROP TABLE episode CASCADE;
 DROP TABLE translator CASCADE;
@@ -257,20 +267,61 @@ BEGIN
 END; $$
 LANGUAGE plpgsql;
 
+CREATE OR REPLACE FUNCTION fetch_episodes_by_slug_and_number(slug TEXT, episode_number TEXT)
+RETURNS SETOF episode AS $$
+BEGIN
+  RETURN QUERY SELECT e.*
+  FROM episode e
+  LEFT JOIN anime a ON a.anime_id = e.anime_id
+  WHERE a.title_romaji_slug = slug
+  AND e.episode_number = episodeNumber;
+END; $$
+LANGUAGE plpgsql;
+
 CREATE OR REPLACE FUNCTION fetch_urls_by_slug_and_episode_number_test(slug TEXT, episode_num TEXT)
 RETURNS TABLE (
     player_name TEXT,
     urls TEXT[],
     translator_names TEXT[],
-    translator_logos TEXT[]
+    translator_logos TEXT[],
+    episode_id INT,
 ) AS $$
 BEGIN
-  RETURN QUERY SELECT u.player_name, array_agg(u.url), array_agg(t.translator_name), array_agg(t.translator_logo)
+  RETURN QUERY SELECT u.player_name, array_agg(u.url), array_agg(t.translator_name), array_agg(t.translator_logo), u.episode_id
   FROM url u
   LEFT JOIN episode e ON e.episode_id = u.episode_id
   LEFT JOIN anime a ON a.anime_id = e.anime_id
   LEFT JOIN translator t ON u.translator_id = t.translator_id
   WHERE a.title_romaji_slug = slug AND e.episode_number = episode_num
   GROUP BY u.player_name;
+END; $$
+LANGUAGE plpgsql;
+
+CREATE OR REPLACE FUNCTION fetch_comments_with_users(ep_id INT)
+RETURNS TABLE (
+    comment_id INT,
+    user_id UUID,
+    episode_id INT,
+    comment_text TEXT,
+    create_date TIMESTAMP,
+    update_date TIMESTAMP,
+    id UUID,
+    name TEXT,
+    image TEXT
+) AS $$
+BEGIN
+  RETURN QUERY
+  SELECT
+    c.comment_id,
+    c.user_id,
+    c.episode_id,
+    c.comment_text,
+    c.create_date,
+    c.update_date,
+    u.id,
+    u.name,
+    u.image 
+  FROM comment c
+  LEFT JOIN next_auth.users u ON c.user_id = u.id;
 END; $$
 LANGUAGE plpgsql;

@@ -5,6 +5,7 @@ export type Episode = Tables<'episode'>;
 export type Url = Tables<'url'>;
 export type Translator = Tables<'translator'>;
 export type Genre = Tables<'genre'>;
+export type Comment = Tables<'comment'>;
 
 // export type NewestEpisode = Episode & { anime: Anime };
 export type NewestEpisode = Episode & Anime;
@@ -13,7 +14,10 @@ export type UrlTranslator = {
   urls: string[];
   translator_names: string[];
   translator_logos: string[];
+  episode_id: number;
 };
+
+export type CommentUser = Comment & { id: string; name: string; image: string };
 
 export type Anilist = {
   id: number;

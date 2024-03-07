@@ -1,7 +1,12 @@
 import NextAuth from 'next-auth';
+import { Session } from 'next-auth';
 import GoogleProvider from 'next-auth/providers/google';
 import DiscordProvider from 'next-auth/providers/discord';
-import { SupabaseAdapter } from "@next-auth/supabase-adapter"
+import { SupabaseAdapter } from '@next-auth/supabase-adapter';
+
+interface User {
+  id: string;
+}
 
 export const authOptions = {
   adapter: SupabaseAdapter({
@@ -18,6 +23,14 @@ export const authOptions = {
       clientSecret: process.env.DISCORD_CLIENT_SECRET!,
     }),
   ],
+  callbacks: {
+    session: async ({ session, user }: { session: Session; user: User }) => {
+      if (session?.user) {
+        session.user.id = user.id;
+      }
+      return session;
+    },
+  },
 };
 const handler = NextAuth(authOptions);
 

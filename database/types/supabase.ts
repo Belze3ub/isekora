@@ -90,6 +90,48 @@ export type Database = {
           }
         ]
       }
+      comment: {
+        Row: {
+          comment_id: number
+          comment_text: string
+          create_date: string | null
+          episode_id: number | null
+          update_date: string | null
+          user_id: string | null
+        }
+        Insert: {
+          comment_id?: number
+          comment_text: string
+          create_date?: string | null
+          episode_id?: number | null
+          update_date?: string | null
+          user_id?: string | null
+        }
+        Update: {
+          comment_id?: number
+          comment_text?: string
+          create_date?: string | null
+          episode_id?: number | null
+          update_date?: string | null
+          user_id?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "comment_episode_id_fkey"
+            columns: ["episode_id"]
+            isOneToOne: false
+            referencedRelation: "episode"
+            referencedColumns: ["episode_id"]
+          },
+          {
+            foreignKeyName: "comment_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "users"
+            referencedColumns: ["id"]
+          }
+        ]
+      }
       episode: {
         Row: {
           anime_id: number | null
@@ -266,9 +308,40 @@ export type Database = {
           title_romaji_slug: string
         }[]
       }
+      fetch_comments_with_users: {
+        Args: {
+          ep_id: number
+        }
+        Returns: {
+          comment_id: number
+          user_id: string
+          episode_id: number
+          comment_text: string
+          create_date: string
+          update_date: string
+          id: string
+          name: string
+          image: string
+        }[]
+      }
       fetch_episodes_by_slug: {
         Args: {
           slug: string
+        }
+        Returns: {
+          anime_id: number | null
+          create_date: string | null
+          episode_id: number
+          episode_number: string
+          episode_thumbnail: string | null
+          update_date: string | null
+          views: number | null
+        }[]
+      }
+      fetch_episodes_by_slug_and_number: {
+        Args: {
+          slug: string
+          episode_num: string
         }
         Returns: {
           anime_id: number | null
@@ -302,7 +375,7 @@ export type Database = {
           title_romaji_slug: string
         }[]
       }
-      fetch_urls_by_slug_and_episode_number_test: {
+      fetch_urls_by_slug_and_episode_number: {
         Args: {
           slug: string
           episode_num: string

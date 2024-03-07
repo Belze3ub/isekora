@@ -8,7 +8,7 @@ export const fetchEpisodeUrls = async (
   let urls: UrlTranslator[] = [];
   try {
     const { data, error } = await supabase.rpc(
-      'fetch_urls_by_slug_and_episode_number_test',
+      'fetch_urls_by_slug_and_episode_number',
       {
         slug: slug,
         episode_num: episodeNumber,
