@@ -46,7 +46,7 @@ const EpisodeNav = ({ slug, episodeNumber, url, episodes }: Props) => {
         </Button>
       </Link>
       <Link href={`/anime/${slug}`}>
-        <TooltipProvider>
+        <TooltipProvider delayDuration={200}>
           <Tooltip>
             <TooltipTrigger asChild>
               <Button className="border flex gap-2">
@@ -59,7 +59,7 @@ const EpisodeNav = ({ slug, episodeNumber, url, episodes }: Props) => {
           </Tooltip>
         </TooltipProvider>
       </Link>
-      <TooltipProvider>
+      <TooltipProvider delayDuration={200}>
         <Tooltip>
           <TooltipTrigger asChild>
             <Link href={url} target="_blank">
