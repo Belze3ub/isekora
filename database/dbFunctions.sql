@@ -303,8 +303,8 @@ RETURNS TABLE (
     user_id UUID,
     episode_id INT,
     comment_text TEXT,
-    create_date TIMESTAMP,
-    update_date TIMESTAMP,
+    create_date TIMESTAMPTZ,
+    update_date TIMESTAMPTZ,
     id UUID,
     name TEXT,
     image TEXT
@@ -322,6 +322,7 @@ BEGIN
     u.name,
     u.image 
   FROM comment c
-  LEFT JOIN next_auth.users u ON c.user_id = u.id;
+  LEFT JOIN next_auth.users u ON c.user_id = u.id
+  WHERE c.episode_id = ep_id;
 END; $$
 LANGUAGE plpgsql;

@@ -1,25 +1,30 @@
 'use client';
 import { Button } from './ui/button';
-import { Textarea } from './ui/textarea';
 import { useSession } from 'next-auth/react';
 import { FormEvent, useState } from 'react';
 import supabase from '@/database/dbConfig';
 import { Switch } from './ui/switch';
 import { Label } from './ui/label';
-import {z} from 'zod';
+import { z } from 'zod';
+import TextareaAutosize from 'react-textarea-autosize';
 
 const commentSchema = z.object({
-  commentText: z.string().min(1, 'Komentarz nie może być pusty').max(800, 'Komentarz nie może mieć więcej niż 800 znaków')
-})
+  commentText: z
+    .string()
+    .min(1, 'Komentarz nie może być pusty')
+    .max(800, 'Komentarz nie może mieć więcej niż 800 znaków'),
+});
 
 const CommentForm = ({ episodeId }: { episodeId: number }) => {
   const [commentText, setCommentText] = useState('');
+  const [error, setError] = useState('');
   const { data: session } = useSession();
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
-    const result = commentSchema.safeParse({commentText})
+    const result = commentSchema.safeParse({ commentText });
     if (!result.success) {
-      console.error(result.error)
+      setError(result.error.errors[0].message);
+      console.error(result.error);
       return;
     }
     const { data, error } = await supabase.from('comment').insert([
@@ -31,17 +36,25 @@ const CommentForm = ({ episodeId }: { episodeId: number }) => {
     ]);
     if (error) {
       console.error(error);
+      setError(error.message);
     } else {
       setCommentText('');
+      setError('');
     }
   };
   return (
     <form onSubmit={handleSubmit}>
-      <Textarea
+      <TextareaAutosize
         value={commentText}
         onChange={(e) => setCommentText(e.target.value)}
+        maxLength={800}
+        className='w-full rounded-lg resize-none p-2 outline-none bg-secondary overflow-hidden h-[112px]'
+        minRows={4}
       />
-      <div className="flex-between mt-2">
+      {error && (
+        <p className='text-red-500'>{error}</p>
+      )}
+      <div className="flex flex-col items-center gap-2 sm:flex-row flex-between mt-2">
         <div className="flex items-center">
           <Switch
             id="spoiler"

@@ -5,9 +5,6 @@ export const fetchCommentsForEpisode = async (episode_id: number): Promise<Comme
   let comments: CommentUser[] = [];
   try {
     const { data, error } = await supabase
-      // .from('comment')
-      // .select('*')
-      // .eq('episode_id', episode_id);
       .rpc('fetch_comments_with_users', {
         ep_id: episode_id,
       });
