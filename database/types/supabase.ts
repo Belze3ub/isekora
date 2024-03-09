@@ -145,6 +145,27 @@ export type Database = {
           }
         ]
       }
+      emoji: {
+        Row: {
+          emoji_character: string | null
+          emoji_description: string | null
+          emoji_id: number
+          emoji_image_url: string | null
+        }
+        Insert: {
+          emoji_character?: string | null
+          emoji_description?: string | null
+          emoji_id?: number
+          emoji_image_url?: string | null
+        }
+        Update: {
+          emoji_character?: string | null
+          emoji_description?: string | null
+          emoji_id?: number
+          emoji_image_url?: string | null
+        }
+        Relationships: []
+      }
       episode: {
         Row: {
           anime_id: number | null

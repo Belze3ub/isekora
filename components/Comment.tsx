@@ -1,20 +1,24 @@
 'use client';
 import { timeAgo } from '@/lib/utils';
 import { Skeleton } from './ui/skeleton';
-import { CommentUser } from '@/database/types/types';
+import { CommentUser, Emoji } from '@/database/types/types';
 import Image from 'next/image';
-import { useEffect, useState } from 'react';
+import { Suspense, useEffect, useState } from 'react';
 import { FaPlus } from 'react-icons/fa6';
 import CommentForm from './CommentForm';
 import { Button } from './ui/button';
 import { useSession } from 'next-auth/react';
+import { Popover, PopoverContent, PopoverTrigger } from './ui/popover';
+import EmojiPicker from './EmojiPicker';
+
 
 interface Props {
   comment: CommentUser;
+  emojis: Emoji[];
   children?: React.ReactNode;
 }
 
-const Comment = ({ comment, children }: Props) => {
+const Comment = ({ comment, children, emojis }: Props) => {
   const [rendered, setRendered] = useState(false);
   const [reply, setReply] = useState<number[]>([]);
   const { data: session } = useSession();
@@ -60,18 +64,26 @@ const Comment = ({ comment, children }: Props) => {
         </div>
         <div>
           <div className="flex items-center gap-2">
-            <Button variant="ghost">
-              <FaPlus />
-            </Button>
-            {!comment.parent_id && session?.user?.id && (
-              <Button
-                variant="ghost"
-                className="rounded-full"
-                onClick={() => handleReply(comment.comment_id)}
-              >
-                Odpowiedz
-              </Button>
-            )}
+            <Popover>
+              <PopoverTrigger>
+                <FaPlus />
+              </PopoverTrigger>
+              <PopoverContent className="p-1">
+                {/* <Picker data={data} onEmojiSelect={console.log} /> */}
+                <EmojiPicker emojis={emojis} />
+              </PopoverContent>
+            </Popover>
+            <Suspense fallback={<Skeleton className="w-20 h-3" />}>
+              {!comment.parent_id && session?.user?.id && (
+                <Button
+                  variant="ghost"
+                  className="rounded-full"
+                  onClick={() => handleReply(comment.comment_id)}
+                >
+                  Odpowiedz
+                </Button>
+              )}
+            </Suspense>
           </div>
           {reply.includes(comment.comment_id) && (
             <div className="mt-5">

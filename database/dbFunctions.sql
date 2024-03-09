@@ -67,6 +67,13 @@ CREATE TABLE comment (
     parent_id INT REFERENCES comment(comment_id);
 );
 
+CREATE TABLE emoji (
+  emoji_id SERIAL PRIMARY KEY,
+  emoji_character TEXT,
+  emoji_image_url TEXT,
+  emoji_description TEXT
+)
+
 
 DROP TABLE anime CASCADE;
 DROP TABLE episode CASCADE;
