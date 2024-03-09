@@ -14,7 +14,7 @@ interface Props {
 }
 
 const RealTimeComments = ({ comments, emojis }: Props) => {
-  const [showRes, setShowRes] = useState<number []>([]);
+  const [showRes, setShowRes] = useState<number[]>([]);
   const router = useRouter();
   useEffect(() => {
     const channel = supabase
@@ -40,11 +40,17 @@ const RealTimeComments = ({ comments, emojis }: Props) => {
     showRes.includes(commentId)
       ? setShowRes(showRes.filter((s) => s !== commentId))
       : setShowRes([...showRes, commentId]);
-  }
+  };
 
   const getResponses = (commentId: number) =>
-    comments.filter((c) => c.parent_id === commentId);
-  
+    comments
+      .filter((c) => c.parent_id === commentId)
+      .sort(
+        (a, b) =>
+          new Date(a.create_date!).getTime() -
+          new Date(b.create_date!).getTime()
+      );
+
   return (
     <div className="flex flex-col gap-5">
       {comments
@@ -54,8 +60,8 @@ const RealTimeComments = ({ comments, emojis }: Props) => {
             {getResponses(comment.comment_id).length !== 0 && (
               <div>
                 <Button
-                  variant="ghost"
-                  className="rounded-full text-accent"
+                  variant="default"
+                  className="rounded-full text-accent p-0 hover:bg-transparent"
                   onClick={() => toggleShowRes(comment.comment_id)}
                 >
                   {showRes.includes(comment.comment_id) ? (

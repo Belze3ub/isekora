@@ -74,6 +74,12 @@ CREATE TABLE emoji (
   emoji_description TEXT
 )
 
+CREATE TABLE comment_emoji (
+  comment_id INT REFERENCES comment(comment_id),
+  emoji_id INT REFERENCES emoji(emoji_id),
+  user_id UUID REFERENCES next_auth.users(id)
+);
+
 
 DROP TABLE anime CASCADE;
 DROP TABLE episode CASCADE;

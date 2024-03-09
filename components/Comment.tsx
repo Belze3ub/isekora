@@ -1,16 +1,12 @@
 'use client';
-import { timeAgo } from '@/lib/utils';
-import { Skeleton } from './ui/skeleton';
 import { CommentUser, Emoji } from '@/database/types/types';
+import { timeAgo } from '@/lib/utils';
+import { useSession } from 'next-auth/react';
 import Image from 'next/image';
-import { Suspense, useEffect, useState } from 'react';
-import { FaPlus } from 'react-icons/fa6';
+import { useEffect, useState } from 'react';
 import CommentForm from './CommentForm';
 import { Button } from './ui/button';
-import { useSession } from 'next-auth/react';
-import { Popover, PopoverContent, PopoverTrigger } from './ui/popover';
-import EmojiPicker from './EmojiPicker';
-
+import { Skeleton } from './ui/skeleton';
 
 interface Props {
   comment: CommentUser;
@@ -48,7 +44,7 @@ const Comment = ({ comment, children, emojis }: Props) => {
           <div className="font-medium mr-2">{comment.name}</div>
           <div className="text-gray-400 text-sm">
             {rendered ? (
-              timeAgo(new Date(comment.update_date!))
+              timeAgo(new Date(comment.create_date!))
             ) : (
               <Skeleton className="h-3 w-20" />
             )}
@@ -64,26 +60,23 @@ const Comment = ({ comment, children, emojis }: Props) => {
         </div>
         <div>
           <div className="flex items-center gap-2">
-            <Popover>
+            {/* <Popover>
               <PopoverTrigger>
                 <FaPlus />
               </PopoverTrigger>
               <PopoverContent className="p-1">
-                {/* <Picker data={data} onEmojiSelect={console.log} /> */}
-                <EmojiPicker emojis={emojis} />
+                <EmojiPicker emojis={emojis} comment={comment} />
               </PopoverContent>
-            </Popover>
-            <Suspense fallback={<Skeleton className="w-20 h-3" />}>
-              {!comment.parent_id && session?.user?.id && (
-                <Button
-                  variant="ghost"
-                  className="rounded-full"
-                  onClick={() => handleReply(comment.comment_id)}
-                >
-                  Odpowiedz
-                </Button>
-              )}
-            </Suspense>
+            </Popover> */}
+            {!comment.parent_id && session?.user?.id && (
+              <Button
+                variant="ghost"
+                className="rounded-lg p-0"
+                onClick={() => handleReply(comment.comment_id)}
+              >
+                Odpowiedz
+              </Button>
+            )}
           </div>
           {reply.includes(comment.comment_id) && (
             <div className="mt-5">

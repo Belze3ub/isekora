@@ -7,6 +7,8 @@ export type Translator = Tables<'translator'>;
 export type Genre = Tables<'genre'>;
 export type Comment = Tables<'comment'>;
 export type Emoji = Tables<'emoji'>;
+export type CommentEmoji = Tables<'comment_emoji'> & Emoji;
+
 
 // export type NewestEpisode = Episode & { anime: Anime };
 export type NewestEpisode = Episode & Anime;

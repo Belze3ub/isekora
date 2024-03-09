@@ -145,6 +145,46 @@ export type Database = {
           }
         ]
       }
+      comment_emoji: {
+        Row: {
+          comment_id: number | null
+          emoji_id: number | null
+          user_id: string | null
+        }
+        Insert: {
+          comment_id?: number | null
+          emoji_id?: number | null
+          user_id?: string | null
+        }
+        Update: {
+          comment_id?: number | null
+          emoji_id?: number | null
+          user_id?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "comment_emoji_comment_id_fkey"
+            columns: ["comment_id"]
+            isOneToOne: false
+            referencedRelation: "comment"
+            referencedColumns: ["comment_id"]
+          },
+          {
+            foreignKeyName: "comment_emoji_emoji_id_fkey"
+            columns: ["emoji_id"]
+            isOneToOne: false
+            referencedRelation: "emoji"
+            referencedColumns: ["emoji_id"]
+          },
+          {
+            foreignKeyName: "comment_emoji_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "users"
+            referencedColumns: ["id"]
+          }
+        ]
+      }
       emoji: {
         Row: {
           emoji_character: string | null
@@ -360,6 +400,31 @@ export type Database = {
           image: string
         }[]
       }
+      fetch_emojis_for_comment:
+        | {
+            Args: Record<PropertyKey, never>
+            Returns: {
+              comment_id: number
+              emoji_id: number
+              user_id: string
+              emoji_character: string
+              emoji_image_url: string
+              emoji_description: string
+            }[]
+          }
+        | {
+            Args: {
+              com_id: number
+            }
+            Returns: {
+              comment_id: number
+              emoji_id: number
+              user_id: string
+              emoji_character: string
+              emoji_image_url: string
+              emoji_description: string
+            }[]
+          }
       fetch_episodes_by_slug: {
         Args: {
           slug: string
