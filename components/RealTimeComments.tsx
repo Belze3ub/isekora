@@ -2,21 +2,18 @@
 
 import supabase from '@/database/dbConfig';
 import { CommentUser } from '@/database/types/types';
-import { timeAgo } from '@/lib/utils';
-import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
-import { Skeleton } from './ui/skeleton';
+import { IoIosArrowDown, IoIosArrowUp } from 'react-icons/io';
+import Comment from './Comment';
+import { Button } from './ui/button';
 
 interface Props {
   comments: CommentUser[];
 }
 
 const RealTimeComments = ({ comments }: Props) => {
-  const [rendered, setRendered] = useState(false);
-  useEffect(() => {
-    setRendered(true);
-  }, []);
+  const [showRes, setShowRes] = useState<number []>([]);
   const router = useRouter();
   useEffect(() => {
     const channel = supabase
@@ -37,33 +34,50 @@ const RealTimeComments = ({ comments }: Props) => {
       supabase.removeChannel(channel);
     };
   }, [router]);
+
+  const toggleShowRes = (commentId: number) => {
+    showRes.includes(commentId)
+      ? setShowRes(showRes.filter((s) => s !== commentId))
+      : setShowRes([...showRes, commentId]);
+  }
+
+  const getResponses = (commentId: number) =>
+    comments.filter((c) => c.parent_id === commentId);
+  
   return (
-    <div className='flex flex-col gap-5'>
-      {comments.map((comment) => (
-        <div key={comment.comment_id} className="flex gap-3 overflow-hidden">
-          <div className="relative w-[30px] h-[30px]  rounded-full overflow-hidden shrink-0">
-            <Image
-              src={comment.image}
-              fill
-              className="object-cover"
-              alt={`${comment.name} avatar`}
-            />
-          </div>
-          <div className="flex flex-col gap-2">
-            <div className="flex py-1 flex-wrap items-center">
-              <div className="font-medium mr-2">{comment.name}</div>
-              <div className="text-gray-400 text-sm">
-                {rendered ? (
-                  timeAgo(new Date(comment.update_date!))
-                ) : (
-                  <Skeleton className='h-3 w-20' />
+    <div className="flex flex-col gap-5">
+      {comments
+        .filter((comment) => !comment.parent_id)
+        .map((comment) => (
+          <Comment comment={comment} key={comment.comment_id}>
+            {getResponses(comment.comment_id).length !== 0 && (
+              <div>
+                <Button
+                  variant="ghost"
+                  className="rounded-full text-accent"
+                  onClick={() => toggleShowRes(comment.comment_id)}
+                >
+                  {showRes.includes(comment.comment_id) ? (
+                    <IoIosArrowUp size={20} />
+                  ) : (
+                    <IoIosArrowDown size={20} />
+                  )}
+                  <span className="ml-1">{`${
+                    getResponses(comment.comment_id).length
+                  } odpowiedzi`}</span>
+                </Button>
+                {showRes.includes(comment.comment_id) && (
+                  <div className="mt-2 ml-5">
+                    {getResponses(comment.comment_id).map((comm) => (
+                      <Comment key={comm.comment_id} comment={comm} />
+                      // <p key={comm.comment_id}>{comm.comment_id}</p>
+                    ))}
+                  </div>
                 )}
               </div>
-            </div>
-            <div className=" break-all">{comment.comment_text}</div>
-          </div>
-        </div>
-      ))}
+            )}
+          </Comment>
+        ))}
     </div>
   );
 };

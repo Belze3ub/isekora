@@ -61,8 +61,10 @@ CREATE TABLE comment (
     user_id UUID REFERENCES next_auth.users(id),
     episode_id INT REFERENCES episode(episode_id),
     comment_text TEXT NOT NULL,
+    spoiler BOOLEAN NOT NULL DEFAULT FALSE,
     create_date TIMESTAMP WITH TIME ZONE DEFAULT (CURRENT_TIMESTAMP AT TIME ZONE 'UTC'),
-    update_date TIMESTAMP WITH TIME ZONE DEFAULT (CURRENT_TIMESTAMP AT TIME ZONE 'UTC')
+    update_date TIMESTAMP WITH TIME ZONE DEFAULT (CURRENT_TIMESTAMP AT TIME ZONE 'UTC'),
+    parent_id INT REFERENCES comment(comment_id);
 );
 
 
@@ -303,8 +305,10 @@ RETURNS TABLE (
     user_id UUID,
     episode_id INT,
     comment_text TEXT,
+    spoiler BOOLEAN,
     create_date TIMESTAMPTZ,
     update_date TIMESTAMPTZ,
+    parent_id INT,
     id UUID,
     name TEXT,
     image TEXT
@@ -316,8 +320,10 @@ BEGIN
     c.user_id,
     c.episode_id,
     c.comment_text,
+    c.spoiler,
     c.create_date,
     c.update_date,
+    c.parent_id,
     u.id,
     u.name,
     u.image 

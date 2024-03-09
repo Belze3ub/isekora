@@ -96,6 +96,8 @@ export type Database = {
           comment_text: string
           create_date: string | null
           episode_id: number | null
+          parent_id: number | null
+          spoiler: boolean
           update_date: string | null
           user_id: string | null
         }
@@ -104,6 +106,8 @@ export type Database = {
           comment_text: string
           create_date?: string | null
           episode_id?: number | null
+          parent_id?: number | null
+          spoiler?: boolean
           update_date?: string | null
           user_id?: string | null
         }
@@ -112,6 +116,8 @@ export type Database = {
           comment_text?: string
           create_date?: string | null
           episode_id?: number | null
+          parent_id?: number | null
+          spoiler?: boolean
           update_date?: string | null
           user_id?: string | null
         }
@@ -122,6 +128,13 @@ export type Database = {
             isOneToOne: false
             referencedRelation: "episode"
             referencedColumns: ["episode_id"]
+          },
+          {
+            foreignKeyName: "comment_parent_id_fkey"
+            columns: ["parent_id"]
+            isOneToOne: false
+            referencedRelation: "comment"
+            referencedColumns: ["comment_id"]
           },
           {
             foreignKeyName: "comment_user_id_fkey"
@@ -317,8 +330,10 @@ export type Database = {
           user_id: string
           episode_id: number
           comment_text: string
+          spoiler: boolean
           create_date: string
           update_date: string
+          parent_id: number
           id: string
           name: string
           image: string

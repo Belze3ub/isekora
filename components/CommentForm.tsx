@@ -7,6 +7,7 @@ import { Switch } from './ui/switch';
 import { Label } from './ui/label';
 import { z } from 'zod';
 import TextareaAutosize from 'react-textarea-autosize';
+import { useRouter } from 'next/navigation';
 
 const commentSchema = z.object({
   commentText: z
@@ -15,12 +16,21 @@ const commentSchema = z.object({
     .max(800, 'Komentarz nie może mieć więcej niż 800 znaków'),
 });
 
-const CommentForm = ({ episodeId }: { episodeId: number }) => {
+interface Props {
+  episodeId: number;
+  parentId?: number;
+  setReply?: (reply: number []) => void;
+}
+
+const CommentForm = ({ episodeId, parentId, setReply }: Props) => {
+  const router = useRouter();
   const [commentText, setCommentText] = useState('');
+  const [spoiler, setSpoiler] = useState(false);
   const [error, setError] = useState('');
   const { data: session } = useSession();
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
+    // console.log(spoiler)
     const result = commentSchema.safeParse({ commentText });
     if (!result.success) {
       setError(result.error.errors[0].message);
@@ -32,6 +42,8 @@ const CommentForm = ({ episodeId }: { episodeId: number }) => {
         episode_id: episodeId,
         user_id: session?.user?.id,
         comment_text: commentText,
+        spoiler: spoiler,
+        parent_id: parentId,
       },
     ]);
     if (error) {
@@ -39,7 +51,10 @@ const CommentForm = ({ episodeId }: { episodeId: number }) => {
       setError(error.message);
     } else {
       setCommentText('');
+      setSpoiler(false);
       setError('');
+      setReply && setReply([]);
+      router.refresh();
     }
   };
   return (
@@ -48,17 +63,18 @@ const CommentForm = ({ episodeId }: { episodeId: number }) => {
         value={commentText}
         onChange={(e) => setCommentText(e.target.value)}
         maxLength={800}
-        className='w-full rounded-lg resize-none p-2 outline-none bg-secondary overflow-hidden h-[112px]'
+        className="w-full rounded-lg resize-none p-2 outline-none bg-secondary overflow-hidden h-[112px]"
         minRows={4}
+        placeholder={parentId ? 'Dodaj odpowiedź' : 'Dodaj komentarz'}
       />
-      {error && (
-        <p className='text-red-500'>{error}</p>
-      )}
+      {error && <p className="text-red-500">{error}</p>}
       <div className="flex flex-col items-center gap-2 sm:flex-row flex-between mt-2">
         <div className="flex items-center">
           <Switch
             id="spoiler"
             className="mr-1 data-[state=checked]:bg-accent data-[state=unchecked]:bg-secondary"
+            checked={spoiler}
+            onCheckedChange={setSpoiler}
           />
           <Label htmlFor="spoiler">Spoiler</Label>
         </div>
