@@ -57,7 +57,7 @@ const CoverImage = ({
             </h3>
             {episodeNumber && (
               <h4>
-                Episode{' '}
+                Odcinek{' '}
                 <span className="text-slate-50 font-bold">{episodeNumber}</span>
               </h4>
             )}

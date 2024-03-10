@@ -1,10 +1,9 @@
-import { fetchEpisodeBySlugAndNumber } from '@/database/episode';
-import CommentForm from './CommentForm';
-import { fetchCommentsForEpisode } from '@/database/comment';
-import RealTimeComments from './RealTimeComments';
-import { getServerSession } from 'next-auth';
 import { authOptions } from '@/app/api/auth/[...nextauth]/route';
-import { fetchEmojis } from '@/database/emoji';
+import { fetchCommentsForEpisode } from '@/database/comment';
+import { fetchEpisodeBySlugAndNumber } from '@/database/episode';
+import { getServerSession } from 'next-auth';
+import CommentForm from './CommentForm';
+import Comment from './Comment';
 
 interface Props {
   slug: string;
@@ -14,9 +13,19 @@ interface Props {
 const CommentsSection = async ({ slug, episodeNumber }: Props) => {
   const session = await getServerSession(authOptions);
   const episode = await fetchEpisodeBySlugAndNumber(slug, episodeNumber);
-  const emojis = await fetchEmojis();
-  const comments = episode
-    ? await fetchCommentsForEpisode(episode?.episode_id)
+  const comments =
+    episode && (await fetchCommentsForEpisode(episode.episode_id));
+  const mainComments = comments
+    ? comments?.filter((comment) => !comment.parent_id)
+    : [];
+  const replies = comments
+    ? comments
+        ?.filter((comment) => comment.parent_id)
+        .sort(
+          (a, b) =>
+            new Date(a.create_date!).getTime() -
+            new Date(b.create_date!).getTime()
+        )
     : [];
 
   return (
@@ -26,11 +35,14 @@ const CommentsSection = async ({ slug, episodeNumber }: Props) => {
       ) : (
         <p className="text-center py-5">Zaloguj się aby dodać komentarz</p>
       )}
-      {comments.length !== 0 ? (
-        <RealTimeComments comments={comments} emojis={emojis} />
-      ) : (
-        <p className="text-center">Brak komentarzy</p>
-      )}
+      {mainComments?.map((comment) => (
+        <Comment
+          key={comment.comment_id}
+          comment={comment}
+          replies={replies}
+          session={session}
+        />
+      ))}
     </div>
   );
 };

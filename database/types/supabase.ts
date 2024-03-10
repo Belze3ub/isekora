@@ -400,31 +400,33 @@ export type Database = {
           image: string
         }[]
       }
-      fetch_emojis_for_comment:
-        | {
-            Args: Record<PropertyKey, never>
-            Returns: {
-              comment_id: number
-              emoji_id: number
-              user_id: string
-              emoji_character: string
-              emoji_image_url: string
-              emoji_description: string
-            }[]
-          }
-        | {
-            Args: {
-              com_id: number
-            }
-            Returns: {
-              comment_id: number
-              emoji_id: number
-              user_id: string
-              emoji_character: string
-              emoji_image_url: string
-              emoji_description: string
-            }[]
-          }
+      fetch_emojis_for_comment: {
+        Args: {
+          com_id: number
+        }
+        Returns: {
+          comment_id: number
+          emoji_id: number
+          emoji_character: string
+          emoji_image_url: string
+          emoji_description: string
+          count: number
+        }[]
+      }
+      fetch_emojis_for_comment_and_user: {
+        Args: {
+          com_id: number
+          u_id: string
+        }
+        Returns: {
+          comment_id: number
+          emoji_id: number
+          user_id: string
+          emoji_character: string
+          emoji_image_url: string
+          emoji_description: string
+        }[]
+      }
       fetch_episodes_by_slug: {
         Args: {
           slug: string

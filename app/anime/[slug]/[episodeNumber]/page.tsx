@@ -29,12 +29,12 @@ const EpisodePage = async ({ params: { slug, episodeNumber } }: Props) => {
   );
 };
 
-export async function generateMetadata({params}: Props) {
+export async function generateMetadata({ params }: Props) {
   const dbAnime = await fetchAnimeBySlug(params.slug);
   return {
     title: `Odcinek ${params.episodeNumber} - ${dbAnime?.title_romaji} (ang. ${dbAnime?.title_english}) | Napisy pl`,
     description: `Odcinek ${params.episodeNumber} serii ${dbAnime?.title_romaji} (ang. ${dbAnime?.title_english}) za darmo z polskimi napisami.`,
   };
-};
+}
 
 export default EpisodePage;

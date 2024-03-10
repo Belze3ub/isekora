@@ -19,10 +19,16 @@ const commentSchema = z.object({
 interface Props {
   episodeId: number;
   parentId?: number;
-  setReply?: (reply: number []) => void;
+  setIsReplying?: (isReplying: Boolean) => void;
+  setShowResponses?: (showResponse: Boolean) => void;
 }
 
-const CommentForm = ({ episodeId, parentId, setReply }: Props) => {
+const CommentForm = ({
+  episodeId,
+  parentId,
+  setIsReplying,
+  setShowResponses,
+}: Props) => {
   const router = useRouter();
   const [commentText, setCommentText] = useState('');
   const [spoiler, setSpoiler] = useState(false);
@@ -53,7 +59,8 @@ const CommentForm = ({ episodeId, parentId, setReply }: Props) => {
       setCommentText('');
       setSpoiler(false);
       setError('');
-      setReply && setReply([]);
+      setIsReplying && setIsReplying(false);
+      setShowResponses && setShowResponses(true);
       router.refresh();
     }
   };
