@@ -33,7 +33,9 @@ const CoverImage = ({
         src={src}
         alt={alt}
         fill
-        className={'object-cover transition-all group-hover:blur-[1px]'}
+        className={
+          'object-cover transition-all group-hover:blur-[1px] duration-300'
+        }
         sizes="(max-width: 768px) 100vw, 33vw"
         priority={priority ? priority : false}
       />
@@ -46,7 +48,7 @@ const CoverImage = ({
             }`}
           >
             <h3
-              className={`font-bold text-sm md:text-md lg:text-md overflow-hidden text-ellipsis group-hover:text-accent `}
+              className={`font-bold text-sm md:text-md lg:text-md overflow-hidden text-ellipsis group-hover:text-accent duration-300 `}
               style={{
                 display: '-webkit-box',
                 WebkitBoxOrient: 'vertical',

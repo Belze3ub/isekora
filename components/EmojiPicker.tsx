@@ -80,7 +80,6 @@ const EmojiPicker = ({ commentId }: Props) => {
         <Toggle
           key={emoji.emoji_id}
           onClick={() => toggleEmoji(emoji.emoji_id)}
-          // className={`${selectedEmojis.includes(emoji.emoji_id) && ''}`}
           aria-pressed={selectedEmojis.includes(emoji.emoji_id) ? true : false}
           data-state={`${
             selectedEmojis.includes(emoji.emoji_id) ? 'on' : 'off'

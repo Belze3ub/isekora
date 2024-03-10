@@ -26,7 +26,7 @@ const Navbar = async () => {
         </div>
         <div className="flex justify-end items-center gap-5">
           <SearchModal />
-          <ThemeToggle />
+          {/* <ThemeToggle /> */}
           <div className="hidden md:block">
             {!session && <Link href="/api/auth/signin">Sign In</Link>}
             {session && (

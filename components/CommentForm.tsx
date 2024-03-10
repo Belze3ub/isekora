@@ -88,7 +88,7 @@ const CommentForm = ({
         <div>
           <span className="font-bold">{commentText.length}</span>/800
         </div>
-        <Button type="submit" className="bg-accent">
+        <Button type="submit" variant={'outline'}>
           Dodaj
         </Button>
       </div>
