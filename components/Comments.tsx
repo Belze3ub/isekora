@@ -18,6 +18,7 @@ const Comments = ({ comments, episodeId, session }: Props) => {
       return [newComment, ...state];
     }
   );
+  
   const mainComments = optimisticComments
     ? optimisticComments?.filter((comment) => !comment.parent_id)
     : [];

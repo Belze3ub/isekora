@@ -1,20 +1,19 @@
 'use client'
 import { CommentUser } from "@/database/types/types";
 import { timeAgo } from "@/lib/utils";
+import { useSession } from "next-auth/react";
 import Image from "next/image";
 import { useEffect, useState } from "react";
-import { Button } from "./ui/button";
-import { useSession } from "next-auth/react";
-import CommentFormTest from "./CommentFormTest";
-import { IoIosArrowDown, IoIosArrowUp } from "react-icons/io";
-import { MdOutlineReply } from "react-icons/md";
 import { FaReply } from "react-icons/fa6";
+import { IoIosArrowDown, IoIosArrowUp } from "react-icons/io";
+import CommentFormTest from "./CommentFormTest";
+import { Button } from "./ui/button";
 
 interface Props {
   comment: CommentUser;
   setOptimisticComments?: (comment: CommentUser) => void;
   episodeId: number;
-  replies?: CommentUser[]
+  replies?: CommentUser[],
 }
 
 const CommentTest = ({
@@ -31,7 +30,7 @@ const CommentTest = ({
   useEffect(() => {
     const timeAgoStr = timeAgo(new Date(comment.create_date!)) || '';
     setTimeAgoStr(timeAgoStr);
-  }, [comment.create_date]);
+  }, [comment]);
 
   const responses = replies
     ?.filter((reply) => reply.parent_id === comment.comment_id)
@@ -83,6 +82,10 @@ const CommentTest = ({
                 session={session}
                 setOptimisticComments={setOptimisticComments}
                 parentId={comment.comment_id}
+                isReplying={isReplying}
+                setIsReplying={setIsReplying}
+                showResponses={showResponses}
+                setShowResponses={setShowResponses}
               />
             )}
           </div>

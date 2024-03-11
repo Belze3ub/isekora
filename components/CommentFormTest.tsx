@@ -13,6 +13,10 @@ interface Props {
   session: Session;
   setOptimisticComments: (comment: CommentUser) => void;
   parentId?: number;
+  isReplying?: boolean;
+  setIsReplying?: (isReplying: boolean) => void;
+  showResponses?: boolean;
+  setShowResponses?: (showResponses: boolean) => void;
 }
 
 const CommentFormTest = ({
@@ -20,16 +24,19 @@ const CommentFormTest = ({
   episodeId,
   session,
   parentId,
+  isReplying,
+  setIsReplying,
+  showResponses,
+  setShowResponses,
 }: Props) => {
-  const formRef = useRef<HTMLFormElement>(null);
   const [commentText, setCommentText] = useState('');
 
   return (
     <form
-      ref={formRef}
       action={async (formData) => {
         const commentText = formData.get('commentText');
         const spoiler = !formData.get('spoiler') ? false : true;
+        setIsReplying && isReplying && setIsReplying(false);
         setOptimisticComments({
           comment_id: Math.random(),
           comment_text: commentText as string,
@@ -42,7 +49,7 @@ const CommentFormTest = ({
           spoiler: spoiler,
           parent_id: parentId || null,
         });
-        formRef.current?.reset();
+        setShowResponses && !showResponses && setShowResponses(true);
         const result = await addComment(formData);
         if (result?.error) {
           console.error(result.error);
@@ -68,15 +75,13 @@ const CommentFormTest = ({
             id="spoiler"
             name="spoiler"
             className="mr-1 data-[state=checked]:bg-accent data-[state=unchecked]:bg-secondary"
-            // checked={spoiler}
-            // onCheckedChange={setSpoiler}
           />
           <Label htmlFor="spoiler">Spoiler</Label>
         </div>
         <div>
           <span className="font-bold">{commentText.length}</span>/800
         </div>
-        <Button variant={'outline'}>Dodaj</Button>
+        <Button type='submit' variant={'outline'}>Dodaj</Button>
       </div>
     </form>
   );
