@@ -1,4 +1,5 @@
 import CommentsSection from '@/components/CommentsSection';
+import CommentsSectionTest from '@/components/CommentsSectionTest';
 import EpisodeUrlList from '@/components/EpisodeUrlList';
 import { fetchAnimeBySlug } from '@/database/anime';
 import { fetchEpisodesBySlug } from '@/database/episode';
@@ -24,7 +25,8 @@ const EpisodePage = async ({ params: { slug, episodeNumber } }: Props) => {
         players={players}
         episodes={episodes}
       />
-      <CommentsSection slug={slug} episodeNumber={episodeNumber} />
+      {/* <CommentsSection slug={slug} episodeNumber={episodeNumber} /> */}
+      <CommentsSectionTest slug={slug} episodeNumber={episodeNumber} />
     </div>
   );
 };

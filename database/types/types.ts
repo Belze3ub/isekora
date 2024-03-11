@@ -20,7 +20,7 @@ export type UrlTranslator = {
   episode_id: number;
 };
 
-export type CommentUser = Comment & { id: string; name: string; image: string };
+export type CommentUser = Comment & { name: string; image: string };
 
 export type Anilist = {
   id: number;

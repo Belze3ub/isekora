@@ -76,7 +76,7 @@ export const timeAgo = (date: Date) => {
   const now = new Date();
   let diffInSeconds = Math.floor((now.getTime() - date.getTime()) / 1000);
 
-  if (diffInSeconds < 1) diffInSeconds = 1;
+  if (diffInSeconds < 0) diffInSeconds = 0;
   if (diffInSeconds < 60) {
     const lastDigit = diffInSeconds % 10;
     let label = 'sekund';
