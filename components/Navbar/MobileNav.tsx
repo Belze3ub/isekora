@@ -1,12 +1,17 @@
-import { Sheet, SheetClose, SheetContent, SheetTrigger } from '@/components/ui/sheet';
+import {
+  Sheet,
+  SheetClose,
+  SheetContent,
+  SheetTrigger,
+} from '@/components/ui/sheet';
+import logo from '@/public/images/logo.svg';
+import Image from 'next/image';
+import Link from 'next/link';
 import { IoClose, IoMenu } from 'react-icons/io5';
 import { Button } from '../ui/button';
-import Link from 'next/link';
-import Image from 'next/image';
-import logo from '@/public/images/logo.svg';
 import MobileNavContent from './MobileNavContent';
 
-const MobileNav = () => {
+const MobileNav = async () => {
   return (
     <Sheet>
       <SheetTrigger asChild>

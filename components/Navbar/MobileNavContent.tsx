@@ -17,7 +17,7 @@ const MobileNavContent = () => {
             <Link
               href={link.route}
               className={`${
-                isActive ? 'bg-primary' : 'bg-secondary'
+                isActive ? 'bg-accent' : 'bg-secondary'
               } w-full rounded-lg flex p-4 justify-center`}
             >
               <p className={`${isActive ? 'base-bold' : 'base-medium'}`}>

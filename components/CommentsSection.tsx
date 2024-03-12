@@ -1,9 +1,9 @@
-import { authOptions } from '@/app/api/auth/[...nextauth]/route';
 import { fetchCommentsForEpisode } from '@/database/comment';
 import { fetchEpisodeBySlugAndNumber } from '@/database/episode';
 import { getServerSession } from 'next-auth';
 import CommentForm from './CommentForm';
 import Comment from './Comment';
+import { authOptions } from '@/app/api/auth/[...nextauth]/authOptions';
 
 interface Props {
   slug: string;

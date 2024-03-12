@@ -18,7 +18,7 @@ const Comments = ({ comments, episodeId, session }: Props) => {
       return [newComment, ...state];
     }
   );
-  
+
   const mainComments = optimisticComments
     ? optimisticComments?.filter((comment) => !comment.parent_id)
     : [];
@@ -28,6 +28,9 @@ const Comments = ({ comments, episodeId, session }: Props) => {
 
   return (
     <>
+      <h2 className='h2-bold text-center'>
+        Liczba komentarzy: {mainComments.length}
+      </h2>
       {session?.user ? (
         <CommentFormTest
           episodeId={episodeId}
@@ -35,7 +38,7 @@ const Comments = ({ comments, episodeId, session }: Props) => {
           setOptimisticComments={setOptimisticComments}
         />
       ) : (
-        <p className="text-center">Zaloguj się aby dodać komentarz</p>
+        <p className="text-center p-5">Zaloguj się aby dodać komentarz</p>
       )}
       <CommentList
         mainComments={mainComments}

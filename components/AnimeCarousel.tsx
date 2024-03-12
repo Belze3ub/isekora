@@ -20,6 +20,7 @@ const AnimeCarousel = ({ anime }: Props) => {
     <Carousel
       opts={{
         align: 'start',
+        loop: true,
       }}
       className="w-full relative"
     >
@@ -27,7 +28,7 @@ const AnimeCarousel = ({ anime }: Props) => {
         {anime.map((anime) => (
           <CarouselItem
             key={anime.anime_id}
-            className="basis-1/2 pl-2 sm:basis-1/3 md:basis-1/5 lg:basis-1/6 xl:basis-1/7"
+            className="basis-1/2 pl-2 sm:basis-1/3 md:basis-1/5 lg:basis-1/6"
           >
             <Link href={`/anime/${anime.title_romaji_slug}`}>
               <CoverImage

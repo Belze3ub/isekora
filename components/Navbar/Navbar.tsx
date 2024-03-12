@@ -6,8 +6,8 @@ import MobileNav from '@/components/Navbar/MobileNav';
 import NavContent from '@/components/Navbar/NavContent';
 import SearchModal from '../SearchModal';
 import { getServerSession } from 'next-auth';
-import { authOptions } from '@/app/api/auth/[...nextauth]/route';
 import LoggedInUser from '../LoggedInUser';
+import { authOptions } from '@/app/api/auth/[...nextauth]/authOptions';
 
 const Navbar = async () => {
   const session = await getServerSession(authOptions);
@@ -27,7 +27,7 @@ const Navbar = async () => {
         <div className="flex justify-end items-center gap-5">
           <SearchModal />
           {/* <ThemeToggle /> */}
-          <div className="hidden md:block">
+          <div className="">
             {!session && <Link href="/api/auth/signin">Sign In</Link>}
             {session && (
               // <div>

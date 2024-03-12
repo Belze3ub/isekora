@@ -36,7 +36,9 @@ const AnimeListPage = async ({ searchParams }: Props) => {
   return (
     <div className="container">
       <GenreList genres={allGenres} />
-      <FormatSelect formats={formats} />
+      <div className='mb-5'>
+        <FormatSelect formats={formats} />
+      </div>
       {animes.length !== 0 ? (
         <>
           <PaginationComponent page={page} totalPages={totalPages} />
@@ -60,7 +62,9 @@ const AnimeListPage = async ({ searchParams }: Props) => {
           </div>
           <PaginationComponent page={page} totalPages={totalPages} />
         </>
-      ) : <p className='text-center mt-5'>Nie znaleziono</p>}
+      ) : (
+        <p className="text-center mt-5">Nie znaleziono</p>
+      )}
     </div>
   );
 };

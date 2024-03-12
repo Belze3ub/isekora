@@ -15,7 +15,7 @@ const CommentList = ({
   setOptimisticComments,
 }: Props) => {
   return (
-    <div className="flex flex-col gap-5">
+    <div className="flex flex-col gap-5 mt-5">
       {mainComments.map((comment) => (
         <CommentTest
           key={comment.comment_id}
