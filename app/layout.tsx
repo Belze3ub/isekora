@@ -4,6 +4,9 @@ import './globals.css';
 import { ThemeProvider } from '@/components/theme-provider';
 import Navbar from '../components/Navbar/Navbar';
 import AuthProvider from './auth/Provider';
+import NextTopLoader from 'nextjs-toploader';
+import config from '@/tailwind.config'
+
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -21,6 +24,7 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const color = config.theme.extend.colors.accent;
   return (
     <html lang="en" suppressHydrationWarning>
       <body className={inter.className}>
@@ -31,6 +35,7 @@ export default function RootLayout({
           disableTransitionOnChange
         > */}
         <AuthProvider>
+          <NextTopLoader showSpinner={false} color={color.DEFAULT} />
           <Navbar />
           <main>{children}</main>
         </AuthProvider>
