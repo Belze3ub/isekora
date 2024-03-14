@@ -55,7 +55,7 @@ const AnimePageLayout = async ({ children, params: { slug } }: Props) => {
                     href={`https://www.youtube.com/watch?v=${anime.trailer.id}`}
                     target="_blank"
                   >
-                    <Button className="w-full hover:bg-secondary">
+                    <Button className="w-full">
                       <FaYoutube size={20} className="mr-2" />
                       Zwiastun
                     </Button>
@@ -65,7 +65,7 @@ const AnimePageLayout = async ({ children, params: { slug } }: Props) => {
                   href={`https://myanimelist.net/anime/${anime.idMal}`}
                   target="_blank"
                 >
-                  <Button className="w-full hover:bg-secondary">
+                  <Button className="w-full">
                     <SiMyanimelist size={30} className="mr-2" />
                     MyAnimeList
                   </Button>
@@ -74,7 +74,7 @@ const AnimePageLayout = async ({ children, params: { slug } }: Props) => {
                   href={`https://anilist.co/anime/${anime.id}`}
                   target="_blank"
                 >
-                  <Button className="w-full hover:bg-secondary">
+                  <Button className="w-full">
                     <SiAnilist size={20} className="mr-2" />
                     AniList
                   </Button>

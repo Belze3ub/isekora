@@ -87,7 +87,7 @@ const GenreList = ({ genres }: { genres: Genre[] }) => {
         <Toggle
           key={genre_id}
           onClick={() => handleToggle(genre)}
-          className="border"
+          className="bg-secondary"
           aria-pressed={genresFromQuery.includes(genre) ? true : false}
           data-state={`${genresFromQuery.includes(genre) ? 'on' : 'off'}`}
         >
