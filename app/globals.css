@@ -53,17 +53,16 @@
   .flex-between {
     @apply flex justify-between items-center;
   }
-  .no-scrollbar::-webkit-scrollbar {
-    display: none;
-  }
-  .no-scrollbar {
-    -ms-overflow-style: none;
-    scrollbar-width: none;
-  }
   .no-focus {
     @apply focus-visible:ring-0 !important;
   }
   body {
     @apply bg-background text-foreground;
+  }
+  *::-webkit-scrollbar {
+    @apply w-1;
+  }
+  *::-webkit-scrollbar-thumb {
+    @apply bg-accent rounded-full;
   }
 }
