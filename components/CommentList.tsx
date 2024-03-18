@@ -5,14 +5,14 @@ interface Props {
   mainComments: CommentUser[];
   replies: CommentUser[];
   episodeId: number;
-  setOptimisticComments: (comment: CommentUser) => void;
+  // setOptimisticComments: (comment: CommentUser) => void;
 }
 
 const CommentList = ({
   mainComments,
   replies,
   episodeId,
-  setOptimisticComments,
+  // setOptimisticComments,
 }: Props) => {
   return (
     <div className="flex flex-col gap-5 mt-5">
@@ -21,7 +21,7 @@ const CommentList = ({
           key={comment.comment_id}
           comment={comment}
           episodeId={episodeId}
-          setOptimisticComments={setOptimisticComments}
+          // setOptimisticComments={setOptimisticComments}
           replies={replies}
         />
       ))}

@@ -14,7 +14,7 @@ interface Props {
 const CommentsSectionTest = async ({ slug, episodeNumber }: Props) => {
   const session = await getServerSession(authOptions);
   const episode = await fetchEpisodeBySlugAndNumber(slug, episodeNumber);
-  const comments = episode
+  const initialComments = episode
     ? (await fetchCommentsForEpisode(episode.episode_id)).sort(
         (a, b) =>
           new Date(b.create_date!).getTime() -
@@ -30,7 +30,11 @@ const CommentsSectionTest = async ({ slug, episodeNumber }: Props) => {
         <p className="text-center py-5">Zaloguj się aby dodać komentarz</p>
       )} */}
       {episode && (
-        <Comments comments={comments} episodeId={episode?.episode_id} session={session} />
+        <Comments
+          initialComments={initialComments}
+          episodeId={episode?.episode_id}
+          session={session}
+        />
       )}
     </div>
   );

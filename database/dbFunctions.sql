@@ -345,3 +345,37 @@ BEGIN
   WHERE c.episode_id = ep_id;
 END; $$
 LANGUAGE plpgsql;
+
+CREATE OR REPLACE FUNCTION fetch_comment_by_id(comm_id INT)
+RETURNS TABLE (
+    comment_id INT,
+    user_id UUID,
+    episode_id INT,
+    comment_text TEXT,
+    spoiler BOOLEAN,
+    create_date TIMESTAMPTZ,
+    update_date TIMESTAMPTZ,
+    parent_id INT,
+    id UUID,
+    name TEXT,
+    image TEXT
+) AS $$
+BEGIN
+  RETURN QUERY
+  SELECT
+    c.comment_id,
+    c.user_id,
+    c.episode_id,
+    c.comment_text,
+    c.spoiler,
+    c.create_date,
+    c.update_date,
+    c.parent_id,
+    u.id,
+    u.name,
+    u.image 
+  FROM comment c
+  LEFT JOIN next_auth.users u ON c.user_id = u.id
+  WHERE c.comment_id = comm_id;
+END; $$
+LANGUAGE plpgsql;

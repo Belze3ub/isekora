@@ -36,19 +36,46 @@ export const addComment = async (data: Inputs) => {
   // const spoiler = !formData.get('spoiler') ? false : true;
   // const parentId = formData.get('parentId');
   // if (!commentText || !episodeId) return;
+  if (!result.success) {
+    throw new Error('Nie udało się dodać komentarza')
+  }
   try {
     await createComment(
-      data.commentText,
-      data.episodeId,
-      data.userId,
-      data.spoiler,
-      data.parentId
+      result.data.commentText,
+      result.data.episodeId,
+      result.data.userId,
+      result.data.spoiler,
+      result.data.parentId
     );
+    revalidatePath('/anime/[slug]/[episodeNumber]', 'page');
   } catch (error) {
     if (error instanceof Error) {
-      return { error: error.message || 'Nie udało się dodać komentarza' };
+      throw new Error(error.message)
+    } else {
+      throw new Error('Wystąpił nieznany błąd')
     }
-  } finally {
-    revalidatePath('/anime/[slug]/[episodeNumber]', 'page');
   }
+  // await createComment(
+  //   data.commentText,
+  //   data.episodeId,
+  //   data.userId,
+  //   data.spoiler,
+  //   data.parentId
+  // );
+  // try {
+  //   // throw new Error();
+  //   await createComment(
+  //     data.commentText,
+  //     data.episodeId,
+  //     data.userId,
+  //     data.spoiler,
+  //     data.parentId
+  //   );
+  // } catch (error) {
+  //   if (error instanceof Error) {
+  //     return { error: error.message || 'Nie udało się dodać komentarza' };
+  //   }
+  // } finally {
+  //   revalidatePath('/anime/[slug]/[episodeNumber]', 'page');
+  // }
 };

@@ -382,6 +382,24 @@ export type Database = {
           title_romaji_slug: string
         }[]
       }
+      fetch_comment_by_id: {
+        Args: {
+          comm_id: number
+        }
+        Returns: {
+          comment_id: number
+          user_id: string
+          episode_id: number
+          comment_text: string
+          spoiler: boolean
+          create_date: string
+          update_date: string
+          parent_id: number
+          id: string
+          name: string
+          image: string
+        }[]
+      }
       fetch_comments_with_users: {
         Args: {
           ep_id: number

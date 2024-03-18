@@ -1,41 +1,66 @@
 'use client';
-import { CommentUser } from '@/database/types/types';
+import { Comment, CommentUser } from '@/database/types/types';
 import { Session } from 'next-auth';
-import { useOptimistic } from 'react';
+import { useEffect, useOptimistic, useState } from 'react';
 import CommentFormTest from './CommentFormTest';
 import CommentList from './CommentList';
+import supabase from '@/database/dbConfig';
+import { fetchCommentById, fetchCommentsForEpisode } from '@/database/comment';
 
 interface Props {
-  comments: CommentUser[];
+  initialComments: CommentUser[];
   episodeId: number;
   session: Session | null;
 }
 
-const Comments = ({ comments, episodeId, session }: Props) => {
-  const [optimisticComments, setOptimisticComments] = useOptimistic(
-    comments,
-    (state, newComment: CommentUser) => {
-      return [newComment, ...state];
-    }
-  );
+const Comments = ({ initialComments, episodeId, session }: Props) => {
+  const [comments, setComments] = useState<CommentUser[]>(initialComments);
+  // const [optimisticComments, setOptimisticComments] = useOptimistic(
+  //   comments,
+  //   (state, newComment: CommentUser) => {
+  //     return [newComment, ...state];
+  //   }
+  // );
+  useEffect(() => {
+    const commentSubscription = supabase
+      .channel('comment')
+      .on(
+        'postgres_changes',
+        { event: '*', schema: 'public', table: 'comment' },
+        async () => {
+          const newComments = await fetchCommentsForEpisode(episodeId);
+          setComments(newComments);
+          // const comment_id = (payload.new as Comment).comment_id;
+          // const newComment = await fetchCommentById(comment_id);
+          // // const newComment = payload.new as CommentUser
+          // newComment &&
+          //   setComments((prevComments) => [...prevComments, newComment]);
+        }
+      )
+      .subscribe();
 
-  const mainComments = optimisticComments
-    ? optimisticComments?.filter((comment) => !comment.parent_id)
+    return () => {
+      supabase.removeChannel(commentSubscription);
+    };
+  }, [episodeId]);
+
+  const mainComments = comments
+    ? comments?.filter((comment) => !comment.parent_id)
     : [];
-  const replies = optimisticComments
-    ? optimisticComments?.filter((comment) => comment.parent_id)
+  const replies = comments
+    ? comments?.filter((comment) => comment.parent_id)
     : [];
 
   return (
     <>
-      <h2 className='h2-bold text-center'>
+      <h2 className="h2-bold text-center">
         Liczba komentarzy: {mainComments.length}
       </h2>
       {session?.user ? (
         <CommentFormTest
           episodeId={episodeId}
           session={session}
-          setOptimisticComments={setOptimisticComments}
+          // setOptimisticComments={setOptimisticComments}
         />
       ) : (
         <p className="text-center p-5">Zaloguj się aby dodać komentarz</p>
@@ -44,7 +69,7 @@ const Comments = ({ comments, episodeId, session }: Props) => {
         mainComments={mainComments}
         replies={replies}
         episodeId={episodeId}
-        setOptimisticComments={setOptimisticComments}
+        // setOptimisticComments={setOptimisticComments}
       />
     </>
   );

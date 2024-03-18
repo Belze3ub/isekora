@@ -11,14 +11,14 @@ import { Button } from "./ui/button";
 
 interface Props {
   comment: CommentUser;
-  setOptimisticComments?: (comment: CommentUser) => void;
+  // setOptimisticComments?: (comment: CommentUser) => void;
   episodeId: number;
   replies?: CommentUser[],
 }
 
 const CommentTest = ({
   comment,
-  setOptimisticComments,
+  // setOptimisticComments,
   episodeId,
   replies,
 }: Props) => {
@@ -76,18 +76,18 @@ const CommentTest = ({
         </div>
         {isReplying && session?.user?.id && (
           <div className="mt-5">
-            {setOptimisticComments && (
+            {/* {setOptimisticComments && ( */}
               <CommentFormTest
                 episodeId={episodeId}
                 session={session}
-                setOptimisticComments={setOptimisticComments}
+                // setOptimisticComments={setOptimisticComments}
                 parentId={comment.comment_id}
                 isReplying={isReplying}
                 setIsReplying={setIsReplying}
                 showResponses={showResponses}
                 setShowResponses={setShowResponses}
               />
-            )}
+            {/* )} */}
           </div>
         )}
         <div>

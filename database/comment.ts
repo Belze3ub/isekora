@@ -26,6 +26,31 @@ export const fetchCommentsForEpisode = async (
   return comments;
 };
 
+export const fetchCommentById = async (
+  comment_id: number
+): Promise<CommentUser | null> => {
+  let comment: CommentUser | null = null;
+  try {
+    const { data, error } = await supabase.rpc('fetch_comment_by_id', {
+      comm_id: comment_id,
+    });
+    if (error) {
+      console.error(
+        `Error fetching comment with comment_id: ${comment_id} - ${error.message}`
+      );
+    } else {
+      comment = data[0];
+    }
+  } catch (error) {
+    if (error instanceof Error) {
+      console.error(
+        `Error fetching comment with comment_id: ${comment_id} - ${error.message}`
+      );
+    }
+  }
+  return comment;
+};
+
 export const createComment = async (
   commentText: string,
   episodeId: number,
@@ -33,18 +58,28 @@ export const createComment = async (
   spoiler?: boolean,
   parentId?: number
 ) => {
-  const { data, error } = await supabase.from('comment').insert([
-    {
-      episode_id: episodeId,
-      user_id: userId,
-      comment_text: commentText,
-      spoiler: spoiler,
-      parent_id: parentId || null,
-    },
-  ]);
-  if (error) {
-    console.error(error);
-  } else {
-    return data;
+  try {
+    const { data, error } = await supabase.from('comment').insert([
+      {
+        episode_id: episodeId,
+        user_id: userId,
+        comment_text: commentText,
+        spoiler: spoiler,
+        parent_id: parentId || null,
+      },
+    ]);
+    if (error) {
+      throw new Error(
+        `Error inserting comment: ${commentText} to database - ${error.message}`
+      );
+    } else {
+      return data;
+    }
+  } catch (error) {
+    if (error instanceof Error) {
+      throw new Error(
+        `Error inserting comment: ${commentText} to database - ${error.message}`
+      );
+    }
   }
 };
