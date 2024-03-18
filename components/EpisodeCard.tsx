@@ -10,12 +10,14 @@ interface EpisodeProps {
   episode: Episode;
   titleSlug: string;
   title_english: string;
+  title_romaji: string;
 }
 
 const EpisodeCard = ({
   episode: { episode_number, episode_thumbnail, create_date },
   titleSlug,
   title_english,
+  title_romaji,
 }: EpisodeProps) => {
   const [imgSrc, setImgSrc] = useState(episode_thumbnail);
   const date = create_date && timestampToDate(create_date);
@@ -30,7 +32,7 @@ const EpisodeCard = ({
               fill
               sizes="(max-width: 600px) 100vw, 600px"
               className="object-cover"
-              alt={`Thumbnail for episode ${episode_number} for ${title_english}`}
+              alt={`Miniaturka do odcinka numer ${episode_number} dla tytułu ${title_romaji || title_english}`}
             />
           ) : (
             <div className="absolute z-10 inset-0 place-items-center text-2xl grid">

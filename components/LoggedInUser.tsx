@@ -8,22 +8,26 @@ import {
 } from './ui/dropdown-menu';
 import { Button } from './ui/button';
 import Link from 'next/link';
+import { FaRegUser } from 'react-icons/fa';
 
 const LoggedInUser = (session: Session) => {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
         <Avatar>
-          <Button variant="ghost" size="icon">
-            <AvatarImage src={session.user?.image!} />
-            <span className="sr-only">User Menu</span>
+          <Button size="icon">
+            <AvatarImage src={session.user?.image!} alt='Awatar użytkownika' />
+            <span className="sr-only">Menu Użytkownika</span>
+            <AvatarFallback>
+              <FaRegUser size={20} />
+            </AvatarFallback>
           </Button>
         </Avatar>
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end">
         <DropdownMenuItem>
           <Link href="/api/auth/signout" className="ml-5">
-            Sign Out
+            Wyloguj
           </Link>
         </DropdownMenuItem>
       </DropdownMenuContent>

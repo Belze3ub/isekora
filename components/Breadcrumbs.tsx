@@ -15,7 +15,7 @@ const Breadcrumbs = ({ title }: { title?: string }) => {
 
   return (
     <>
-      <Link href="/" className="hover:text-accent">
+      <Link href="/" className="hover:text-accent py-2">
         Home
       </Link>
       {pathnames.map((value, index) => {
@@ -25,16 +25,14 @@ const Breadcrumbs = ({ title }: { title?: string }) => {
         const to = `/${pathnames.slice(0, index + 1).join('/')}`;
 
         return (
-          <div key={to} className='flex items-center'>
+          <div key={to} className="flex items-center">
             <div className="mx-2">
               <LuDot size={20} />
             </div>
             {last ? (
-              <div className="cursor-default">
-                {value}
-              </div>
+              <div className="cursor-default">{value}</div>
             ) : (
-              <Link href={to} className="hover:text-accent">
+              <Link href={to} className="hover:text-accent py-2">
                 {value}
               </Link>
             )}

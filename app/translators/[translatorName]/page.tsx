@@ -48,7 +48,10 @@ const TranslatorDetailPage = async ({
           <div className="gap-5 md:col-span-1 self-start">
             <CoverImage
               src={translator.translator_logo || placeholder}
-              alt={translator.translator_name || 'Unknown translator'}
+              alt={
+                `Logo grupy suberskiej ${translator.translator_name}` ||
+                'Logo nieznanej grupy suberskiej'
+              }
               ratioClass="aspect-square"
               radiusClass="rounded-[100vw]"
               centerClass={true}
@@ -111,14 +114,14 @@ const TranslatorDetailPage = async ({
                     <CoverImage
                       src={anime.cover_extra_large_image || placeholder}
                       alt={
-                        anime.title_romaji ||
-                        anime.title_english ||
-                        'Title Unknown'
+                        `Zdjęcie okładki dla tytułu: ${
+                          anime.title_romaji || anime.title_english
+                        }` || 'Zdjęcie okładki dla nieznanego tytułu'
                       }
                       title={
                         anime.title_romaji ||
                         anime.title_english ||
-                        'Title Unknown'
+                        'Nieznany tytuł'
                       }
                     />
                   </Link>

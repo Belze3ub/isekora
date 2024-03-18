@@ -72,7 +72,10 @@ const AnimeDetailPage = async ({ params: { slug } }: Props) => {
                     <div className="min-w-[5rem] grid items-center">
                       <CoverImage
                         src={anime.node.coverImage.medium}
-                        alt={anime.node.title.romaji}
+                        alt={
+                          `Zdjęcie okładki dla tytułu: ${anime.node.title.romaji}` ||
+                          'Zdjęcie okładki dla nieznanego tytułu'
+                        }
                       />
                     </div>
                     <div className="p-2">
@@ -96,6 +99,7 @@ const AnimeDetailPage = async ({ params: { slug } }: Props) => {
             key={episode.episode_id}
             episode={episode}
             title_english={anime.title.english}
+            title_romaji={anime.title.romaji}
             titleSlug={slug}
           />
         ))}
@@ -120,7 +124,10 @@ const AnimeDetailPage = async ({ params: { slug } }: Props) => {
                     <div className="min-w-[5rem] grid items-center">
                       <CoverImage
                         src={anime.mediaRecommendation.coverImage.medium}
-                        alt={anime.mediaRecommendation.title.romaji}
+                        alt={
+                          `Zdjęcie okładki dla tytułu: ${anime.mediaRecommendation.title.romaji}` ||
+                          'Zdjęcie okładki dla nieznanego tytułu'
+                        }
                       />
                     </div>
                     <div className="p-2 w-full flex flex-col justify-between">

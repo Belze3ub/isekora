@@ -37,7 +37,10 @@ const EpisodeUrlList = ({ slug, episodeNumber, players, episodes }: Props) => {
                       src={player.translator_logos[i]}
                       width={30}
                       height={30}
-                      alt="Translator Name"
+                      alt={
+                        `Logo grupy suberskiej ${player.translator_names[i]}` ||
+                        'Logo nieznanej grupy suberskiej'
+                      }
                       className="mr-1 rounded-full"
                     />
                   )}

@@ -2,7 +2,7 @@
 import { addComment } from '@/app/actions/addComment';
 import { CommentUser } from '@/database/types/types';
 import { Session } from 'next-auth';
-import { useRef, useState } from 'react';
+import { useRef, useState, useTransition } from 'react';
 import TextareaAutosize from 'react-textarea-autosize';
 import { Button } from './ui/button';
 import { Label } from './ui/label';
@@ -16,7 +16,7 @@ import {
   FormLabel,
   FormMessage,
 } from './ui/form';
-import { useForm } from 'react-hook-form';
+import { useForm, useWatch } from 'react-hook-form';
 import { z } from 'zod';
 import { CommentSchema, Inputs } from '@/schemas/CommentSchema';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -45,8 +45,6 @@ const CommentFormTest = ({
   showResponses,
   setShowResponses,
 }: Props) => {
-  const [commentText, setCommentText] = useState('');
-
   const form = useForm<Inputs>({
     resolver: zodResolver(CommentSchema),
     defaultValues: {
@@ -58,27 +56,38 @@ const CommentFormTest = ({
     },
   });
 
+  const [_, startTransition] = useTransition();
+
   const onSubmit = async (data: Inputs) => {
     form.reset();
-    setIsReplying && isReplying && setIsReplying(false);
-    setOptimisticComments({
-      comment_id: Math.random(),
-      comment_text: data.commentText,
-      episode_id: data.episodeId,
-      user_id: data.userId,
-      name: session.user?.name!,
-      image: session.user?.image!,
-      create_date: new Date().toString(),
-      update_date: new Date().toString(),
-      spoiler: data.spoiler || false,
-      parent_id: data.parentId || null,
-    });
-    setShowResponses && !showResponses && setShowResponses(true);
+    if (setIsReplying && isReplying) {
+      setIsReplying(false);
+    }
+    startTransition(() => {
+      setOptimisticComments({
+        comment_id: Math.random(),
+        comment_text: data.commentText,
+        episode_id: data.episodeId,
+        user_id: data.userId,
+        name: session.user?.name!,
+        image: session.user?.image!,
+        create_date: new Date().toString(),
+        update_date: new Date().toString(),
+        spoiler: data.spoiler || false,
+        parent_id: data.parentId || null,
+      });
+    })
+    if (setShowResponses && !showResponses) {
+      setShowResponses(true);
+    }
+
     const result = await addComment(data);
     if (result?.error) {
       console.error(result.error);
     }
   };
+
+  const commentText = form.watch('commentText');
 
   return (
     <Form {...form}>
@@ -89,14 +98,15 @@ const CommentFormTest = ({
           render={({ field }) => (
             <FormItem>
               <FormControl>
-                {/* <Textarea
+                <Textarea
                   placeholder={`${
                     parentId ? 'Dodaj odpowiedź...' : 'Dodaj komentarz...'
                   }`}
                   className="w-full rounded-xl resize-none p-3 focus-visible:ring-0 bg-secondary min-h-[112px]"
                   {...field}
-                /> */}
-                <AutosizeTextarea
+                  maxLength={800}
+                />
+                {/* <AutosizeTextarea
                   placeholder={`${
                     parentId ? 'Dodaj odpowiedź...' : 'Dodaj komentarz...'
                   }`}
@@ -106,7 +116,7 @@ const CommentFormTest = ({
                   value={commentText}
                   onChange={(e) => setCommentText(e.target.value)}
                   maxLength={800}
-                />
+                /> */}
               </FormControl>
               <FormMessage />
             </FormItem>

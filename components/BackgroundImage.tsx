@@ -12,7 +12,7 @@ const BackgroundImage = ({ cover, banner, alt }: Props) => {
     <div className="absolute w-full overflow-hidden -z-10 h-[40vh] md:h-[60vh] lg:h-[75vh]">
       {(banner || cover) && (
         <Image
-          alt={`Tło dla ${alt}`}
+          alt={`Tło dla tytułu: ${alt}`}
           className="object-cover blur-[5px] "
           src={banner || cover || ''}
           fill

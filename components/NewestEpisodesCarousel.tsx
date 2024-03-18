@@ -35,8 +35,11 @@ const NewestEpisodesCarousel = ({ episodes }: { episodes: NewestEpisode[] }) => 
                 >
                   <CoverImage
                     src={anime.cover_extra_large_image || placeholder}
-                    alt={anime.title_romaji || 'Unknown title'}
-                    title={anime.title_romaji || 'Unknown title'}
+                    alt={
+                      `Zdjęcie okładki dla tytułu: ${anime.title_romaji}` ||
+                      'Zdjęcie okładki dla nieznanego tytułu'
+                    }
+                    title={anime.title_romaji || 'Nieznany tytuł'}
                     episodeNumber={anime.episode_number}
                   />
                 </Link>
@@ -46,11 +49,11 @@ const NewestEpisodesCarousel = ({ episodes }: { episodes: NewestEpisode[] }) => 
         ))}
       </CarouselContent>
       <CarouselPrevious
-        className="absolute left-2 hover:bg-cyan-300"
+        className="absolute left-2 hover:bg-accent"
         variant="default"
       />
       <CarouselNext
-        className="absolute right-1 hover:bg-cyan-300"
+        className="absolute right-2 hover:bg-accent"
         variant="default"
       />
     </Carousel>

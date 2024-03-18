@@ -17,7 +17,7 @@ const Navbar = async () => {
       <nav className="flex-between card w-full gap-5 p-4 bg-primary-100 flex-wrap">
         <div className="flex items-center gap-5">
           <Link href="/" className="flex gap-2">
-            <Image src={logo} width={30} height={30} alt="Isekora" />
+            <Image src={logo} width={30} height={30} alt="Logo Isekora" />
             <p className="h2-bold">Isekora</p>
           </Link>
           <div className="hidden md:block">
@@ -28,7 +28,7 @@ const Navbar = async () => {
           <SearchModal />
           {/* <ThemeToggle /> */}
           <div className="">
-            {!session && <Link href="/api/auth/signin">Sign In</Link>}
+            {!session && <Link href="/api/auth/signin">Zaloguj</Link>}
             {session && (
               // <div>
               //   {session?.user?.name}

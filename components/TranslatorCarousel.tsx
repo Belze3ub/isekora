@@ -32,10 +32,13 @@ const TranslatorCarousel = ({ translators }: Props) => {
             <Link href={`/translators/${translator.translator_name}`}>
               <CoverImage
                 src={translator.translator_logo || placeholder}
-                alt={translator.translator_name || 'Unknown translator'}
-                title={translator.translator_name || 'Unknown translator'}
-                ratioClass='aspect-square'
-                radiusClass='rounded-[100vw]'
+                alt={
+                  `Logo grupy suberskiej ${translator.translator_name}` ||
+                  'Logo nieznanej grupy suberskiej'
+                }
+                title={translator.translator_name || 'Nieznana grupa suberska'}
+                ratioClass="aspect-square"
+                radiusClass="rounded-[100vw]"
                 centerClass={true}
               />
             </Link>
@@ -43,11 +46,11 @@ const TranslatorCarousel = ({ translators }: Props) => {
         ))}
       </CarouselContent>
       <CarouselPrevious
-        className="absolute left-2 hover:bg-cyan-300"
+        className="absolute left-2 hover:bg-accent"
         variant="default"
       />
       <CarouselNext
-        className="absolute right-1 hover:bg-cyan-300"
+        className="absolute right-2 hover:bg-accent"
         variant="default"
       />
     </Carousel>

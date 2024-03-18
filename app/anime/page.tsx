@@ -36,7 +36,7 @@ const AnimeListPage = async ({ searchParams }: Props) => {
   return (
     <div className="container">
       <GenreList genres={allGenres} />
-      <div className='mb-5'>
+      <div className="mb-5">
         <FormatSelect formats={formats} />
       </div>
       {animes.length !== 0 ? (
@@ -51,10 +51,11 @@ const AnimeListPage = async ({ searchParams }: Props) => {
                 <CoverImage
                   src={anime.cover_extra_large_image || placeholder}
                   alt={
-                    anime.title_romaji || anime.title_english || 'Title Unknown'
+                    `Zdjęcie okładki dla tytułu: ${anime.title_romaji || anime.title_english}` ||
+                    'Zdjęcie okładki dla nieznanego tytułu'
                   }
                   title={
-                    anime.title_romaji || anime.title_english || 'Title Unknown'
+                    anime.title_romaji || anime.title_english || 'Nieznany tytuł'
                   }
                 />
               </Link>

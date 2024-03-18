@@ -32,8 +32,11 @@ const EpisodeCarousel = ({ episodes }: Props) => {
             <Link href={`/anime/${episode.title_romaji_slug}`}>
               <CoverImage
                 src={episode.cover_extra_large_image || placeholder}
-                alt={episode.title_romaji || 'Unknown title'}
-                title={episode.title_romaji || 'Unknown title'}
+                alt={
+                  `Zdjęcie okładki dla tytułu: ${episode.title_romaji}` ||
+                  'Zdjęcie okładki dla nieznanego tytułu'
+                }
+                title={episode.title_romaji || 'Nieznany tytuł'}
                 episodeNumber={episode.episode_number}
               />
             </Link>
@@ -41,11 +44,11 @@ const EpisodeCarousel = ({ episodes }: Props) => {
         ))}
       </CarouselContent>
       <CarouselPrevious
-        className="absolute left-2 hover:bg-cyan-300"
+        className="absolute left-2 hover:bg-accent"
         variant="default"
       />
       <CarouselNext
-        className="absolute right-1 hover:bg-cyan-300"
+        className="absolute right-2 hover:bg-accent"
         variant="default"
       />
     </Carousel>

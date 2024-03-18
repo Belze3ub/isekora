@@ -9,11 +9,18 @@ const TranslatorsPage = async () => {
   return (
     <div className="grid gap-3 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 my-3 container">
       {translators.map((translator) => (
-        <Link href={`/translators/${translator.translator_name}`} key={translator.translator_id}>
+        <Link
+          href={`/translators/${translator.translator_name}`}
+          key={translator.translator_id}
+        >
           <CoverImage
             src={translator.translator_logo || placeholder}
-            alt={translator.translator_name || 'Unknown translator'}
-            title={translator.translator_name || 'Unknown translator'}
+            alt={
+              `Logo grupy suberskiej ${translator.translator_name}` ||
+              'Logo nieznanej grupy suberskiej'
+            }
+            // alt={translator.translator_name || 'Unknown translator'}
+            title={translator.translator_name || 'Nieznana grupa suberska'}
             ratioClass="aspect-square"
             radiusClass="rounded-[100vw]"
             centerClass={true}
