@@ -1,21 +1,48 @@
 'use client';
 
 import { Episode, UrlTranslator } from '@/database/types/types';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import VideoContainer from './VideoContainer';
 import { Button } from './ui/button';
 import Image from 'next/image';
 import EpisodeNav from './EpisodeNav';
+import supabase from '@/database/dbConfig';
+import { fetchEpisodeUrls } from '@/database/url';
 
 interface Props {
   slug: string;
   episodeNumber: string;
-  players: UrlTranslator[];
+  initialPlayers: UrlTranslator[];
   episodes: Episode[];
 }
 
-const EpisodeUrlList = ({ slug, episodeNumber, players, episodes }: Props) => {
-  const [url, setUrl] = useState<string>(players[0].urls[0]);
+const EpisodeUrlList = ({
+  slug,
+  episodeNumber,
+  initialPlayers,
+  episodes,
+}: Props) => {
+  const [url, setUrl] = useState<string>(initialPlayers[0].urls[0]);
+  const [players, setPlayers] = useState(initialPlayers);
+
+  useEffect(() => {
+    const episodeSubscription = supabase
+      .channel('url')
+      .on(
+        'postgres_changes',
+        { event: '*', schema: 'public', table: 'url' },
+        async () => {
+          const players = await fetchEpisodeUrls(slug, episodeNumber);
+          setPlayers(players);
+        }
+      )
+      .subscribe();
+
+    return () => {
+      supabase.removeChannel(episodeSubscription);
+    };
+  }, [slug, episodeNumber]);
+  
   return (
     <div className="flex flex-col gap-5">
       <EpisodeNav

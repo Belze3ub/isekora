@@ -22,7 +22,8 @@ const EpisodePage = async ({ params: { slug, episodeNumber } }: Props) => {
       <EpisodeUrlList
         slug={slug}
         episodeNumber={episodeNumber}
-        players={players}
+        // players={players}
+        initialPlayers={players}
         episodes={episodes}
       />
       {/* <CommentsSection slug={slug} episodeNumber={episodeNumber} /> */}
