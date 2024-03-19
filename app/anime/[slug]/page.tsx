@@ -1,6 +1,7 @@
 import AnimeGenresList from '@/components/AnimeGenresList';
 import CoverImage from '@/components/CoverImage';
 import EpisodeCard from '@/components/EpisodeCard';
+import EpisodeList from '@/components/EpisodeList';
 import NextEpisodeCard from '@/components/NextEpisodeCard';
 import { fetchAnimeByAnilistId, fetchAnimeBySlug } from '@/database/anime';
 import { fetchEpisodesBySlug } from '@/database/episode';
@@ -93,7 +94,8 @@ const AnimeDetailPage = async ({ params: { slug } }: Props) => {
         </div>
       )}
       <h3 className="h3-bold mt-4 mb-2">Odcinki</h3>
-      <div className="grid gap-3 md:grid-cols-[repeat(2,minmax(100px,500px))] lg:grid-cols-[repeat(3,minmax(100px,500px))] xl:grid-cols-[repeat(4,minmax(100px,500px))]">
+      <EpisodeList slug={slug} anime={anime} initialEpisodes={episodes} />
+      {/* <div className="grid gap-3 md:grid-cols-[repeat(2,minmax(100px,500px))] lg:grid-cols-[repeat(3,minmax(100px,500px))] xl:grid-cols-[repeat(4,minmax(100px,500px))]">
         {episodes.map((episode) => (
           <EpisodeCard
             key={episode.episode_id}
@@ -109,7 +111,7 @@ const AnimeDetailPage = async ({ params: { slug } }: Props) => {
             timeUntilAiring={anime.nextAiringEpisode.airingAt}
           />
         )}
-      </div>
+      </div> */}
       {recommendedAnime.length !== 0 && (
         <div>
           <h3 className="h3-semibold mt-4 mb-2">Podobne serie</h3>
