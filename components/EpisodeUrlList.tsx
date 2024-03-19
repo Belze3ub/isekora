@@ -49,7 +49,7 @@ const EpisodeUrlList = ({
         slug={slug}
         episodeNumber={episodeNumber}
         url={url}
-        episodes={episodes}
+        initialEpisodes={episodes}
       />
       {url && <VideoContainer url={url} />}
       <div className="flex flex-col sm:grid gap-y-2 gap-x-5 grid-cols-[auto_1fr] sm:items-center">

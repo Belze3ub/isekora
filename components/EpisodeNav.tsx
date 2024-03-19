@@ -11,15 +11,47 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from './ui/tooltip';
+import { useEffect, useState } from 'react';
+import supabase from '@/database/dbConfig';
 
 interface Props {
   slug: string;
   episodeNumber: string;
   url: string;
-  episodes: Episode[];
+  initialEpisodes: Episode[];
 }
 
-const EpisodeNav = ({ slug, episodeNumber, url, episodes }: Props) => {
+const EpisodeNav = ({ slug, episodeNumber, url, initialEpisodes }: Props) => {
+  const [episodes, setEpisodes] = useState(initialEpisodes);
+
+  useEffect(() => {
+    const episodeSubscription = supabase
+      .channel('episode')
+      .on(
+        'postgres_changes',
+        { event: '*', schema: 'public', table: 'episode' },
+        async (payload) => {
+          if (payload.eventType === 'DELETE') {
+            const deletedEpisode = payload.old as Episode;
+            setEpisodes((prevEpisodes) =>
+              prevEpisodes.filter(
+                (prevEpisode) =>
+                  prevEpisode.episode_id !== deletedEpisode.episode_id
+              )
+            );
+          } else if (payload.eventType === 'INSERT') {
+            const newEpisode = payload.new as Episode;
+            setEpisodes((prevEpisodes) => [...prevEpisodes, newEpisode]);
+          }
+        }
+      )
+      .subscribe();
+
+    return () => {
+      supabase.removeChannel(episodeSubscription);
+    };
+  }, []);
+  
   const episodeArr = episodes.map((episode) => Number(episode.episode_number));
   episodeArr.sort((a, b) => a - b);
   const currentEpisodeIndex = episodeArr.indexOf(Number(episodeNumber));

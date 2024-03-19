@@ -41,7 +41,7 @@ const EpisodeList = ({ slug, anime, initialEpisodes }: Props) => {
     return () => {
       supabase.removeChannel(episodeSubscription);
     };
-  }, [slug, setEpisodes]);
+  }, []);
 
   return (
     <div className="grid gap-3 md:grid-cols-[repeat(2,minmax(100px,500px))] lg:grid-cols-[repeat(3,minmax(100px,500px))] xl:grid-cols-[repeat(4,minmax(100px,500px))]">
