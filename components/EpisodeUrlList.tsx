@@ -25,7 +25,7 @@ const EpisodeUrlList = ({ slug, episodeNumber, players, episodes }: Props) => {
         episodes={episodes}
       />
       {url && <VideoContainer url={url} />}
-      <div className="flex flex-col sm:grid gap-y-2 gap-x-5 grid-cols-[auto_1fr] items-center">
+      <div className="flex flex-col sm:grid gap-y-2 gap-x-5 grid-cols-[auto_1fr] sm:items-center">
         {players.map((player) => (
           <React.Fragment key={player.player_name}>
             <div>{player.player_name.toUpperCase()}</div>

@@ -201,7 +201,7 @@ const CommentFormTest = ({
             </FormItem>
           )}
         />
-        <div className="flex-between mt-2">
+        <div className="flex flex-col items-center mt-2 gap-2 xs:flex-row justify-between">
           <FormField
             control={form.control}
             name="spoiler"
@@ -216,7 +216,11 @@ const CommentFormTest = ({
                     onCheckedChange={field.onChange}
                   />
                 </FormControl>
-                <FormLabel htmlFor="spoiler" className="text-base mt-0">
+                <FormLabel
+                  htmlFor="spoiler"
+                  className="text-base"
+                  style={{ marginTop: 0 }}
+                >
                   Spoiler
                 </FormLabel>
                 <FormMessage />

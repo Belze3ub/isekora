@@ -13,13 +13,14 @@ const BackgroundImage = ({ cover, banner, alt }: Props) => {
       {(banner || cover) && (
         <Image
           alt={`Tło dla tytułu: ${alt}`}
-          className="object-cover blur-[5px] "
+          className="object-cover blur-[5px]"
           src={banner || cover || ''}
           fill
           sizes="100vw"
+          quality={1}
         />
       )}
-      <div className="absolute inset-0 bg-gradient-to-b from-[rgba(0,0,0,0.5)] to-background to-90%" />
+      <div className="absolute inset-0 bg-gradient-to-b from-[rgba(0,0,0,0.5)] to-background" />
     </div>
   );
 };
