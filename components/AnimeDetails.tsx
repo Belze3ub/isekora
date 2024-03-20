@@ -62,12 +62,6 @@ const AnimeDetails = ({ anime }: { anime: Anilist }) => {
             <div>{anime.duration} min</div>
           </div>
         )}
-        {/* <div>
-          <h4 className="font-bold">Studio</h4>
-          {anime.studios.nodes.map((studio) => (
-            <div key={studio.name}>{studio.name}</div>
-          ))}
-        </div> */}
         {anime.averageScore && (
           <div>
             <h4 className="font-bold">Średnia ocena</h4>

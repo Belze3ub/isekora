@@ -51,7 +51,8 @@ const EpisodeUrlList = ({
         url={url}
         initialEpisodes={episodes}
       />
-      {url && <VideoContainer url={url} />}
+      {/* {url && <VideoContainer url={url} />} */}
+      <iframe allow="fullscreen" src={url} className={`w-full aspect-video`} />
       <div className="flex flex-col sm:grid gap-y-2 gap-x-5 grid-cols-[auto_1fr] sm:items-center">
         {players.map((player) => (
           <React.Fragment key={player.player_name}>

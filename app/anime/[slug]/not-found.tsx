@@ -1,6 +1,6 @@
 const AnimeNotFoundPage = () => {
   return (
-    <div>Anime was not found</div>
+    <div>Nie znaleziono serii</div>
   )
 }
 

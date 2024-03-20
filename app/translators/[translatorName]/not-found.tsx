@@ -1,6 +1,6 @@
 const TranslatorNofFoundPage = () => {
   return (
-    <div>TranslatorNofFoundPage</div>
+    <div>Nie znaleziono grupy suberskiej</div>
   )
 }
 

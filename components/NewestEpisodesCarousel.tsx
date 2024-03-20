@@ -1,4 +1,7 @@
 import { NewestEpisode } from '@/database/types/types';
+import placeholder from '@/public/images/no-image-placeholder.svg';
+import Link from 'next/link';
+import CoverImage from './CoverImage';
 import {
   Carousel,
   CarouselContent,
@@ -6,16 +9,17 @@ import {
   CarouselNext,
   CarouselPrevious,
 } from './ui/carousel';
-import Link from 'next/link';
-import CoverImage from './CoverImage';
-import placeholder from '@/public/images/no-image-placeholder.svg'
 
 const chunk = (arr: NewestEpisode[], size: number) =>
   Array.from({ length: Math.ceil(arr.length / size) }, (v, i) =>
     arr.slice(i * size, i * size + size)
   );
 
-const NewestEpisodesCarousel = ({ episodes }: { episodes: NewestEpisode[] }) => {
+interface Props {
+  episodes: NewestEpisode[];
+}
+
+const NewestEpisodesCarousel = ({ episodes }: Props) => {
   const chunks = chunk(episodes, 12);
   return (
     <Carousel

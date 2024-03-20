@@ -15,15 +15,16 @@ export default async function Home() {
   const anime = await fetchAnimeBySeason(season, year);
   const episodes = await fetchNewestEpisodes(36);
   const translators = await fetchTranslators();
+
   return (
     <div className="p-[1rem]">
-        <h2 className="h1-bold mb-2 flex items-center justify-center gap-2 text-center">
-          <SeasonIcon season={season} />
-          <span>
-            {translatedSeason} {year}
-          </span>
-        </h2>
-        <AnimeCarousel anime={anime} />
+      <h2 className="h1-bold mb-2 flex items-center justify-center gap-2 text-center">
+        <SeasonIcon season={season} />
+        <span>
+          {translatedSeason} {year}
+        </span>
+      </h2>
+      <AnimeCarousel anime={anime} />
       <Separator
         orientation="horizontal"
         className="my-20 w-[50%] mx-auto h-1 rounded-full"

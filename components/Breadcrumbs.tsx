@@ -3,12 +3,6 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { LuDot } from 'react-icons/lu';
 
-// interface Props {
-//   slug: string;
-//   title: string;
-//   episodeNumber: string;
-// }
-
 const Breadcrumbs = ({ title }: { title?: string }) => {
   const currentPath = usePathname();
   const pathnames = currentPath.split('/').filter((x) => x);
@@ -40,23 +34,6 @@ const Breadcrumbs = ({ title }: { title?: string }) => {
         );
       })}
     </>
-    // <>
-    //   <Link href="/" className="hover:text-accent">
-    //     Home
-    //   </Link>
-    //   <div>/</div>
-    //   <Link href="/anime" className="hover:text-accent">
-    //     Anime
-    //   </Link>
-    //   <div>/</div>
-    //   <Link href={`/anime/${slug}`} className="hover:text-accent">
-    //     {title}
-    //   </Link>
-    //   <div>/</div>
-    //   <Link href={`/anime/${slug}/${episodeNumber}`} className="hover:text-accent">
-    //     {episodeNumber}
-    //   </Link>
-    // </>
   );
 };
 

@@ -1,4 +1,7 @@
-import React from 'react';
+import { NewestEpisode } from '@/database/types/types';
+import placeholder from '@/public/images/no-image-placeholder.svg';
+import Link from 'next/link';
+import CoverImage from './CoverImage';
 import {
   Carousel,
   CarouselContent,
@@ -6,10 +9,6 @@ import {
   CarouselNext,
   CarouselPrevious,
 } from './ui/carousel';
-import Link from 'next/link';
-import CoverImage from './CoverImage';
-import { NewestEpisode } from '@/database/types/types';
-import placeholder from '@/public/images/no-image-placeholder.svg';
 
 interface Props {
   episodes: NewestEpisode[];

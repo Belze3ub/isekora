@@ -1,29 +1,22 @@
-import { CommentUser } from "@/database/types/types"
-import CommentTest from "./CommentTest";
+import { CommentUser } from '@/database/types/types';
+import Comment from './Comment';
 
 interface Props {
   mainComments: CommentUser[];
   replies: CommentUser[];
   episodeId: number;
-  // setOptimisticComments: (comment: CommentUser) => void;
 }
 
-const CommentList = ({
-  mainComments,
-  replies,
-  episodeId,
-  // setOptimisticComments,
-}: Props) => {
+const CommentList = ({ mainComments, replies, episodeId }: Props) => {
   return (
     <>
       {mainComments.length !== 0 && (
         <div className="flex flex-col gap-5 mt-5">
           {mainComments.map((comment) => (
-            <CommentTest
+            <Comment
               key={comment.comment_id}
               comment={comment}
               episodeId={episodeId}
-              // setOptimisticComments={setOptimisticComments}
               replies={replies}
             />
           ))}
@@ -33,4 +26,4 @@ const CommentList = ({
   );
 };
 
-export default CommentList
+export default CommentList;

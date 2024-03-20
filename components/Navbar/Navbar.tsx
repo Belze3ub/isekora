@@ -30,12 +30,6 @@ const Navbar = async () => {
           <div className="">
             {!session && <Link href="/api/auth/signin">Zaloguj</Link>}
             {session && (
-              // <div>
-              //   {session?.user?.name}
-              //   <Link href="/api/auth/signout" className="ml-5">
-              //     Sign Out
-              //   </Link>
-              // </div>
               <LoggedInUser {...session} />
             )}
           </div>

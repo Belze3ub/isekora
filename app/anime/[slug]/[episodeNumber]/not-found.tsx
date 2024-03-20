@@ -1,6 +1,6 @@
 const EpisodeNotFoundPage = () => {
   return (
-    <div>Episode was not found</div>
+    <div>Nie znaleziono odcinka</div>
   )
 }
 

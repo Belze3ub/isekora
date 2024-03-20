@@ -24,7 +24,6 @@ const fetchAnime = cache((slug: string) => {
 });
 
 const AnimePageLayout = async ({ children, params: { slug } }: Props) => {
-  // const dbAnime = await fetchAnimeBySlug(slug);
   const dbAnime = await fetchAnime(slug);
   const anime = dbAnime && (await fetchAnimeInfo(dbAnime.anilist_id));
   if (!anime) notFound();

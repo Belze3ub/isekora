@@ -1,98 +1,189 @@
 'use client';
+import { addComment } from '@/app/actions/addComment';
+import { CommentSchema, Inputs } from '@/schemas/CommentSchema';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { Loader2 } from 'lucide-react';
+import { Session } from 'next-auth';
+import { useState } from 'react';
+import { useForm } from 'react-hook-form';
 import { Button } from './ui/button';
-import { useSession } from 'next-auth/react';
-import { FormEvent, useState } from 'react';
-import supabase from '@/database/dbConfig';
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from './ui/form';
+import { Input } from './ui/input';
 import { Switch } from './ui/switch';
-import { Label } from './ui/label';
-import { z } from 'zod';
-import TextareaAutosize from 'react-textarea-autosize';
-import { useRouter } from 'next/navigation';
-
-const commentSchema = z.object({
-  commentText: z
-    .string()
-    .min(1, 'Komentarz nie może być pusty')
-    .max(800, 'Komentarz nie może mieć więcej niż 800 znaków'),
-});
+import { Textarea } from './ui/textarea';
+import { useToast } from './ui/use-toast';
 
 interface Props {
   episodeId: number;
+  session: Session;
   parentId?: number;
-  setIsReplying?: (isReplying: Boolean) => void;
-  setShowResponses?: (showResponse: Boolean) => void;
+  isReplying?: boolean;
+  setIsReplying?: (isReplying: boolean) => void;
+  showResponses?: boolean;
+  setShowResponses?: (showResponses: boolean) => void;
 }
 
 const CommentForm = ({
   episodeId,
+  session,
   parentId,
+  isReplying,
   setIsReplying,
+  showResponses,
   setShowResponses,
 }: Props) => {
-  const router = useRouter();
-  const [commentText, setCommentText] = useState('');
-  const [spoiler, setSpoiler] = useState(false);
-  const [error, setError] = useState('');
-  const { data: session } = useSession();
-  const handleSubmit = async (e: FormEvent) => {
-    e.preventDefault();
-    // console.log(spoiler)
-    const result = commentSchema.safeParse({ commentText });
-    if (!result.success) {
-      setError(result.error.errors[0].message);
-      console.error(result.error);
-      return;
+  const form = useForm<Inputs>({
+    resolver: zodResolver(CommentSchema),
+    defaultValues: {
+      commentText: '',
+      spoiler: false,
+      episodeId: episodeId,
+      userId: session.user?.id,
+      parentId: parentId,
+    },
+  });
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const { toast } = useToast();
+
+  const onSubmit = async (data: Inputs) => {
+    setIsSubmitting(true);
+    if (setIsReplying && isReplying) {
+      setIsReplying(false);
     }
-    const { data, error } = await supabase.from('comment').insert([
-      {
-        episode_id: episodeId,
-        user_id: session?.user?.id,
-        comment_text: commentText,
-        spoiler: spoiler,
-        parent_id: parentId,
-      },
-    ]);
-    if (error) {
-      console.error(error);
-      setError(error.message);
-    } else {
-      setCommentText('');
-      setSpoiler(false);
-      setError('');
-      setIsReplying && setIsReplying(false);
-      setShowResponses && setShowResponses(true);
-      router.refresh();
+    if (setShowResponses && !showResponses) {
+      setShowResponses(true);
+    }
+
+    try {
+      await addComment(data);
+      toast({
+        title: 'Dodałeś nowy komentarz',
+      });
+      form.reset();
+      setIsSubmitting(false);
+    } catch (error) {
+      if (error instanceof Error) {
+        console.error(error.message);
+        toast({
+          title: 'Ups, coś poszło nie tak...',
+          description: error.message,
+          variant: 'destructive',
+        });
+      }
+      setIsSubmitting(false);
     }
   };
+
+  const commentText = form.watch('commentText');
+
   return (
-    <form onSubmit={handleSubmit}>
-      <TextareaAutosize
-        value={commentText}
-        onChange={(e) => setCommentText(e.target.value)}
-        maxLength={800}
-        className="w-full rounded-lg resize-none p-2 outline-none bg-secondary overflow-hidden h-[112px]"
-        minRows={4}
-        placeholder={parentId ? 'Dodaj odpowiedź' : 'Dodaj komentarz'}
-      />
-      {error && <p className="text-red-500">{error}</p>}
-      <div className="flex flex-col items-center gap-2 sm:flex-row flex-between mt-2">
-        <div className="flex items-center">
-          <Switch
-            id="spoiler"
-            className="mr-1 data-[state=checked]:bg-accent data-[state=unchecked]:bg-secondary"
-            checked={spoiler}
-            onCheckedChange={setSpoiler}
+    <Form {...form}>
+      <form onSubmit={form.handleSubmit(onSubmit)}>
+        <FormField
+          control={form.control}
+          name="commentText"
+          render={({ field }) => (
+            <FormItem>
+              <FormControl>
+                <Textarea
+                  placeholder={`${
+                    parentId ? 'Dodaj odpowiedź...' : 'Dodaj komentarz...'
+                  }`}
+                  className="w-full rounded-xl resize-none p-3 focus-visible:ring-0 bg-secondary min-h-[112px]"
+                  {...field}
+                  maxLength={800}
+                />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <FormField
+          control={form.control}
+          name="episodeId"
+          render={() => (
+            <FormItem>
+              <FormControl>
+                <Input type="hidden" name="episodeId" value={episodeId} />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <FormField
+          control={form.control}
+          name="userId"
+          render={() => (
+            <FormItem>
+              <FormControl>
+                <Input type="hidden" name="userId" value={session.user?.id} />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <FormField
+          control={form.control}
+          name="parentId"
+          render={() => (
+            <FormItem>
+              <FormControl>
+                <Input type="hidden" name="parentId" value={parentId} />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <div className="flex flex-col items-center mt-2 gap-2 xs:flex-row justify-between">
+          <FormField
+            control={form.control}
+            name="spoiler"
+            render={({ field }) => (
+              <FormItem className="flex items-center">
+                <FormControl>
+                  <Switch
+                    id="spoiler"
+                    name="spoiler"
+                    className="mr-1 data-[state=checked]:bg-accent data-[state=unchecked]:bg-secondary"
+                    checked={field.value}
+                    onCheckedChange={field.onChange}
+                  />
+                </FormControl>
+                <FormLabel
+                  htmlFor="spoiler"
+                  className="text-base"
+                  style={{ marginTop: 0 }}
+                >
+                  Spoiler
+                </FormLabel>
+                <FormMessage />
+              </FormItem>
+            )}
           />
-          <Label htmlFor="spoiler">Spoiler</Label>
+          <div>
+            <span className="font-bold">{commentText.length}</span>/
+            <span>800</span>
+          </div>
+          <Button type="submit" variant={'outline'} disabled={isSubmitting}>
+            {isSubmitting ? (
+              <>
+                <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                Dodawanie...
+              </>
+            ) : (
+              'Dodaj'
+            )}
+          </Button>
         </div>
-        <div>
-          <span className="font-bold">{commentText.length}</span>/800
-        </div>
-        <Button type="submit" variant={'outline'}>
-          Dodaj
-        </Button>
-      </div>
-    </form>
+      </form>
+    </Form>
   );
 };
 

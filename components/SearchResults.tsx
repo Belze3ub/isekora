@@ -6,7 +6,7 @@ import placeholder from '@/public/images/no-image-placeholder.svg';
 import { DialogClose } from '@radix-ui/react-dialog';
 import _ from 'lodash';
 import Link from 'next/link';
-import { useCallback, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import CoverImage from './CoverImage';
 
 interface Props {
@@ -17,23 +17,19 @@ interface Props {
 const SearchResults = ({ searchQuery, setSearchQuery }: Props) => {
   const [anime, setAnime] = useState<Anime[]>([]);
   const [isSearching, setIsSearching] = useState(false);
-  const fetchData = useCallback(
-    _.debounce(async (searchQuery) => {
-      const anime = await fetchAnime(searchQuery, 5);
-      setAnime(anime);
-      setIsSearching(false);
-    }, 1000),
-    []
-  );
 
   useEffect(() => {
-    if (searchQuery) {
-      setIsSearching(true);
-      fetchData(searchQuery);
-    } else {
-      setIsSearching(false);
-    }
-  }, [searchQuery, fetchData]);
+    setIsSearching(true);
+    const fetchData = _.debounce(async (searchQuery) => {
+        const anime = await fetchAnime(searchQuery, 5);
+        setAnime(anime);
+        setIsSearching(false);
+      }, 1000);
+    fetchData(searchQuery);
+    return () => {
+      fetchData.cancel();
+    };
+  }, [searchQuery]);
 
   return (
     <div className="bg-primary rounded-lg max-h-[80%] overflow-auto flex flex-col">
@@ -51,7 +47,9 @@ const SearchResults = ({ searchQuery, setSearchQuery }: Props) => {
               />
             </div>
             <div>
-              <h4 className="font-bold text-left line-clamp-2">{a.title_romaji}</h4>
+              <h4 className="font-bold text-left line-clamp-2">
+                {a.title_romaji}
+              </h4>
               <h5 className="text-left truncate">
                 {a.episodes} {a.episodes === 1 ? 'odcinek' : 'odcinków'}
               </h5>
@@ -61,11 +59,7 @@ const SearchResults = ({ searchQuery, setSearchQuery }: Props) => {
       ))}
       {anime.length === 0 && (
         <p className="text-center p-2">
-          {isSearching
-            ? 'Wyszukiwanie...'
-            : searchQuery && anime.length === 0
-            ? 'Nic nie znaleziono'
-            : ''}
+          {isSearching ? 'Wyszukiwanie...' : 'Nic nie znaleziono'}
         </p>
       )}
     </div>

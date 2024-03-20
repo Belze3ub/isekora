@@ -24,7 +24,6 @@ const TranslatorDetailPage = async ({
   params: { translatorName },
 }: Props) => {
   const translator_name = translatorName.replace('%20', ' ');
-  // const translator = await fetchTranslatorByName(translator_name);
   const translator = await fetchTranslator(translator_name);
   const translatorAnime = await fetchAnimeByTranslatorName(translator_name);
   const animeCount = translatorAnime.length;

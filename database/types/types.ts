@@ -17,7 +17,6 @@ export type UrlTranslator = {
   urls: string[];
   translator_names: string[];
   translator_logos: string[];
-  // episode_id: number;
 };
 
 export type CommentUser = Comment & { name: string; image: string };

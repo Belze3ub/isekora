@@ -1,11 +1,11 @@
 'use client';
-import { Comment, CommentUser } from '@/database/types/types';
-import { Session } from 'next-auth';
-import { useEffect, useOptimistic, useState } from 'react';
-import CommentFormTest from './CommentFormTest';
-import CommentList from './CommentList';
+import { fetchCommentsForEpisode } from '@/database/comment';
 import supabase from '@/database/dbConfig';
-import { fetchCommentById, fetchCommentsForEpisode } from '@/database/comment';
+import { CommentUser } from '@/database/types/types';
+import { Session } from 'next-auth';
+import { useEffect, useState } from 'react';
+import CommentList from './CommentList';
+import CommentForm from './CommentForm';
 
 interface Props {
   initialComments: CommentUser[];
@@ -15,12 +15,6 @@ interface Props {
 
 const Comments = ({ initialComments, episodeId, session }: Props) => {
   const [comments, setComments] = useState<CommentUser[]>(initialComments);
-  // const [optimisticComments, setOptimisticComments] = useOptimistic(
-  //   comments,
-  //   (state, newComment: CommentUser) => {
-  //     return [newComment, ...state];
-  //   }
-  // );
   useEffect(() => {
     const commentSubscription = supabase
       .channel('comment')
@@ -30,11 +24,6 @@ const Comments = ({ initialComments, episodeId, session }: Props) => {
         async () => {
           const newComments = await fetchCommentsForEpisode(episodeId);
           setComments(newComments);
-          // const comment_id = (payload.new as Comment).comment_id;
-          // const newComment = await fetchCommentById(comment_id);
-          // // const newComment = payload.new as CommentUser
-          // newComment &&
-          //   setComments((prevComments) => [...prevComments, newComment]);
         }
       )
       .subscribe();
@@ -57,11 +46,7 @@ const Comments = ({ initialComments, episodeId, session }: Props) => {
         Liczba komentarzy: {mainComments.length}
       </h2>
       {session?.user ? (
-        <CommentFormTest
-          episodeId={episodeId}
-          session={session}
-          // setOptimisticComments={setOptimisticComments}
-        />
+        <CommentForm episodeId={episodeId} session={session} />
       ) : (
         <p className="text-center p-5">Zaloguj się aby dodać komentarz</p>
       )}
@@ -69,7 +54,6 @@ const Comments = ({ initialComments, episodeId, session }: Props) => {
         mainComments={mainComments}
         replies={replies}
         episodeId={episodeId}
-        // setOptimisticComments={setOptimisticComments}
       />
     </>
   );
