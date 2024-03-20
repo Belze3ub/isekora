@@ -9,7 +9,7 @@ interface Props {
 
 const BackgroundImage = ({ cover, banner, alt }: Props) => {
   return (
-    <div className="absolute w-full overflow-hidden -z-10 h-[40vh] md:h-[60vh] lg:h-[75vh]">
+    <div className="absolute inset-0 overflow-hidden -z-10 h-[40vh] md:h-[60vh] lg:h-[75vh]">
       {(banner || cover) && (
         <Image
           alt={`Tło dla tytułu: ${alt}`}

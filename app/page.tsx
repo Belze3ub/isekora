@@ -17,14 +17,18 @@ export default async function Home() {
   const translators = await fetchTranslators();
 
   return (
-    <div className="p-[1rem]">
+    <div className="py-[1rem]">
       <h2 className="h1-bold mb-2 flex items-center justify-center gap-2 text-center">
         <SeasonIcon season={season} />
         <span>
           {translatedSeason} {year}
         </span>
       </h2>
-      <AnimeCarousel anime={anime} />
+      {anime.length !== 0 ? (
+        <AnimeCarousel anime={anime} />
+      ) : (
+        <p className='text-center'>Brak anime z obecnego sezonu</p>
+      )}
       <Separator
         orientation="horizontal"
         className="my-20 w-[50%] mx-auto h-1 rounded-full"

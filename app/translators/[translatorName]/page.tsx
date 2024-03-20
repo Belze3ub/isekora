@@ -83,7 +83,7 @@ const TranslatorDetailPage = async ({
                 Przetłumaczone anime: {animeCount}
               </div>
               <h1 className="h1-bold">{translator?.translator_name}</h1>
-              <h3 className="h3-semibold my-5">Opis</h3>
+              <h3 className="h3-semibold mt-4 mb-2">Opis</h3>
               {translator.translator_info ? (
                 <p
                   dangerouslySetInnerHTML={{
@@ -95,14 +95,14 @@ const TranslatorDetailPage = async ({
               )}
             </div>
             <div>
-              <h3 className="h3-bold">Najnowsze Odcinki</h3>
+              <h3 className="h3-bold mt-4 mb-2">Najnowsze Odcinki</h3>
               {newestEpisodes.length !== 0 ? (
                 <NewestEpisodesFromTranslator newestEpisodes={newestEpisodes} />
               ) : (
                 <p className="text-center">Brak odcinków</p>
               )}
             </div>
-            <h3 className="h3-bold">Wszystkie anime</h3>
+            <h3 className="h3-bold mt-4 mb-2">Wszystkie anime</h3>
             {translatorAnime.length !== 0 ? (
               <div className="grid gap-3 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 my-3">
                 {translatorAnime.map((anime) => (
