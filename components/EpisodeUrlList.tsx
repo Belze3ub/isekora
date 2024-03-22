@@ -52,7 +52,7 @@ const EpisodeUrlList = ({
         initialEpisodes={episodes}
       />
       {/* {url && <VideoContainer url={url} />} */}
-      <iframe allow="fullscreen" src={url} className={`w-full aspect-video`} />
+      <iframe allow="fullscreen" src={url} className={`w-full aspect-video`} title={`Odtwarzacz dla odcinka ${episodeNumber}`} />
       <div className="flex flex-col sm:grid gap-y-2 gap-x-5 grid-cols-[auto_1fr] sm:items-center">
         {initialPlayers.map((player) => (
           <React.Fragment key={player.player_name}>

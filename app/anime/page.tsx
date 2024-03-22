@@ -45,7 +45,7 @@ const AnimeListPage = async ({ searchParams }: Props) => {
         <>
           <PaginationComponent page={page} totalPages={totalPages} />
           <div className="grid gap-3 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 my-3">
-            {animes.map((anime) => (
+            {animes.map((anime, index) => (
               <Link
                 href={`/anime/${anime.title_romaji_slug}`}
                 key={anime.anime_id}
@@ -62,6 +62,7 @@ const AnimeListPage = async ({ searchParams }: Props) => {
                     anime.title_english ||
                     'Nieznany tytuł'
                   }
+                  priority={index === 0}
                 />
               </Link>
             ))}

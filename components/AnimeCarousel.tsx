@@ -38,7 +38,7 @@ const AnimeCarousel = ({ anime }: Props) => {
                   'Zdjęcie okładki dla nieznanego tytułu'
                 }
                 title={anime.title_romaji || 'Nieznany tytuł'}
-                priority={index < 6}
+                priority={index < 1}
               />
             </Link>
           </CarouselItem>

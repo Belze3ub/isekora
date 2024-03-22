@@ -69,7 +69,7 @@ const EpisodeNav = ({ slug, episodeNumber, url, initialEpisodes }: Props) => {
         className={!previousEpisode ? 'pointer-events-none' : ''}
         href={`/anime/${slug}/${previousEpisode}`}
       >
-        <Button className="border">
+        <Button className="border" aria-label="Poprzedni odcinek">
           <MdArrowLeft
             size={25}
             className={previousEpisode ? 'text-accent' : ''}
@@ -81,7 +81,7 @@ const EpisodeNav = ({ slug, episodeNumber, url, initialEpisodes }: Props) => {
         <TooltipProvider delayDuration={200}>
           <Tooltip>
             <TooltipTrigger asChild>
-              <Button className="border flex gap-2">
+              <Button className="border flex gap-2" aria-label="Lista odcinków">
                 <FaRegListAlt size={20} />
               </Button>
             </TooltipTrigger>
@@ -95,7 +95,10 @@ const EpisodeNav = ({ slug, episodeNumber, url, initialEpisodes }: Props) => {
         <Tooltip>
           <TooltipTrigger asChild>
             <Link href={url} target="_blank">
-              <Button className="border flex gap-2">
+              <Button
+                className="border flex gap-2"
+                aria-label="Otwórz w nowej karcie"
+              >
                 <CgArrowTopRightR size={20} />
               </Button>
             </Link>
@@ -111,7 +114,7 @@ const EpisodeNav = ({ slug, episodeNumber, url, initialEpisodes }: Props) => {
         className={!nextEpisode ? 'pointer-events-none' : ''}
         href={`/anime/${slug}/${nextEpisode}`}
       >
-        <Button className="border">
+        <Button className="border" aria-label="Następny odcinek">
           Następny
           <MdArrowRight
             size={25}

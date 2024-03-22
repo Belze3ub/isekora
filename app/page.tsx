@@ -12,12 +12,12 @@ import { getCurrentSeasonAndYear, seasonTranslations } from '@/lib/utils';
 export default async function Home() {
   const { season, year } = getCurrentSeasonAndYear();
   const translatedSeason = seasonTranslations[season];
-  const anime = await fetchAnimeBySeason('winter', year);
+  const anime = await fetchAnimeBySeason(season, year);
   const episodes = await fetchNewestEpisodes(36);
   const translators = await fetchTranslators();
 
   return (
-    <div className="py-[1rem]">
+    <div className="p-4">
       <h2 className="h1-bold mb-2 flex items-center justify-center gap-2 text-center">
         <SeasonIcon season={season} />
         <span>
@@ -31,7 +31,7 @@ export default async function Home() {
       )}
       <Separator
         orientation="horizontal"
-        className="my-20 w-[50%] mx-auto h-1 rounded-full"
+        className="my-5 sm:my-20 w-[50%] mx-auto h-1 rounded-full"
       />
       <div>
         <h2 className="h1-bold mb-2 text-center">Ostatnio dodane</h2>
@@ -50,7 +50,7 @@ export default async function Home() {
       </div>
       <Separator
         orientation="horizontal"
-        className="my-20 w-[50%] mx-auto h-1 rounded-full"
+        className="my-5 sm:my-20 w-[50%] mx-auto h-1 rounded-full"
       />
       <div>
         <h2 className="h1-bold mb-2 text-center">Grupy Suberskie</h2>

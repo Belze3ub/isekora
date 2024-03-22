@@ -24,7 +24,7 @@ const TranslatorCarousel = ({ translators }: Props) => {
       className="w-full relative"
     >
       <CarouselContent className="-ml-2">
-        {translators.map((translator) => (
+        {translators.map((translator, index) => (
           <CarouselItem
             key={translator.translator_id}
             className="basis-1/2 pl-2 sm:basis-1/3 md:basis-1/5 lg:basis-1/6 xl:basis-1/7"
@@ -40,6 +40,7 @@ const TranslatorCarousel = ({ translators }: Props) => {
                 ratioClass="aspect-square"
                 radiusClass="rounded-[100vw]"
                 centerClass={true}
+                priority={index === 0}
               />
             </Link>
           </CarouselItem>

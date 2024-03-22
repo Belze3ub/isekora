@@ -32,7 +32,7 @@ const NewestEpisodesCarousel = ({ episodes }: Props) => {
         {chunks.map((chunk, index) => (
           <CarouselItem key={index} className="w-full">
             <div className="grid grid-cols-6 grid-rows-2 gap-2">
-              {chunk.map((anime) => (
+              {chunk.map((anime, i) => (
                 <Link
                   href={`/anime/${anime.title_romaji_slug}/${anime.episode_number}`}
                   key={anime.episode_id}
@@ -45,7 +45,7 @@ const NewestEpisodesCarousel = ({ episodes }: Props) => {
                     }
                     title={anime.title_romaji || 'Nieznany tytuł'}
                     episodeNumber={anime.episode_number}
-                    priority={index === 0}
+                    priority={index === 0 && i === 0}
                   />
                 </Link>
               ))}

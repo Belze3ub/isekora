@@ -15,7 +15,7 @@ const MobileNav = async () => {
   return (
     <Sheet>
       <SheetTrigger asChild>
-        <Button variant="ghost" size="icon">
+        <Button variant="ghost" size="icon" aria-label='menu'>
           <IoMenu className="h-[1.5rem] w-[1.5rem]" />
         </Button>
       </SheetTrigger>

@@ -54,6 +54,7 @@ const TranslatorDetailPage = async ({ params: { translatorName } }: Props) => {
               ratioClass="aspect-square"
               radiusClass="rounded-[100vw]"
               centerClass={true}
+              priority
             />
             <div>
               <h3 className="h3-bold mb-2">Informacje o Tłumaczu</h3>
@@ -105,7 +106,7 @@ const TranslatorDetailPage = async ({ params: { translatorName } }: Props) => {
             <h3 className="h3-bold mt-4 mb-2">Wszystkie anime</h3>
             {translatorAnime.length !== 0 ? (
               <div className="grid gap-3 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 my-3">
-                {translatorAnime.map((anime) => (
+                {translatorAnime.map((anime, index) => (
                   <Link
                     href={`/anime/${anime.title_romaji_slug}`}
                     key={anime.anime_id}
@@ -122,6 +123,7 @@ const TranslatorDetailPage = async ({ params: { translatorName } }: Props) => {
                         anime.title_english ||
                         'Nieznany tytuł'
                       }
+                      priority={index === 0}
                     />
                   </Link>
                 ))}

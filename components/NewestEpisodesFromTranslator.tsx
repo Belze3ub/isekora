@@ -30,6 +30,7 @@ const NewestEpisodesFromTranslator = ({newestEpisodes}: Props) => {
                 alt={episode.title_romaji || 'Unknown title'}
                 title={episode.title_romaji || 'Unknown title'}
                 episodeNumber={episode.episode_number}
+                priority={index === 0}
               />
             </Link>
           </CarouselItem>

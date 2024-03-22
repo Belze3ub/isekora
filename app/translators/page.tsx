@@ -10,7 +10,7 @@ const TranslatorsPage = async () => {
   return (
     <div className="grid gap-3 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 my-3 container">
       <TranslatorsSubscription />
-      {translators.map((translator) => (
+      {translators.map((translator, index) => (
         <Link
           href={`/translators/${translator.translator_name}`}
           key={translator.translator_id}
@@ -25,6 +25,7 @@ const TranslatorsPage = async () => {
             ratioClass="aspect-square"
             radiusClass="rounded-[100vw]"
             centerClass={true}
+            priority={index === 0}
           />
         </Link>
       ))}

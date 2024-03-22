@@ -17,7 +17,10 @@ const SearchModal = () => {
   return (
     <div>
       <Dialog>
-        <DialogTrigger className="md:bg-secondary flex items-center gap-2 p-2 rounded-lg">
+        <DialogTrigger
+          className="md:bg-secondary flex items-center gap-2 p-2 rounded-lg"
+          aria-label="wyszukaj"
+        >
           <FaMagnifyingGlass />
           <p className="hidden md:block">Szukaj...</p>
         </DialogTrigger>
@@ -31,7 +34,12 @@ const SearchModal = () => {
               setSearchQuery={setSearchQuery}
             />
           </DialogHeader>
-          {searchQuery && <SearchResults searchQuery={searchQuery} setSearchQuery={setSearchQuery} />}
+          {searchQuery && (
+            <SearchResults
+              searchQuery={searchQuery}
+              setSearchQuery={setSearchQuery}
+            />
+          )}
         </DialogContent>
       </Dialog>
     </div>

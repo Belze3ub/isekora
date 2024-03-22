@@ -24,15 +24,15 @@ const FormatSelect = ({ formats }: { formats: { format: string }[] }) => {
 
   return (
     <Select onValueChange={(format) => handleSelect(format)} value={format}>
-      <SelectTrigger className="w-[180px]">
+      <SelectTrigger className="w-[180px]" aria-label='Wybierz rodzaj'>
         <SelectValue placeholder="Rodzaj" />
       </SelectTrigger>
       <SelectContent>
         <SelectGroup>
           <SelectLabel>Wybierz rodzaj...</SelectLabel>
-          <SelectItem value="all">Każdy</SelectItem>
+          <SelectItem value="all" aria-label='Każdy'>Każdy</SelectItem>
           {formats.map((format) => (
-            <SelectItem key={format.format} value={format.format}>
+            <SelectItem key={format.format} value={format.format} aria-label={format.format}>
               {format.format.toUpperCase()}
             </SelectItem>
           ))}
