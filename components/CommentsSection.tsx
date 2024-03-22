@@ -1,17 +1,15 @@
 import { authOptions } from '@/app/api/auth/[...nextauth]/authOptions';
 import { fetchCommentsForEpisode } from '@/database/comment';
-import { fetchEpisodeBySlugAndNumber } from '@/database/episode';
 import { getServerSession } from 'next-auth';
 import Comments from './Comments';
+import { Episode } from '@/database/types/types';
 
 interface Props {
-  slug: string;
-  episodeNumber: string;
+  episode: Episode;
 }
 
-const CommentsSection = async ({ slug, episodeNumber }: Props) => {
+const CommentsSection = async ({episode }: Props) => {
   const session = await getServerSession(authOptions);
-  const episode = await fetchEpisodeBySlugAndNumber(slug, episodeNumber);
   const initialComments = episode
     ? (await fetchCommentsForEpisode(episode.episode_id)).sort(
         (a, b) =>

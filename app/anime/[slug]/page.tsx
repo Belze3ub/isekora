@@ -7,6 +7,7 @@ import { RecommendedAnime, RelatedAnime } from '@/database/types/types';
 import fetchAnimeInfo from '@/lib/anilistQuery';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
+import AnimeEpisodesSubscription from './AnimeEpisodesSubscription';
 
 interface Props {
   params: {
@@ -21,22 +22,28 @@ const AnimeDetailPage = async ({ params: { slug } }: Props) => {
   if (!anime) notFound();
   const relatedAnime: RelatedAnime[] = [];
   const recommendedAnime: RecommendedAnime[] = [];
-  await Promise.all(anime.relations.edges.map(async (edge) => {
-    const foundAnime = await fetchAnimeByAnilistId(edge.node.id);
-    foundAnime &&
-      relatedAnime.push({
-        ...edge,
-        title_romaji_slug: foundAnime.title_romaji_slug,
-      });
-  }));
-  await Promise.all(anime.recommendations.nodes.map(async (node) => {
-    const foundAnime = await fetchAnimeByAnilistId(node.mediaRecommendation?.id);
-    foundAnime &&
-      recommendedAnime.push({
-        ...node,
-        title_romaji_slug: foundAnime.title_romaji_slug,
-      });
-  }));
+  await Promise.all(
+    anime.relations.edges.map(async (edge) => {
+      const foundAnime = await fetchAnimeByAnilistId(edge.node.id);
+      foundAnime &&
+        relatedAnime.push({
+          ...edge,
+          title_romaji_slug: foundAnime.title_romaji_slug,
+        });
+    })
+  );
+  await Promise.all(
+    anime.recommendations.nodes.map(async (node) => {
+      const foundAnime = await fetchAnimeByAnilistId(
+        node.mediaRecommendation?.id
+      );
+      foundAnime &&
+        recommendedAnime.push({
+          ...node,
+          title_romaji_slug: foundAnime.title_romaji_slug,
+        });
+    })
+  );
   relatedAnime.sort((a, b) => {
     let titleA = a.node.title.romaji.toLowerCase();
     let titleB = b.node.title.romaji.toLowerCase();
@@ -49,6 +56,7 @@ const AnimeDetailPage = async ({ params: { slug } }: Props) => {
   });
   return (
     <div>
+      <AnimeEpisodesSubscription animeId={dbAnime.anime_id} />
       <h1 className="h1-bold">{anime.title.romaji}</h1>
       <h2 className="h2-semibold">{anime.title.english}</h2>
       <h3 className="h3-semibold mt-4 mb-2">Opis</h3>

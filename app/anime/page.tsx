@@ -12,6 +12,7 @@ import Link from 'next/link';
 import placeholder from '@/public/images/no-image-placeholder.svg';
 import FormatSelect from '@/components/FormatSelect';
 import { Metadata } from 'next';
+import AnimeSubscription from './AnimeSubscription';
 
 interface Props {
   searchParams?: {
@@ -35,6 +36,7 @@ const AnimeListPage = async ({ searchParams }: Props) => {
   const formats = await fetchAnimeFormats();
   return (
     <div className="container">
+      <AnimeSubscription />
       <GenreList genres={allGenres} />
       <div className="mb-5">
         <FormatSelect formats={formats} />
@@ -51,11 +53,14 @@ const AnimeListPage = async ({ searchParams }: Props) => {
                 <CoverImage
                   src={anime.cover_extra_large_image || placeholder}
                   alt={
-                    `Zdjęcie okładki dla tytułu: ${anime.title_romaji || anime.title_english}` ||
-                    'Zdjęcie okładki dla nieznanego tytułu'
+                    `Zdjęcie okładki dla tytułu: ${
+                      anime.title_romaji || anime.title_english
+                    }` || 'Zdjęcie okładki dla nieznanego tytułu'
                   }
                   title={
-                    anime.title_romaji || anime.title_english || 'Nieznany tytuł'
+                    anime.title_romaji ||
+                    anime.title_english ||
+                    'Nieznany tytuł'
                   }
                 />
               </Link>

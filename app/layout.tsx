@@ -5,9 +5,9 @@ import { ThemeProvider } from '@/components/theme-provider';
 import Navbar from '../components/Navbar/Navbar';
 import AuthProvider from './auth/Provider';
 import NextTopLoader from 'nextjs-toploader';
-import config from '@/tailwind.config'
+import config from '@/tailwind.config';
 import { Toaster } from '@/components/ui/toaster';
-
+import EpisodesSubscription from './EpisodesSubscription';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -39,6 +39,7 @@ export default function RootLayout({
           <NextTopLoader showSpinner={false} color={color.DEFAULT} />
           <Navbar />
           <main>{children}</main>
+          <EpisodesSubscription />
           <Toaster />
         </AuthProvider>
         {/* </ThemeProvider> */}

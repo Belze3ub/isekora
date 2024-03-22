@@ -9,6 +9,7 @@ import placeholder from '@/public/images/no-image-placeholder.svg';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import { cache } from 'react';
+import TranslatorEpisodesSubscription from './TranslatorEpisodesSubscription';
 
 interface Props {
   params: {
@@ -18,11 +19,9 @@ interface Props {
 
 const fetchTranslator = cache((translator_name: string) => {
   return fetchTranslatorByName(translator_name);
-})
+});
 
-const TranslatorDetailPage = async ({
-  params: { translatorName },
-}: Props) => {
+const TranslatorDetailPage = async ({ params: { translatorName } }: Props) => {
   const translator_name = translatorName.replace('%20', ' ');
   const translator = await fetchTranslator(translator_name);
   const translatorAnime = await fetchAnimeByTranslatorName(translator_name);
@@ -34,6 +33,7 @@ const TranslatorDetailPage = async ({
   if (!translator) notFound();
   return (
     <>
+      <TranslatorEpisodesSubscription translatorId={translator.translator_id} />
       <BackgroundImage
         banner={translator?.translator_banner}
         cover={translator?.translator_logo}
@@ -136,7 +136,7 @@ const TranslatorDetailPage = async ({
   );
 };
 
-export async function generateMetadata({params}: Props) {
+export async function generateMetadata({ params }: Props) {
   const translator_name = params.translatorName.replace('%20', ' ');
   const translator = await fetchTranslatorByName(translator_name);
   return {
@@ -145,6 +145,6 @@ export async function generateMetadata({params}: Props) {
       ? `${translator?.translator_info}`
       : `Grupa tłumaczy ${translator?.translator_name}`,
   };
-};
+}
 
 export default TranslatorDetailPage;

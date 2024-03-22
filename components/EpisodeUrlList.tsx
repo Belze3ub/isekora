@@ -23,25 +23,25 @@ const EpisodeUrlList = ({
   episodes,
 }: Props) => {
   const [url, setUrl] = useState<string>(initialPlayers[0].urls[0]);
-  const [players, setPlayers] = useState(initialPlayers);
+  // const [players, setPlayers] = useState(initialPlayers);
 
-  useEffect(() => {
-    const episodeSubscription = supabase
-      .channel('url')
-      .on(
-        'postgres_changes',
-        { event: '*', schema: 'public', table: 'url' },
-        async () => {
-          const players = await fetchEpisodeUrls(slug, episodeNumber);
-          setPlayers(players);
-        }
-      )
-      .subscribe();
+  // useEffect(() => {
+  //   const episodeSubscription = supabase
+  //     .channel('url')
+  //     .on(
+  //       'postgres_changes',
+  //       { event: '*', schema: 'public', table: 'url' },
+  //       async () => {
+  //         const players = await fetchEpisodeUrls(slug, episodeNumber);
+  //         setPlayers(players);
+  //       }
+  //     )
+  //     .subscribe();
 
-    return () => {
-      supabase.removeChannel(episodeSubscription);
-    };
-  }, [slug, episodeNumber]);
+  //   return () => {
+  //     supabase.removeChannel(episodeSubscription);
+  //   };
+  // }, [slug, episodeNumber]);
   
   return (
     <div className="flex flex-col gap-5">
@@ -54,7 +54,7 @@ const EpisodeUrlList = ({
       {/* {url && <VideoContainer url={url} />} */}
       <iframe allow="fullscreen" src={url} className={`w-full aspect-video`} />
       <div className="flex flex-col sm:grid gap-y-2 gap-x-5 grid-cols-[auto_1fr] sm:items-center">
-        {players.map((player) => (
+        {initialPlayers.map((player) => (
           <React.Fragment key={player.player_name}>
             <div>{player.player_name.toUpperCase()}</div>
             <div className="flex gap-2 flex-wrap">

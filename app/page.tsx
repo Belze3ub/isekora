@@ -12,7 +12,7 @@ import { getCurrentSeasonAndYear, seasonTranslations } from '@/lib/utils';
 export default async function Home() {
   const { season, year } = getCurrentSeasonAndYear();
   const translatedSeason = seasonTranslations[season];
-  const anime = await fetchAnimeBySeason(season, year);
+  const anime = await fetchAnimeBySeason('winter', year);
   const episodes = await fetchNewestEpisodes(36);
   const translators = await fetchTranslators();
 
@@ -27,7 +27,7 @@ export default async function Home() {
       {anime.length !== 0 ? (
         <AnimeCarousel anime={anime} />
       ) : (
-        <p className='text-center'>Brak anime z obecnego sezonu</p>
+        <p className="text-center">Brak anime z obecnego sezonu</p>
       )}
       <Separator
         orientation="horizontal"

@@ -1,37 +1,6 @@
 import supabase from "./dbConfig";
 import { Episode, NewestEpisode } from "./types/types";
 
-// export const fetchNewestEpisodes = async (): Promise<NewestEpisode[]> => {
-//   let episodes: NewestEpisode[] = [];
-//   try {
-//     const { data, error } = await supabase
-//       .from('episode')
-//       .select(
-//         `
-//         *,
-//         anime:anime_id (*)
-//       `
-//       )
-//       .returns<NewestEpisode[]>()
-//       .order('added_date', { ascending: false })
-//       .limit(36);
-//     if (error) {
-//       console.error(
-//         `Error fetching data from episode table with season - ${error.message}`
-//       );
-//     } else {
-//       episodes = data;
-//     }
-//   } catch (error) {
-//     if (error instanceof Error) {
-//       console.error(
-//         `Error fetching data from episode table with season - ${error.message}`
-//       );
-//     }
-//   }
-//   return episodes;
-// };
-
 export const fetchNewestEpisodes = async (limit: number): Promise<NewestEpisode[]> => {
   let episodes: NewestEpisode[] = [];
   try {
