@@ -28,7 +28,7 @@ const EpisodeCarousel = ({ episodes }: Props) => {
             key={episode.episode_id}
             className="basis-1/2 pl-2 sm:basis-1/3 md:basis-1/5 lg:basis-1/6 xl:basis-1/7"
           >
-            <Link href={`/anime/${episode.title_romaji_slug}`}>
+            <Link href={`/anime/${episode.title_romaji_slug}/${episode.episode_number}`}>
               <CoverImage
                 src={episode.cover_extra_large_image || placeholder}
                 alt={
@@ -37,7 +37,7 @@ const EpisodeCarousel = ({ episodes }: Props) => {
                 }
                 title={episode.title_romaji || 'Nieznany tytuł'}
                 episodeNumber={episode.episode_number}
-                priority={index < 5}
+                priority={index < 1}
               />
             </Link>
           </CarouselItem>
