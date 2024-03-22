@@ -23,7 +23,7 @@ const EpisodeCarousel = ({ episodes }: Props) => {
       className="w-full relative"
     >
       <CarouselContent className="-ml-2">
-        {episodes.map((episode) => (
+        {episodes.map((episode, index) => (
           <CarouselItem
             key={episode.episode_id}
             className="basis-1/2 pl-2 sm:basis-1/3 md:basis-1/5 lg:basis-1/6 xl:basis-1/7"
@@ -37,6 +37,7 @@ const EpisodeCarousel = ({ episodes }: Props) => {
                 }
                 title={episode.title_romaji || 'Nieznany tytuł'}
                 episodeNumber={episode.episode_number}
+                priority={index < 5}
               />
             </Link>
           </CarouselItem>

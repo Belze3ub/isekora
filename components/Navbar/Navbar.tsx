@@ -17,7 +17,7 @@ const Navbar = async () => {
       <nav className="flex-between card w-full gap-5 p-4 bg-primary-100 flex-wrap">
         <div className="flex items-center gap-5">
           <Link href="/" className="flex gap-2">
-            <Image src={logo} width={30} height={30} alt="Logo Isekora" />
+            <Image src={logo} width={30} height={30} alt="Logo Isekora" priority />
             <p className="h2-bold">Isekora</p>
           </Link>
           <div className="hidden md:block">

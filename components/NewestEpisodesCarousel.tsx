@@ -45,6 +45,7 @@ const NewestEpisodesCarousel = ({ episodes }: Props) => {
                     }
                     title={anime.title_romaji || 'Nieznany tytuł'}
                     episodeNumber={anime.episode_number}
+                    priority={index === 0}
                   />
                 </Link>
               ))}

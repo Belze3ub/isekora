@@ -25,7 +25,7 @@ const AnimeCarousel = ({ anime }: Props) => {
       className="w-full relative"
     >
       <CarouselContent className="-ml-2">
-        {anime.map((anime) => (
+        {anime.map((anime, index) => (
           <CarouselItem
             key={anime.anime_id}
             className="basis-1/2 pl-2 sm:basis-1/3 md:basis-1/5 lg:basis-1/6"
@@ -38,6 +38,7 @@ const AnimeCarousel = ({ anime }: Props) => {
                   'Zdjęcie okładki dla nieznanego tytułu'
                 }
                 title={anime.title_romaji || 'Nieznany tytuł'}
+                priority={index < 6}
               />
             </Link>
           </CarouselItem>
