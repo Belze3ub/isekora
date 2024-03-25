@@ -10,9 +10,11 @@ import { fetchTranslators } from '@/database/translator';
 import { getCurrentSeasonAndYear, seasonTranslations } from '@/lib/utils';
 
 export default async function Home() {
-  const { season, year } = getCurrentSeasonAndYear();
+  const { season, year, prevSeason, prevYear } = getCurrentSeasonAndYear();
   const translatedSeason = seasonTranslations[season];
+  const translatedPrevSeason = seasonTranslations[prevSeason];
   const anime = await fetchAnimeBySeason(season, year);
+  const prevSeasonAnime = await fetchAnimeBySeason(prevSeason, prevYear);
   const episodes = await fetchNewestEpisodes(36);
   const translators = await fetchTranslators();
 
@@ -28,6 +30,21 @@ export default async function Home() {
         <AnimeCarousel anime={anime} />
       ) : (
         <p className="text-center">Brak anime z obecnego sezonu</p>
+      )}
+      <Separator
+        orientation="horizontal"
+        className="my-5 sm:my-20 w-[50%] mx-auto h-1 rounded-full"
+      />
+      <h2 className="h1-bold mb-2 flex items-center justify-center gap-2 text-center">
+        <SeasonIcon season={prevSeason} />
+        <span>
+          {translatedPrevSeason} {prevYear}
+        </span>
+      </h2>
+      {prevSeasonAnime.length !== 0 ? (
+        <AnimeCarousel anime={prevSeasonAnime} />
+      ) : (
+        <p className="text-center">Brak anime z poprzedniego sezonu</p>
       )}
       <Separator
         orientation="horizontal"

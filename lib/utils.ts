@@ -6,9 +6,10 @@ export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
 }
 
-export function getCurrentSeasonAndYear(): { season: string; year: string } {
+export function getCurrentSeasonAndYear(): { season: string; year: string, prevSeason: string, prevYear: string } {
   const now = new Date();
-  const year = now.getFullYear();
+  let year = now.getFullYear();
+  let prevYear = year;
   const seasons: { [key: string]: Date } = {
     winter: new Date(year, 11, 21),
     spring: new Date(year, 2, 20),
@@ -17,15 +18,26 @@ export function getCurrentSeasonAndYear(): { season: string; year: string } {
   };
   const seasonNames = Object.keys(seasons);
   let season = 'winter';
+  let prevSeason = 'fall';
+  
   for (let i = 0; i < seasonNames.length; i++) {
     const currentSeason = seasons[seasonNames[i]];
     const nextSeason = seasons[seasonNames[(i + 1) % seasonNames.length]];
     if (now >= currentSeason && now < nextSeason) {
       season = seasonNames[i];
+      prevSeason =
+        seasonNames[(i - 1 + seasonNames.length) % seasonNames.length];
       break;
     }
   }
-  return { season, year: year.toString() };
+
+  if (now >= new Date(`${year}-12-21`)) {
+    year++;
+  } else if (now < new Date(`${year}-3-20`)) {
+    prevYear--;
+  }
+
+  return { season, year: year.toString(), prevSeason, prevYear: prevYear.toString() };
 }
 
 export function timestampToDate(timestamp: string) {

@@ -65,4 +65,7 @@
   *::-webkit-scrollbar-thumb {
     @apply bg-accent rounded-full;
   }
+  *::-webkit-scrollbar-track {
+    @apply m-1;
+  }
 }
