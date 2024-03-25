@@ -8,6 +8,7 @@ import fetchAnimeInfo from '@/lib/anilistQuery';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import AnimeEpisodesSubscription from './AnimeEpisodesSubscription';
+import ScrollToTop from '@/components/ScrollToTop';
 
 interface Props {
   params: {
@@ -56,6 +57,7 @@ const AnimeDetailPage = async ({ params: { slug } }: Props) => {
   });
   return (
     <div>
+      <ScrollToTop />
       <AnimeEpisodesSubscription animeId={dbAnime.anime_id} />
       <h1 className="h1-bold">{anime.title.romaji}</h1>
       <h2 className="h2-semibold">{anime.title.english}</h2>
