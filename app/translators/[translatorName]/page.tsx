@@ -39,8 +39,8 @@ const TranslatorDetailPage = async ({ params: { translatorName } }: Props) => {
         cover={translator?.translator_logo}
         alt={translator?.translator_name}
       />
-      <div className="container">
-        <div className=" flex flex-wrap py-2">
+      <div className="container my-5">
+        <div className=" flex flex-wrap mb-3">
           <Breadcrumbs title={translator_name} />
         </div>
         <div className="grid gap-5 md:grid-cols-5">
@@ -84,7 +84,7 @@ const TranslatorDetailPage = async ({ params: { translatorName } }: Props) => {
                 Przetłumaczone anime: {animeCount}
               </div>
               <h1 className="h1-bold">{translator?.translator_name}</h1>
-              <h3 className="h3-semibold mt-4 mb-2">Opis</h3>
+              <h2 className="h2-semibold mt-4 mb-2">Opis</h2>
               {translator.translator_info ? (
                 <p
                   dangerouslySetInnerHTML={{
@@ -105,7 +105,7 @@ const TranslatorDetailPage = async ({ params: { translatorName } }: Props) => {
             </div>
             <h3 className="h3-bold mt-4 mb-2">Wszystkie anime</h3>
             {translatorAnime.length !== 0 ? (
-              <div className="grid gap-3 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 my-3">
+              <div className="grid gap-3 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
                 {translatorAnime.map((anime, index) => (
                   <Link
                     href={`/anime/${anime.title_romaji_slug}`}

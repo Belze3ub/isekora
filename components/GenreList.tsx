@@ -30,7 +30,7 @@ const GenreList = ({ genres }: { genres: Genre[] }) => {
   };
 
   return (
-    <div className="bg-primary flex flex-wrap gap-2 p-4 rounded-xl my-5">
+    <div className="bg-primary flex flex-wrap gap-2 p-4 rounded-xl">
       {genres.map(({ genre_id, genre }) => (
         <Toggle
           key={genre_id}

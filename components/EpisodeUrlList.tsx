@@ -1,13 +1,10 @@
 'use client';
 
 import { Episode, UrlTranslator } from '@/database/types/types';
-import React, { useEffect, useState } from 'react';
-import VideoContainer from './VideoContainer';
-import { Button } from './ui/button';
 import Image from 'next/image';
+import React, { useState } from 'react';
 import EpisodeNav from './EpisodeNav';
-import supabase from '@/database/dbConfig';
-import { fetchEpisodeUrls } from '@/database/url';
+import { Button } from './ui/button';
 
 interface Props {
   slug: string;
@@ -23,25 +20,6 @@ const EpisodeUrlList = ({
   episodes,
 }: Props) => {
   const [url, setUrl] = useState<string>(initialPlayers[0].urls[0]);
-  // const [players, setPlayers] = useState(initialPlayers);
-
-  // useEffect(() => {
-  //   const episodeSubscription = supabase
-  //     .channel('url')
-  //     .on(
-  //       'postgres_changes',
-  //       { event: '*', schema: 'public', table: 'url' },
-  //       async () => {
-  //         const players = await fetchEpisodeUrls(slug, episodeNumber);
-  //         setPlayers(players);
-  //       }
-  //     )
-  //     .subscribe();
-
-  //   return () => {
-  //     supabase.removeChannel(episodeSubscription);
-  //   };
-  // }, [slug, episodeNumber]);
   
   return (
     <div className="flex flex-col gap-5">
@@ -51,8 +29,13 @@ const EpisodeUrlList = ({
         url={url}
         initialEpisodes={episodes}
       />
-      {/* {url && <VideoContainer url={url} />} */}
-      <iframe allow="fullscreen" src={url} className={`w-full aspect-video`} title={`Odtwarzacz dla odcinka ${episodeNumber}`} />
+      <iframe
+        allow="fullscreen"
+        src={url}
+        className={`w-full aspect-video overflow-hidden`}
+        title={`Odtwarzacz dla odcinka ${episodeNumber}`}
+        scrolling="no"
+      />
       <div className="flex flex-col sm:grid gap-y-2 gap-x-5 grid-cols-[auto_1fr] sm:items-center">
         {initialPlayers.map((player) => (
           <React.Fragment key={player.player_name}>

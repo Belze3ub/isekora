@@ -35,7 +35,7 @@ const AnimeListPage = async ({ searchParams }: Props) => {
   const allGenres = await fetchGenres();
   const formats = await fetchAnimeFormats();
   return (
-    <div className="container">
+    <div className="container my-5">
       <AnimeSubscription />
       <GenreList genres={allGenres} />
       <div className="mb-5">
